@@ -40,6 +40,19 @@ public class ZoneListCommandHandler extends
 					"searchNameServerInterfaceSetId",
 					command.getSearchNameServerInterfaceSetId());
 		}
+		if (command.getSearchGroup() != null) {
+			resolvedZoneListTarget = resolvedZoneListTarget.queryParam(
+					"searchGroup", command.getSearchGroup());
+		}
+		if (command.getSearchBrandedNameServers() != null) {
+			resolvedZoneListTarget = resolvedZoneListTarget.queryParam(
+					"searchBrandedNameServers",
+					command.getSearchBrandedNameServers());
+		}
+		if (command.getSearchDNSSECSigned() != null) {
+			resolvedZoneListTarget = resolvedZoneListTarget.queryParam(
+					"searchDNSSECSigned", command.getSearchDNSSECSigned());
+		}
 		return resolvedZoneListTarget;
 	}
 

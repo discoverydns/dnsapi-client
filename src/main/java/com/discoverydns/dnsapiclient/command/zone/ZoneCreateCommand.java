@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("zoneCreateCommand")
-@JsonPropertyOrder({ "id", "planId", "nameServerSetId", "brandedNameServers" })
+@JsonPropertyOrder({ "id", "planId", "group", "nameServerSetId", "brandedNameServers" })
 public class ZoneCreateCommand {
 
 	@JsonProperty("name")
@@ -14,6 +14,8 @@ public class ZoneCreateCommand {
 	private Boolean brandedNameServers;
 	@JsonProperty("planId")
 	private String planId;
+	@JsonProperty("group")
+	private String group;
 	@JsonProperty("nameServerSetId")
 	private String nameServerSetId;
 
@@ -21,6 +23,7 @@ public class ZoneCreateCommand {
 		private String name;
 		private Boolean brandedNameServers;
 		private String planId;
+		private String group;
 		private String nameServerSetId;
 
 		public Builder withName(final String name) {
@@ -38,6 +41,11 @@ public class ZoneCreateCommand {
 			return this;
 		}
 
+		public Builder withGroup(final String group) {
+			this.group = group;
+			return this;
+		}
+
 		public Builder withNameServerSetId(final String nameServerSetId) {
 			this.nameServerSetId = nameServerSetId;
 			return this;
@@ -48,6 +56,7 @@ public class ZoneCreateCommand {
 			zoneCreateCommand.name = name;
 			zoneCreateCommand.brandedNameServers = brandedNameServers;
 			zoneCreateCommand.planId = planId;
+			zoneCreateCommand.group = group;
 			zoneCreateCommand.nameServerSetId = nameServerSetId;
 
 			return zoneCreateCommand;
@@ -72,6 +81,10 @@ public class ZoneCreateCommand {
 
 	public String getPlanId() {
 		return planId;
+	}
+
+	public String getGroup() {
+		return group;
 	}
 
 }

@@ -32,4 +32,9 @@ public class ZoneCreateView {
 	public String getPlanId() {
 		return zoneCreateCommand.getPlanId();
 	}
+
+	@JsonProperty("group")
+	public String getGroup() {
+		return zoneCreateCommand.getGroup();
+	}
 }

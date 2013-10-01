@@ -16,12 +16,12 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @JsonPropertyOrder({ "@uri", "id", "version", "name", "serial",
 		"brandedNameServers", "dnssecSigned", "nameServerSetId",
 		"nameServerSetName", "nameServerInterfaceSetId",
-		"nameServerInterfaceSetName", "planId", "planName", "sponsorAccountId",
-		"sponsorAccountIdentifier", "createDate", "createAccountId",
-		"createAccountIdentifier", "createUserId", "createUserName",
-		"lastUpdateDate", "lastUpdateAccountId", "lastUpdateAccountIdentifier",
-		"lastUpdateUserId", "lastUpdateUserName", "ddnsResourceRecords",
-		"resourceRecords" })
+		"nameServerInterfaceSetName", "planId", "planName", "group",
+		"sponsorAccountId", "sponsorAccountIdentifier", "createDate",
+		"createAccountId", "createAccountIdentifier", "createUserId",
+		"createUserName", "lastUpdateDate", "lastUpdateAccountId",
+		"lastUpdateAccountIdentifier", "lastUpdateUserId",
+		"lastUpdateUserName", "ddnsResourceRecords", "resourceRecords" })
 public class ZoneGetResponse {
 
 	@JsonIgnore
@@ -94,6 +94,11 @@ public class ZoneGetResponse {
 	@JsonProperty("planName")
 	public String getPlanName() {
 		return zoneGetView.getPlanName();
+	}
+
+	@JsonProperty("group")
+	public String getGroup() {
+		return zoneGetView.getGroup();
 	}
 
 	@JsonProperty("serial")

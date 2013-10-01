@@ -33,4 +33,9 @@ public class ZoneUpdateView {
 		return zoneUpdateCommand.getPlanId();
 	}
 
+	@JsonProperty("group")
+	public String getGroup() {
+		return zoneUpdateCommand.getGroup();
+	}
+
 }

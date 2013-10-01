@@ -44,6 +44,8 @@ public class ZoneGetView {
 	private String planId;
 	@JsonProperty("planName")
 	private String planName;
+	@JsonProperty("group")
+	private String group;
 	@JsonProperty("createUserId")
 	private String createUserId;
 	@JsonProperty("createUserName")
@@ -129,6 +131,10 @@ public class ZoneGetView {
 
 	public String getPlanName() {
 		return planName;
+	}
+	
+	public String getGroup() {
+		return group;
 	}
 
 	public String getCreateUserId() {
