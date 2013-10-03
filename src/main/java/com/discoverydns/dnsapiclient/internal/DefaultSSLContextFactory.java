@@ -1,6 +1,6 @@
 package com.discoverydns.dnsapiclient.internal;
 
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.security.KeyStore;
 
 import javax.net.ssl.KeyManager;
@@ -8,6 +8,8 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
+
+import org.eclipse.jetty.util.resource.Resource;
 
 import com.discoverydns.dnsapiclient.DNSAPIClientConfig;
 import com.discoverydns.dnsapiclient.SSLContextFactory;
@@ -20,17 +22,23 @@ public class DefaultSSLContextFactory implements SSLContextFactory {
 	public SSLContext createSSLContext(final DNSAPIClientConfig config)
 			throws Exception {
 
-		final FileInputStream keyStoreFIS = new FileInputStream(
-				config.getKeyStorePath());
+		InputStream keyStoreIS = Resource.newResource(config.getKeyStorePath())
+				.getInputStream();
+
+		// final FileInputStream keyStoreFIS = new FileInputStream(
+		// config.getKeyStorePath());
 		final KeyStore keyStore = KeyStore
 				.getInstance(config.getKeyStoreType());
-		keyStore.load(keyStoreFIS, config.getKeyStorePassword().toCharArray());
+		keyStore.load(keyStoreIS, config.getKeyStorePassword().toCharArray());
 
-		final FileInputStream trustStoreFIS = new FileInputStream(
-				config.getTrustStorePath());
+		InputStream trustStoreIS = Resource.newResource(
+				config.getTrustStorePath()).getInputStream();
+
+		// final FileInputStream trustStoreFIS = new FileInputStream(
+		// config.getTrustStorePath());
 		final KeyStore trustStore = KeyStore.getInstance(config
 				.getTrustStoreType());
-		trustStore.load(trustStoreFIS, config.getTrustStorePassword()
+		trustStore.load(trustStoreIS, config.getTrustStorePassword()
 				.toCharArray());
 
 		final KeyManagerFactory keyManagerFactory = KeyManagerFactory

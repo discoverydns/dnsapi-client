@@ -26,7 +26,7 @@ public class NameServerInterfaceSetGetCommandHandler
 		super(Method.GET, Status.OK.getStatusCode(),
 				MediaType.APPLICATION_JSON_TYPE);
 		this.nameServerInterfaceSetGetTarget = baseWebTarget
-				.path("nameServerInterfaceSet/{nameServerInterfaceSetId}");
+				.path("nameServerInterfaceSets/{nameServerInterfaceSetId}");
 	}
 
 	@Override

@@ -7,7 +7,9 @@ import org.joda.time.LocalDateTime;
 
 import com.discoverydns.dnsapiclient.command.nameServerInterfaceSet.NameServerInterface;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
+@JsonRootName("nameServerInterfaceSet")
 public class NameServerInterfaceSetGetView {
 
 	@JsonProperty("@uri")

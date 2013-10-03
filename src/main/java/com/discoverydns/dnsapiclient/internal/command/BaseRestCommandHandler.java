@@ -19,7 +19,7 @@ import com.discoverydns.dnsapiclient.internal.views.ErrorView;
 
 public abstract class BaseRestCommandHandler<T, R> implements CommandHandler<T> {
 
-	private static Logger log = LoggerFactory
+	private final static Logger log = LoggerFactory
 			.getLogger(BaseRestCommandHandler.class);
 
 	private final Method method;
@@ -90,7 +90,7 @@ public abstract class BaseRestCommandHandler<T, R> implements CommandHandler<T> 
 							ErrorView.class, restResponse);
 					errorMessage = errorView.getMessage();
 				} catch (final Throwable t) {
-					log.debug("Error getting or no error entity found");
+					log.debug("Error getting or no error entity found", t);
 				}
 			}
 			throw new DNSAPIClientHttpException(

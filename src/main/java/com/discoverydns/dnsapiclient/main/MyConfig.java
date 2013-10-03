@@ -63,7 +63,7 @@ public class MyConfig implements DNSAPIClientConfig {
 
 	@Override
 	public String getTransactionLogFileRotationPattern() {
-		return "/Users/zephyia/transaction.log.%d{yyyMMdd}.gz";
+		return "/Users/zephyia/transaction.log.%d{yyyyMMdd}.gz";
 	}
 
 	@Override

@@ -21,6 +21,9 @@ import org.xbill.DNS.TXTRecord;
 import org.xbill.DNS.Type;
 
 import com.discoverydns.dnsapiclient.ObjectMapperFactory;
+import com.discoverydns.dnsapiclient.command.nameServerInterfaceSet.NameServerInterface;
+import com.discoverydns.dnsapiclient.internal.json.nameserverinterfaceset.NameServerInterfaceDeserializer;
+import com.discoverydns.dnsapiclient.internal.json.nameserverinterfaceset.NameServerInterfaceSerializer;
 import com.discoverydns.dnsapiclient.internal.json.resourcerecords.AAAARecordDeserializer;
 import com.discoverydns.dnsapiclient.internal.json.resourcerecords.AAAARecordSerializer;
 import com.discoverydns.dnsapiclient.internal.json.resourcerecords.ARecordDeserializer;
@@ -161,6 +164,7 @@ public class DefaultObjectMapperFactory implements ObjectMapperFactory {
 		mapper.configure(SerializationFeature.EAGER_SERIALIZER_FETCH, true);
 
 		mapper.registerModule(zoneResourceRecordModule());
+		mapper.registerModule(nameServerInterfaceModule());
 		return mapper;
 	}
 
@@ -379,6 +383,26 @@ public class DefaultObjectMapperFactory implements ObjectMapperFactory {
 
 	private LOCRecordSerializer locRecordSerializer() {
 		return new LOCRecordSerializer();
+	}
+
+	public SimpleModule nameServerInterfaceModule() {
+		SimpleModule module = new SimpleModule("NameServerInterfaceModule");
+
+		module.addDeserializer(NameServerInterface.class,
+				nameServerInterfaceDeserializer());
+
+		module.addSerializer(NameServerInterface.class,
+				nameServerInterfaceSerializer());
+
+		return module;
+	}
+
+	public NameServerInterfaceDeserializer nameServerInterfaceDeserializer() {
+		return new NameServerInterfaceDeserializer();
+	}
+
+	public NameServerInterfaceSerializer nameServerInterfaceSerializer() {
+		return new NameServerInterfaceSerializer();
 	}
 
 }

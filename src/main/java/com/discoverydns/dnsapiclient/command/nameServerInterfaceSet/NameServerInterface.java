@@ -32,4 +32,20 @@ public class NameServerInterface {
 		return ipv6Address;
 	}
 
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setIpv4Address(Inet4Address ipv4Address) {
+		this.ipv4Address = ipv4Address;
+	}
+
+	public void setIpv6Address(Inet6Address ipv6Address) {
+		this.ipv6Address = ipv6Address;
+	}
+
 }
