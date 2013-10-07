@@ -7,6 +7,8 @@ import javax.ws.rs.core.Response.Status;
 
 import com.discoverydns.dnsapiclient.command.nameServerInterfaceSet.NameServerInterfaceSetGetCommand;
 import com.discoverydns.dnsapiclient.command.nameServerInterfaceSet.NameServerInterfaceSetGetResponse;
+import com.discoverydns.dnsapiclient.exception.DNSAPIClientException;
+import com.discoverydns.dnsapiclient.exception.DNSAPIClientException.DNSAPIClientExceptionCode;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.BaseRestCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.InvocationBuildInvoker;
@@ -33,8 +35,15 @@ public class NameServerInterfaceSetGetCommandHandler
 	public WebTarget getWebTarget(
 			final NameServerInterfaceSetGetCommand command,
 			final CommandMetaData commandMetaData) {
-		return nameServerInterfaceSetGetTarget.resolveTemplate(
-				"nameServerInterfaceSetId", command.getIdOrName());
+		WebTarget webTarget = null;
+		try {
+			webTarget = nameServerInterfaceSetGetTarget.resolveTemplate(
+					"nameServerInterfaceSetId", command.getIdOrName());
+		} catch (Throwable t) {
+			throw new DNSAPIClientException(
+					DNSAPIClientExceptionCode.requiredParameterMissing, t, "id");
+		}
+		return webTarget;
 	}
 
 	@Override

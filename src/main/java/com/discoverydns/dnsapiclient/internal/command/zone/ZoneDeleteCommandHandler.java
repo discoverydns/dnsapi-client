@@ -6,6 +6,8 @@ import javax.ws.rs.core.Response.Status;
 
 import com.discoverydns.dnsapiclient.command.zone.ZoneDeleteCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneDeleteResponse;
+import com.discoverydns.dnsapiclient.exception.DNSAPIClientException;
+import com.discoverydns.dnsapiclient.exception.DNSAPIClientException.DNSAPIClientExceptionCode;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.BaseRestCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.InvocationBuildInvoker;
@@ -20,14 +22,22 @@ public class ZoneDeleteCommandHandler extends
 	private final WebTarget zoneDeleteTarget;
 
 	public ZoneDeleteCommandHandler(final WebTarget baseWebTarget) {
-		super(Method.GET, Status.NO_CONTENT.getStatusCode());
+		super(Method.GET, Status.OK.getStatusCode());
 		this.zoneDeleteTarget = baseWebTarget.path("zones/{zoneId}");
 	}
 
 	@Override
 	public WebTarget getWebTarget(final ZoneDeleteCommand command,
 			final CommandMetaData commandMetaData) {
-		return zoneDeleteTarget.resolveTemplate("zoneId", command.getId());
+		WebTarget webTarget = null;
+		try {
+			webTarget = zoneDeleteTarget.resolveTemplate("zoneId",
+					command.getId());
+		} catch (Throwable t) {
+			throw new DNSAPIClientException(
+					DNSAPIClientExceptionCode.requiredParameterMissing, t, "id");
+		}
+		return webTarget;
 	}
 
 	@Override

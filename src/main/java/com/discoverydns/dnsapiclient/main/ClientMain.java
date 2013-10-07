@@ -5,6 +5,7 @@ import ch.qos.logback.classic.Level;
 import com.discoverydns.dnsapiclient.DNSAPIClient;
 import com.discoverydns.dnsapiclient.DNSAPIClientConfig;
 import com.discoverydns.dnsapiclient.DNSAPIClientFactory;
+import com.discoverydns.dnsapiclient.Response;
 import com.discoverydns.dnsapiclient.command.user.UserGetCommand;
 import com.discoverydns.dnsapiclient.command.user.UserGetResponse;
 import com.discoverydns.dnsapiclient.command.user.UserListCommand;
@@ -43,8 +44,9 @@ public class ClientMain {
 
 		for (int x = 1; x < 100000000; x++) {
 			try {
-				userGetResponse = (UserGetResponse) client
+				Response<UserGetResponse> response = client
 						.process(userGetCommand);
+				userGetResponse = response.getResponseObject();
 				// userListResponse = (UserListResponse) client
 				// .process(userListCommand);
 			} catch (final Throwable e) {

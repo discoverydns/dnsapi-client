@@ -62,8 +62,8 @@ public class ZoneGetResponse {
 	}
 
 	@JsonProperty("dnssecSigned")
-	public Boolean getDnssecSigned() {
-		return zoneGetView.getDnssecSigned();
+	public Boolean getDNSSECSigned() {
+		return zoneGetView.getDNSSECSigned();
 	}
 
 	@JsonProperty("nameServerInterfaceSetId")

@@ -85,7 +85,11 @@ public abstract class AbstractDeserializer<T> extends StdDeserializer<T> {
 			final String fieldName) {
 		final JsonNode addressNode = findFieldNode(recordNode, fieldName);
 		try {
-			return getAddressFromString(addressNode.textValue());
+			if (addressNode.textValue() != null) {
+				return getAddressFromString(addressNode.textValue());
+			} else {
+				return null;
+			}
 		} catch (final Throwable e) {
 			throw new DNSAPIClientJsonMappingException(
 					DNSAPIClientJsonMappingExceptionCode.invalidFieldValue, e,

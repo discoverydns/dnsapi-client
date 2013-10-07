@@ -7,7 +7,7 @@ public class DNSAPIClientException extends BaseException {
 	private static final long serialVersionUID = -2062084248122622976L;
 
 	public enum DNSAPIClientExceptionCode {
-		expectedEntity, clientClosed
+		expectedEntity, clientClosed, requiredParameterMissing
 
 	}
 

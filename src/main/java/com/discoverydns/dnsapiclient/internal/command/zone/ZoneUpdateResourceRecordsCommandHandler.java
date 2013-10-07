@@ -7,6 +7,8 @@ import javax.ws.rs.core.Response.Status;
 
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateResourceRecordsCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateResourceRecordsResponse;
+import com.discoverydns.dnsapiclient.exception.DNSAPIClientException;
+import com.discoverydns.dnsapiclient.exception.DNSAPIClientException.DNSAPIClientExceptionCode;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.BaseRestCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.InvocationBuildInvoker;
@@ -34,8 +36,15 @@ public class ZoneUpdateResourceRecordsCommandHandler
 	public WebTarget getWebTarget(
 			final ZoneUpdateResourceRecordsCommand command,
 			final CommandMetaData commandMetaData) {
-		return zoneUpdateResourceRecordsTarget.resolveTemplate("zoneId",
-				command.getId());
+		WebTarget webTarget = null;
+		try {
+			webTarget = zoneUpdateResourceRecordsTarget.resolveTemplate(
+					"zoneId", command.getId());
+		} catch (Throwable t) {
+			throw new DNSAPIClientException(
+					DNSAPIClientExceptionCode.requiredParameterMissing, t, "id");
+		}
+		return webTarget;
 	}
 
 	@Override

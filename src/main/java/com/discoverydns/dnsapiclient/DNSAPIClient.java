@@ -25,14 +25,18 @@ public class DNSAPIClient {
 		this.blockingCommandExecutor = blockingCommandExecutor;
 	}
 
-	public Object process(final Object command) throws Throwable {
+	@SuppressWarnings("unchecked")
+	public <T> Response<T> process(final Object command) throws Throwable {
 		if (clientClosed) {
 			log.debug("Attempt to process command on closed client");
 			throw new DNSAPIClientException(
 					DNSAPIClientExceptionCode.clientClosed);
 		}
 		final DNSAPIClientCommandMetaData commandMetaData = new DNSAPIClientCommandMetaData();
-		return blockingCommandExecutor.process(command, commandMetaData);
+
+		T commandResponse = (T) blockingCommandExecutor.process(command,
+				commandMetaData);
+		return new Response<T>(commandMetaData, commandResponse);
 	}
 
 	public void close() {

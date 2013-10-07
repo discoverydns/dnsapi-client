@@ -93,7 +93,7 @@ public class ZoneGetView {
 		return brandedNameServers;
 	}
 
-	public Boolean getDnssecSigned() {
+	public Boolean getDNSSECSigned() {
 		return dnssecSigned;
 	}
 
@@ -132,7 +132,7 @@ public class ZoneGetView {
 	public String getPlanName() {
 		return planName;
 	}
-	
+
 	public String getGroup() {
 		return group;
 	}

@@ -1,6 +1,7 @@
 package com.discoverydns.dnsapitest.performance;
 
 import com.discoverydns.dnsapiclient.DNSAPIClient;
+import com.discoverydns.dnsapiclient.Response;
 import com.discoverydns.dnsapiclient.command.user.UserGetCommand;
 import com.discoverydns.dnsapiclient.command.user.UserGetResponse;
 import com.discoverydns.dnsapiclient.internal.util.Stopwatch;
@@ -29,9 +30,12 @@ public class DNSAPITestClientSimpleClient implements Runnable {
 		final Stopwatch sw = new Stopwatch();
 		sw.start();
 		for (int x = 0; x < count; x++) {
+
 			try {
-				final UserGetResponse userGetResponse = (UserGetResponse) client
+				Response<UserGetResponse> response = client
 						.process(userGetCommand);
+				final UserGetResponse userGetResponse = response
+						.getResponseObject();
 				// userListResponse = (UserListResponse) client
 				// .process(userListCommand);
 				// System.err.println(userGetResponse.getId());

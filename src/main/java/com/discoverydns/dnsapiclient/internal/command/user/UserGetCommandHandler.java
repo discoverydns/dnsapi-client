@@ -7,6 +7,8 @@ import javax.ws.rs.core.Response.Status;
 
 import com.discoverydns.dnsapiclient.command.user.UserGetCommand;
 import com.discoverydns.dnsapiclient.command.user.UserGetResponse;
+import com.discoverydns.dnsapiclient.exception.DNSAPIClientException;
+import com.discoverydns.dnsapiclient.exception.DNSAPIClientException.DNSAPIClientExceptionCode;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.BaseRestCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.InvocationBuildInvoker;
@@ -30,8 +32,15 @@ public class UserGetCommandHandler extends
 	@Override
 	public WebTarget getWebTarget(final UserGetCommand command,
 			final CommandMetaData commandMetaData) {
-		return userGetTarget.resolveTemplate("userId",
-				command.getIdOrUsername());
+		WebTarget webTarget = null;
+		try {
+			webTarget = userGetTarget.resolveTemplate("userId",
+					command.getIdOrUsername());
+		} catch (Throwable t) {
+			throw new DNSAPIClientException(
+					DNSAPIClientExceptionCode.requiredParameterMissing, t, "id");
+		}
+		return webTarget;
 	}
 
 	@Override

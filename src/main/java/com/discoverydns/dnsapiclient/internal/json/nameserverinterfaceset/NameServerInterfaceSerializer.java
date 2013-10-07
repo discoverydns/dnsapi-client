@@ -23,10 +23,16 @@ public class NameServerInterfaceSerializer extends
 		jsonGenerator.writeStartObject();
 		jsonGenerator.writeNumberField("order", nameServerInterface.getOrder());
 		jsonGenerator.writeStringField("name", nameServerInterface.getName());
-		jsonGenerator.writeStringField("ipv4Address", InetAddresses
-				.toAddrString(nameServerInterface.getIpv4Address()));
-		jsonGenerator.writeStringField("ipv6Address", InetAddresses
-				.toAddrString(nameServerInterface.getIpv6Address()));
+		jsonGenerator.writeStringField(
+				"ipv4Address",
+				(nameServerInterface.getIpv4Address() == null) ? null
+						: InetAddresses.toAddrString(nameServerInterface
+								.getIpv4Address()));
+		jsonGenerator.writeStringField(
+				"ipv6Address",
+				(nameServerInterface.getIpv6Address() == null) ? null
+						: InetAddresses.toAddrString(nameServerInterface
+								.getIpv6Address()));
 		jsonGenerator.writeEndObject();
 	}
 }
