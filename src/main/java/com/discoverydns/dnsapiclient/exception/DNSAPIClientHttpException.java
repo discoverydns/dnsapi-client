@@ -1,10 +1,18 @@
 package com.discoverydns.dnsapiclient.exception;
 
+/**
+ * A DNSAPIClient exception that has occurred during client-server HTTP communication.
+ *
+ * @author Chris Wright
+ */
 public class DNSAPIClientHttpException extends DNSAPIClientException {
 
 	private static final long serialVersionUID = 3792775686625733076L;
 
 	public enum DNSAPIClientHttpExceptionCode {
+        /**
+         * Thrown when the HTTP status code received from the DNSAPI server is not the expected one
+         */
 		serverError
 	}
 

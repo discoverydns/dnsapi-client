@@ -5,6 +5,15 @@ import java.net.URI;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+/**
+ * List record representing a NameServer Set, from the list returned in the {@link NameServerSetListResponse}.
+ *
+ * A NameServer Set represents a logical entity of the DNSAPI architecture,
+ * to link an Account with a NameServer Interface Set,
+ * through the configuration of the Name Server names that will be provided to the Account's Zones.
+ *
+ * @author Chris Wright
+ */
 @JsonRootName("nameServerSet")
 public class NameServerSetRecord {
 
@@ -31,22 +40,37 @@ public class NameServerSetRecord {
 		this.lastUpdateDate = lastUpdateDate;
 	}
 
+    /**
+     * @return The URI representing the NameServer Set list record on the DNSAPI server
+     */
 	public URI getUri() {
 		return uri;
 	}
 
+    /**
+     * @return The NameServer Set UUID
+     */
 	public String getId() {
 		return id;
 	}
 
+    /**
+     * @return The NameServer Set name
+     */
 	public String getName() {
 		return name;
 	}
 
+    /**
+     * @return The creation date of the NameServer Set
+     */
 	public String getCreateDate() {
 		return createDate;
 	}
 
+    /**
+     * @return The last update date of the NameServer Set
+     */
 	public String getLastUpdateDate() {
 		return lastUpdateDate;
 	}

@@ -9,6 +9,12 @@ import com.discoverydns.dnsapiclient.exception.DNSAPIClientException;
 import com.discoverydns.dnsapiclient.exception.DNSAPIClientException.DNSAPIClientExceptionCode;
 import com.discoverydns.dnsapiclient.framework.command.BlockingCommandExecutor;
 
+/**
+ * Instance of a DNSAPI client, used to send a command to the DNAPI server,
+ * and get a {@link Response} back from it.
+ * Should be obtained from the {@link DNSAPIClientFactory}.
+ * @author Chris Wright
+ */
 public class DNSAPIClient {
 
 	private static Logger log = LoggerFactory.getLogger(DNSAPIClient.class);
@@ -25,6 +31,13 @@ public class DNSAPIClient {
 		this.blockingCommandExecutor = blockingCommandExecutor;
 	}
 
+    /**
+     * Process the given command, by sending it to the DNAPI server,
+     * and getting a {@link Response} back from it.
+     * @param command The command to send to the server
+     * @return The {@link Response} received from the server
+     * @throws Throwable In case of any error
+     */
 	@SuppressWarnings("unchecked")
 	public <T> Response<T> process(final Object command) throws Throwable {
 		if (clientClosed) {
@@ -36,9 +49,12 @@ public class DNSAPIClient {
 
 		T commandResponse = (T) blockingCommandExecutor.process(command,
 				commandMetaData);
-		return new Response<T>(commandMetaData, commandResponse);
+		return new Response<>(commandMetaData, commandResponse);
 	}
 
+    /**
+     * Closes the client, which cannot be used anymore.
+     */
 	public void close() {
 		if (!clientClosed) {
 			log.debug("Closing client");

@@ -5,6 +5,14 @@ import java.net.URI;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+/**
+ * List record representing a Zone, from the list returned in the {@link ZoneListResponse}.
+ *
+ * A Zone, belonging to an Account, will be managed by the DNSAPI architecture
+ * for domain names resolution purpose.
+ *
+ * @author Chris Wright
+ */
 @JsonRootName("zone")
 public class ZoneRecord {
 
@@ -38,30 +46,51 @@ public class ZoneRecord {
 		this.lastUpdateDate = lastUpdateDate;
 	}
 
+    /**
+     * @return The URI representing the Zone list record on the DNSAPI server
+     */
 	public URI getUri() {
 		return uri;
 	}
 
+    /**
+     * @return The Zone UUID
+     */
 	public String getId() {
 		return id;
 	}
 
+    /**
+     * @return The Zone name
+     */
 	public String getName() {
 		return name;
 	}
 
+    /**
+     * @return true if the Zone uses branded nameServers, false otherwise
+     */
 	public Boolean getBrandedNameServers() {
 		return brandedNameServers;
 	}
 
+    /**
+     * @return true if the Zone is DNSSEC signed, false otherwise
+     */
 	public Boolean getDnssecSigned() {
 		return dnssecSigned;
 	}
 
+    /**
+     * @return The creation date of the Zone
+     */
 	public String getCreateDate() {
 		return createDate;
 	}
 
+    /**
+     * @return The last update date of the Zone
+     */
 	public String getLastUpdateDate() {
 		return lastUpdateDate;
 	}

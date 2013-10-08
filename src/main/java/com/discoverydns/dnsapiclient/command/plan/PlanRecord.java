@@ -5,6 +5,14 @@ import java.net.URI;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+/**
+ * List record representing a Plan, from the list returned in the {@link PlanListResponse}.
+ *
+ * A Plan describes the available application features granted to an Account,
+ * as well as the details and units used for billing this Account.
+ *
+ * @author Chris Wright
+ */
 @JsonRootName("plan")
 public class PlanRecord {
 
@@ -34,26 +42,44 @@ public class PlanRecord {
 		this.lastUpdateDate = lastUpdateDate;
 	}
 
+    /**
+     * @return The URI representing the Plan list record on the DNSAPI server
+     */
 	public URI getUri() {
 		return uri;
 	}
 
+    /**
+     * @return The Plan UUID
+     */
 	public String getId() {
 		return id;
 	}
 
+    /**
+     * @return The Plan name
+     */
 	public String getName() {
 		return name;
 	}
 
+    /**
+     * @return The Plan status
+     */
 	public String getStatus() {
 		return status;
 	}
 
+    /**
+     * @return The creation date of the Plan
+     */
 	public String getCreateDate() {
 		return createDate;
 	}
 
+    /**
+     * @return The last update date of the Plan
+     */
 	public String getLastUpdateDate() {
 		return lastUpdateDate;
 	}

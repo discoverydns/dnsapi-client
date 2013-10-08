@@ -5,13 +5,18 @@ import java.util.Map;
 
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 
+/**
+ * Instance of {@link CommandMetaData}, used by the {@link DNSAPIClient}
+ * to exchange additional information with the DNSAPI server.
+ * @author Chris Wright
+ */
 public class DNSAPIClientCommandMetaData implements CommandMetaData {
 
 	final public static String SERVER_TRANSACTION_ID = "serverTransactionId";
 	final public static String CLIENT_TRANSACTION_ID = "clientTransactionId";
 
 	final private static int EXPECTED_META_DATA_COUNT = 10;
-	final private Map<String, Object> metaData = new HashMap<String, Object>(
+	final private Map<String, Object> metaData = new HashMap<>(
 			EXPECTED_META_DATA_COUNT);
 
 	@Override

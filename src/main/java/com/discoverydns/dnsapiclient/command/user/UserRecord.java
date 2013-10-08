@@ -5,6 +5,14 @@ import java.net.URI;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+/**
+ * List record representing a User, from the list returned in the {@link UserListResponse}.
+ *
+ * A User is a member of an Account, who can connect to the DNSAPI server
+ * to perform operations on his behalf.
+ *
+ * @author Chris Wright
+ */
 @JsonRootName("user")
 public class UserRecord {
 
@@ -37,30 +45,51 @@ public class UserRecord {
 		this.lastUpdateDate = lastUpdateDate;
 	}
 
+    /**
+     * @return The URI representing the User list record on the DNSAPI server
+     */
 	public URI getUri() {
 		return uri;
 	}
 
+    /**
+     * @return The User UUID
+     */
 	public String getId() {
 		return id;
 	}
 
+    /**
+     * @return The User name
+     */
 	public String getName() {
 		return name;
 	}
 
+    /**
+     * @return The User username
+     */
 	public String getUsername() {
 		return username;
 	}
 
+    /**
+     * @return The User status
+     */
 	public String getStatus() {
 		return status;
 	}
 
+    /**
+     * @return The creation date of the User
+     */
 	public String getCreateDate() {
 		return createDate;
 	}
 
+    /**
+     * @return The last update date of the User
+     */
 	public String getLastUpdateDate() {
 		return lastUpdateDate;
 	}

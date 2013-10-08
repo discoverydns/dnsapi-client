@@ -2,6 +2,11 @@ package com.discoverydns.dnsapiclient.command.plan;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Application additional feature granted to an Account using the Plan.
+ *
+ * @author Chris Wright
+ */
 public class PlanFeature {
 
 	@JsonProperty("featureType")
@@ -9,10 +14,16 @@ public class PlanFeature {
 	@JsonProperty("additionalRate")
 	private Double additionalRate;
 
+    /**
+     * @return The feature type
+     */
 	public String getFeatureType() {
 		return featureType;
 	}
 
+    /**
+     * @return The additional monthly rate (if any) applied when billing an Account using this feature
+     */
 	public Double getAdditionalRate() {
 		return additionalRate;
 	}

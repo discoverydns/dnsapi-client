@@ -61,31 +61,73 @@ import com.discoverydns.dnsapiclient.internal.commandinterceptors.TransactionLog
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
+/**
+ * The factory to create {@link DNSAPIClient} instances.
+ * @author Chris Wright
+ */
 public class DNSAPIClientFactory {
 
 	private SSLContextFactory sslContextFactory = new DefaultSSLContextFactory();
 	private ObjectMapperFactory objectMapperFactory = new DefaultObjectMapperFactory();
 	private ClientTransactionIdStrategy clientTransactionIdStrategy = new DefaultClientTransactionIdStrategy();
 
+    /**
+     * Sets the {@link SSLContextFactory} to be used to create {@link SSLContext} instances,
+     * to establish secure communications between the {@link DNSAPIClient} instances and the DNSAPI server.
+     * If not set, a {@link DefaultSSLContextFactory} will be used,
+     * using the KeyStore and TrustStore files provided in the {@link DNSAPIClientConfig}.
+     * @param sslContextFactory The {@link SSLContextFactory} to be used
+     */
 	public void setSSLContextFactory(final SSLContextFactory sslContextFactory) {
 		this.sslContextFactory = sslContextFactory;
 	}
 
+    /**
+     * Sets the {@link ObjectMapperFactory} to create {@link ObjectMapper} instances,
+     * used by the created {@link DNSAPIClient} instances
+     * to serialize/deserialize the JSON data sent to/coming from the DNSAPI server.
+     * If not set, a {@link DefaultObjectMapperFactory} will be used,
+     * using a set of predefined serializers and deserializers.
+     * @param objectMapperFactory The {@link ObjectMapperFactory} to be used
+     */
 	public void setObjectMapperFactory(
 			final ObjectMapperFactory objectMapperFactory) {
 		this.objectMapperFactory = objectMapperFactory;
 	}
 
+    /**
+     * Sets the {@link ClientTransactionIdStrategy} used by the framework
+     * when a command is sent to the DNSAPI server,
+     * to generate a client transaction id to be put in the meta-data.
+     * If not set, a {@link DefaultClientTransactionIdStrategy} will be used,
+     * generating a random {@link java.util.UUID} every time.
+     * @param clientTransactionIdStrategy The {@link ClientTransactionIdStrategy} to be used
+     */
 	public void setClientTransactionIdStrategy(
 			final ClientTransactionIdStrategy clientTransactionIdStrategy) {
 		this.clientTransactionIdStrategy = clientTransactionIdStrategy;
 	}
 
+    /**
+     * Creates a {@link DNSAPIClient} instance from the given {@link DNSAPIClientConfig} configuration.
+     * The {@link DefaultTransactionLogHandler} will be used for transaction logging.
+     * @param config The configuration to be used to create the instance
+     * @return The created {@link DNSAPIClient} instance
+     * @throws Exception In case of any error
+     */
 	public DNSAPIClient createInstance(final DNSAPIClientConfig config)
 			throws Exception {
 		return createInstance(config, null);
 	}
 
+    /**
+     * Creates a {@link DNSAPIClient} instance from the given {@link DNSAPIClientConfig} configuration,
+     * using the provided {@link TransactionLogHandler} for transaction logging.
+     * @param config The configuration to be used to create the instance
+     * @param transactionLogHandler The {@link TransactionLogHandler} to be used for transaction logging
+     * @return The created {@link DNSAPIClient} instance
+     * @throws Exception In case of any error
+     */
 	public DNSAPIClient createInstance(final DNSAPIClientConfig config,
 			TransactionLogHandler transactionLogHandler) throws Exception {
 		final ObjectMapper mapper = objectMapperFactory.createInstance();

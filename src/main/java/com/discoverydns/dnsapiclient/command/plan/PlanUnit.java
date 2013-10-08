@@ -2,6 +2,11 @@ package com.discoverydns.dnsapiclient.command.plan;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Unit on which base the Account using this Plan will be billed.
+ *
+ * @author Chris Wright
+ */
 public class PlanUnit {
 
 	@JsonProperty("unitType")
@@ -13,18 +18,30 @@ public class PlanUnit {
 	@JsonProperty("excessUnitsBatchRate")
 	private Double excessUnitsBatchRate;
 
+    /**
+     * @return The unit type
+     */
 	public String getUnitType() {
 		return unitType;
 	}
 
+    /**
+     * @return The number of units of the specified type included in the base cost of the plan
+     */
 	public Long getIncludedUnits() {
 		return includedUnits;
 	}
 
+    /**
+     * @return The number of units included in one ‘batch’ of excess units fees
+     */
 	public Long getExcessUnitsBatchSize() {
 		return excessUnitsBatchSize;
 	}
 
+    /**
+     * @return The price charged per batch or part thereof excess units
+     */
 	public Double getExcessUnitsBatchRate() {
 		return excessUnitsBatchRate;
 	}
