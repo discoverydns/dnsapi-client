@@ -2,6 +2,7 @@ package com.discoverydns.dnsapiclient.internal.json.resourcerecords;
 
 import java.io.IOException;
 
+import org.xbill.DNS.DClass;
 import org.xbill.DNS.Record;
 import org.xbill.DNS.Type;
 
@@ -27,10 +28,11 @@ public abstract class AbstractRecordSerializer<T extends Record> extends
 
 			// Common fields
 			jsonGenerator.writeStringField("name", value.getName().toString());
-			jsonGenerator.writeStringField("class", "IN");
+			jsonGenerator.writeStringField("class",
+					DClass.string(value.getDClass()));
 			jsonGenerator.writeStringField("ttl", formatNumber(value.getTTL()));
-			jsonGenerator.writeStringField("type",
-					formatNumber(value.getType()));
+			jsonGenerator
+					.writeStringField("type", Type.string(value.getType()));
 
 			// RDATA fields
 			serializeRDataFields(value, jsonGenerator, serializerProvider);

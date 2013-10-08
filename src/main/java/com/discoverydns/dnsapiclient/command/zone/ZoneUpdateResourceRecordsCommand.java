@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-@JsonRootName("zoneUpdateResourceRecordsCommand")
+@JsonRootName("ZoneUpdateResourceRecordsCommand")
 @JsonPropertyOrder({ "id", "version", "resourceRecords" })
 public class ZoneUpdateResourceRecordsCommand {
 

@@ -22,7 +22,7 @@ public class ZoneDeleteCommandHandler extends
 	private final WebTarget zoneDeleteTarget;
 
 	public ZoneDeleteCommandHandler(final WebTarget baseWebTarget) {
-		super(Method.GET, Status.OK.getStatusCode());
+		super(Method.DELETE, Status.NO_CONTENT.getStatusCode());
 		this.zoneDeleteTarget = baseWebTarget.path("zones/{zoneId}");
 	}
 

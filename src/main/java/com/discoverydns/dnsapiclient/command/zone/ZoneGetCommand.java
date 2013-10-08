@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-@JsonRootName("zoneGetCommand")
+@JsonRootName("ZoneGetCommand")
 @JsonPropertyOrder({ "id" })
 public class ZoneGetCommand {
 

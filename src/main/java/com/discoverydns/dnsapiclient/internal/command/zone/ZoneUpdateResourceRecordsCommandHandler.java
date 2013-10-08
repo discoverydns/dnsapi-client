@@ -29,7 +29,7 @@ public class ZoneUpdateResourceRecordsCommandHandler
 		super(Method.PUT, Status.OK.getStatusCode(),
 				MediaType.APPLICATION_JSON_TYPE);
 		this.zoneUpdateResourceRecordsTarget = baseWebTarget
-				.path("zones/{zoneId}/resourceRecords/");
+				.path("zones/{zoneId}/resourcerecords/");
 	}
 
 	@Override

@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-@JsonRootName("zoneGetResponse")
+@JsonRootName("ZoneGetResponse")
 @JsonPropertyOrder({ "@uri", "id", "version", "name", "serial",
 		"brandedNameServers", "dnssecSigned", "nameServerSetId",
 		"nameServerSetName", "nameServerInterfaceSetId",

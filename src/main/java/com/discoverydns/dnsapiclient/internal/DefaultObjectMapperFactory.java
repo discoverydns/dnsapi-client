@@ -217,38 +217,38 @@ public class DefaultObjectMapperFactory implements ObjectMapperFactory {
 		final RecordTypeReferenceDeserializer recordTypeReferenceDeserializer = new RecordTypeReferenceDeserializer();
 
 		// Register managed record types here
+		recordTypeReferenceDeserializer.registerRecordType(Type.string(Type.A),
+				ARecord.class);
 		recordTypeReferenceDeserializer.registerRecordType(
-				String.valueOf(Type.A), ARecord.class);
+				Type.string(Type.NS), NSRecord.class);
 		recordTypeReferenceDeserializer.registerRecordType(
-				String.valueOf(Type.NS), NSRecord.class);
+				Type.string(Type.SOA), SOARecord.class);
 		recordTypeReferenceDeserializer.registerRecordType(
-				String.valueOf(Type.SOA), SOARecord.class);
+				Type.string(Type.AAAA), AAAARecord.class);
 		recordTypeReferenceDeserializer.registerRecordType(
-				String.valueOf(Type.AAAA), AAAARecord.class);
+				Type.string(Type.MX), MXRecord.class);
 		recordTypeReferenceDeserializer.registerRecordType(
-				String.valueOf(Type.MX), MXRecord.class);
+				Type.string(Type.CNAME), CNAMERecord.class);
 		recordTypeReferenceDeserializer.registerRecordType(
-				String.valueOf(Type.CNAME), CNAMERecord.class);
+				Type.string(Type.TXT), TXTRecord.class);
 		recordTypeReferenceDeserializer.registerRecordType(
-				String.valueOf(Type.TXT), TXTRecord.class);
+				Type.string(Type.SRV), SRVRecord.class);
 		recordTypeReferenceDeserializer.registerRecordType(
-				String.valueOf(Type.SRV), SRVRecord.class);
+				Type.string(Type.NAPTR), NAPTRRecord.class);
 		recordTypeReferenceDeserializer.registerRecordType(
-				String.valueOf(Type.NAPTR), NAPTRRecord.class);
+				Type.string(Type.SPF), SPFRecord.class);
 		recordTypeReferenceDeserializer.registerRecordType(
-				String.valueOf(Type.SPF), SPFRecord.class);
+				Type.string(Type.DS), DSRecord.class);
 		recordTypeReferenceDeserializer.registerRecordType(
-				String.valueOf(Type.DS), DSRecord.class);
+				Type.string(Type.CERT), CERTRecord.class);
 		recordTypeReferenceDeserializer.registerRecordType(
-				String.valueOf(Type.CERT), CERTRecord.class);
+				Type.string(Type.PTR), PTRRecord.class);
 		recordTypeReferenceDeserializer.registerRecordType(
-				String.valueOf(Type.PTR), PTRRecord.class);
+				Type.string(Type.SSHFP), SSHFPRecord.class);
 		recordTypeReferenceDeserializer.registerRecordType(
-				String.valueOf(Type.SSHFP), SSHFPRecord.class);
+				Type.string(Type.TLSA), TLSARecord.class);
 		recordTypeReferenceDeserializer.registerRecordType(
-				String.valueOf(Type.TLSA), TLSARecord.class);
-		recordTypeReferenceDeserializer.registerRecordType(
-				String.valueOf(Type.LOC), LOCRecord.class);
+				Type.string(Type.LOC), LOCRecord.class);
 
 		return recordTypeReferenceDeserializer;
 	}

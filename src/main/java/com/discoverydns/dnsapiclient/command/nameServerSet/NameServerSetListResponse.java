@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-@JsonRootName("nameServerSetListResponse")
+@JsonRootName("NameServerSetListResponse")
 @JsonPropertyOrder({ "@uri", "nameServerSetList", "totalCount" })
 public class NameServerSetListResponse {
 

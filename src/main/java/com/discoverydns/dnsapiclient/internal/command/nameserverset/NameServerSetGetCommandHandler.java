@@ -1,4 +1,4 @@
-package com.discoverydns.dnsapiclient.internal.command.nameServerSet;
+package com.discoverydns.dnsapiclient.internal.command.nameserverset;
 
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -26,7 +26,7 @@ public class NameServerSetGetCommandHandler
 		super(Method.GET, Status.OK.getStatusCode(),
 				MediaType.APPLICATION_JSON_TYPE);
 		this.nameServerSetGetTarget = baseWebTarget
-				.path("nameServerSets/{nameServerSetId}");
+				.path("nameserversets/{nameServerSetId}");
 	}
 
 	@Override

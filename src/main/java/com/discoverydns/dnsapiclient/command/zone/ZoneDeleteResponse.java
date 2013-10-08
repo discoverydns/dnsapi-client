@@ -2,7 +2,7 @@ package com.discoverydns.dnsapiclient.command.zone;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-@JsonRootName("zoneDeleteResponse")
+@JsonRootName("ZoneDeleteResponse")
 public class ZoneDeleteResponse {
 
 }

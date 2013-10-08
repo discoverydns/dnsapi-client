@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-@JsonRootName("planGetResponse")
+@JsonRootName("PlanGetResponse")
 @JsonPropertyOrder({ "@uri", "id", "version", "name", "status",
 		"baseMonthlyRate", "currency", "excessGraceMonths",
 		"excessGraceMonthsPeriod", "trialPeriod", "createDate",

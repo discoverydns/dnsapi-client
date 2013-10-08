@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-@JsonRootName("nameServerInterfaceSetGetResponse")
+@JsonRootName("NameServerInterfaceSetGetResponse")
 @JsonPropertyOrder({ "@uri", "id", "name", "version", "status", "createDate",
 		"createAccountId", "createAccountIdentifier", "createUserId",
 		"createUserName", "lastUpdateDate", "lastUpdateAccountId",

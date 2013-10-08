@@ -20,6 +20,7 @@ public abstract class AbstractRecordDeserializer<T extends Record> extends
 
 	private static final String NAME_FIELD_NAME = "name";
 	private static final String TTL_FIELD_NAME = "ttl";
+	private static final String CLASS_FIELD_NAME = "class";
 
 	protected AbstractRecordDeserializer(final Class<?> recordClass) {
 		super(recordClass);
@@ -33,7 +34,7 @@ public abstract class AbstractRecordDeserializer<T extends Record> extends
 		final ObjectNode recordNode = (ObjectNode) mapper.reader()
 				.without(DeserializationFeature.UNWRAP_ROOT_VALUE)
 				.readTree(jsonParser);
-		return createRecord(getRecordName(recordNode), getDClass(),
+		return createRecord(getRecordName(recordNode), getDClass(recordNode),
 				getRecordTTL(recordNode), recordNode);
 	}
 
@@ -50,8 +51,9 @@ public abstract class AbstractRecordDeserializer<T extends Record> extends
 		return getNodeNameValue(recordNode, NAME_FIELD_NAME);
 	}
 
-	protected int getDClass() {
-		return DClass.IN;
+	protected int getDClass(ObjectNode recordNode) {
+		String dClass = getNodeStringValue(recordNode, CLASS_FIELD_NAME);
+		return DClass.value(dClass);
 	}
 
 	protected int getRecordTTL(final ObjectNode recordNode) {

@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-@JsonRootName("accountGetResponse")
+@JsonRootName("AccountGetResponse")
 @JsonPropertyOrder({ "@uri", "id", "version", "name", "identifier", "status",
 		"currency", "minimumCommitment", "minimumCommitmentStartDate",
 		"createDate", "createAccountId", "createAccountIdentifier",

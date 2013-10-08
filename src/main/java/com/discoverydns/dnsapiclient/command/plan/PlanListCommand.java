@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-@JsonRootName("planListCommand")
+@JsonRootName("PlanListCommand")
 @JsonPropertyOrder({ "searchStatus", "searchName", })
 public class PlanListCommand {
 
