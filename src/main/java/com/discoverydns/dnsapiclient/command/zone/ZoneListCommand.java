@@ -15,14 +15,16 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  */
 @JsonRootName("ZoneListCommand")
 @JsonPropertyOrder({ "searchName", "searchGroup",
-		"searchNameServerInterfaceSetId", "searchBrandedNameServers",
-		"searchDNSSECSigned" })
+		"searchNameServerInterfaceSetId", "searchNameServerSetId",
+		"searchBrandedNameServers", "searchDNSSECSigned" })
 public class ZoneListCommand {
 
 	@JsonProperty("searchName")
 	private String searchName;
 	@JsonProperty("searchNameServerInterfaceSetId")
 	private String searchNameServerInterfaceSetId;
+	@JsonProperty("searchNameServerSetId")
+	private String searchNameServerSetId;
 	@JsonProperty("searchGroup")
 	private String searchGroup;
 	@JsonProperty("searchBrandedNameServers")
@@ -36,6 +38,7 @@ public class ZoneListCommand {
 	public static class Builder {
 		private String searchName;
 		private String searchNameServerInterfaceSetId;
+		private String searchNameServerSetId;
 		private String searchGroup;
 		private Boolean searchBrandedNameServers;
 		private Boolean searchDNSSECSigned;
@@ -71,6 +74,12 @@ public class ZoneListCommand {
 			return this;
 		}
 
+		public Builder withSearchNameServerSetId(
+				final String searchNameServerSetId) {
+			this.searchNameServerSetId = searchNameServerSetId;
+			return this;
+		}
+
         /**
          * Sets if the Zones to look for use branded nameServers.
          * @param searchBrandedNameServers true if the Zones to look for use branded nameServers, false otherwise
@@ -101,6 +110,7 @@ public class ZoneListCommand {
 			zoneListCommand.searchName = searchName;
 			zoneListCommand.searchGroup = searchGroup;
 			zoneListCommand.searchNameServerInterfaceSetId = searchNameServerInterfaceSetId;
+			zoneListCommand.searchNameServerSetId = searchNameServerSetId;
 			zoneListCommand.searchBrandedNameServers = searchBrandedNameServers;
 			zoneListCommand.searchDNSSECSigned = searchDNSSECSigned;
 
@@ -124,6 +134,10 @@ public class ZoneListCommand {
      */
 	public String getSearchNameServerInterfaceSetId() {
 		return searchNameServerInterfaceSetId;
+	}
+
+	public String getSearchNameServerSetId() {
+		return searchNameServerSetId;
 	}
 
     /**

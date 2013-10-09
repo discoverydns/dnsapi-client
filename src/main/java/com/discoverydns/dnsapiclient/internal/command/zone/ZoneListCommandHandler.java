@@ -40,6 +40,11 @@ public class ZoneListCommandHandler extends
 					"searchNameServerInterfaceSetId",
 					command.getSearchNameServerInterfaceSetId());
 		}
+		if (command.getSearchNameServerSetId() != null) {
+			resolvedZoneListTarget = resolvedZoneListTarget
+					.queryParam("searchNameServerSetId",
+							command.getSearchNameServerSetId());
+		}
 		if (command.getSearchGroup() != null) {
 			resolvedZoneListTarget = resolvedZoneListTarget.queryParam(
 					"searchGroup", command.getSearchGroup());
