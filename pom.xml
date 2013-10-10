@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<parent>
-		<groupId>com.discoverydns</groupId>
+		<groupId>com.discoverydns.dnsapi</groupId>
 		<artifactId>dnsapi-parent</artifactId>
 		<version>1.0.0</version>
 	</parent>
