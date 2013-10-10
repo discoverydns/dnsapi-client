@@ -73,7 +73,12 @@ public class ZoneListCommand {
 			this.searchGroup = searchGroup;
 			return this;
 		}
-
+		
+        /**
+         * Sets the UUID of the NameServer Set that the Zones to look for are associated with.
+         * @param searchNameServerSetId The UUID of the associated NameServer Set
+         * @return The {@link Builder}
+         */
 		public Builder withSearchNameServerSetId(
 				final String searchNameServerSetId) {
 			this.searchNameServerSetId = searchNameServerSetId;
@@ -136,6 +141,9 @@ public class ZoneListCommand {
 		return searchNameServerInterfaceSetId;
 	}
 
+    /**
+     * @return The UUID of the NameServer Set associated to the Zones to look for, set on the command.
+     */
 	public String getSearchNameServerSetId() {
 		return searchNameServerSetId;
 	}
