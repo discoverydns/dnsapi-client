@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class TestEnumToPropertyNameConverter {
+public class EnumToPropertyNameConverterTest {
 
 	enum Test1 {
 		value1, value2

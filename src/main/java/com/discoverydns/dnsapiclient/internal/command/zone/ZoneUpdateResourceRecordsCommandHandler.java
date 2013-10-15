@@ -36,7 +36,7 @@ public class ZoneUpdateResourceRecordsCommandHandler
 	public WebTarget getWebTarget(
 			final ZoneUpdateResourceRecordsCommand command,
 			final CommandMetaData commandMetaData) {
-		WebTarget webTarget = null;
+		WebTarget webTarget;
 		try {
 			webTarget = zoneUpdateResourceRecordsTarget.resolveTemplate(
 					"zoneId", command.getId());
@@ -59,7 +59,7 @@ public class ZoneUpdateResourceRecordsCommandHandler
 	public InvocationBuildInvoker getInvocationBuildInvoker(
 			final ZoneUpdateResourceRecordsCommand command,
 			final CommandMetaData commandMetaData) {
-		return new WithEntityInvocationBuildInvoker<ZoneUpdateResourceRecordsView>(
+		return new WithEntityInvocationBuildInvoker<>(
 				new ZoneUpdateResourceRecordsView(command));
 	}
 

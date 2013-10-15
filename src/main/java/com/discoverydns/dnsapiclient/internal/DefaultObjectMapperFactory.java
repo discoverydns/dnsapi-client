@@ -385,7 +385,7 @@ public class DefaultObjectMapperFactory implements ObjectMapperFactory {
 		return new LOCRecordSerializer();
 	}
 
-	public SimpleModule nameServerInterfaceModule() {
+    private SimpleModule nameServerInterfaceModule() {
 		SimpleModule module = new SimpleModule("NameServerInterfaceModule");
 
 		module.addDeserializer(NameServerInterface.class,
@@ -397,11 +397,11 @@ public class DefaultObjectMapperFactory implements ObjectMapperFactory {
 		return module;
 	}
 
-	public NameServerInterfaceDeserializer nameServerInterfaceDeserializer() {
+    private NameServerInterfaceDeserializer nameServerInterfaceDeserializer() {
 		return new NameServerInterfaceDeserializer();
 	}
 
-	public NameServerInterfaceSerializer nameServerInterfaceSerializer() {
+    private NameServerInterfaceSerializer nameServerInterfaceSerializer() {
 		return new NameServerInterfaceSerializer();
 	}
 

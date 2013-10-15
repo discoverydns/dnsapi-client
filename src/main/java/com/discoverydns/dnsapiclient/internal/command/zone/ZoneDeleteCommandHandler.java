@@ -29,7 +29,7 @@ public class ZoneDeleteCommandHandler extends
 	@Override
 	public WebTarget getWebTarget(final ZoneDeleteCommand command,
 			final CommandMetaData commandMetaData) {
-		WebTarget webTarget = null;
+		WebTarget webTarget;
 		try {
 			webTarget = zoneDeleteTarget.resolveTemplate("zoneId",
 					command.getId());

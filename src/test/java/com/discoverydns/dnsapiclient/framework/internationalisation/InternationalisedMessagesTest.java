@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class TestInternationalisedMessages {
+public class InternationalisedMessagesTest {
 
 	private final InternationalisedMessages im = new InternationalisedMessages(
 			"testLocale");

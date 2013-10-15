@@ -21,7 +21,7 @@ public class TransactionLogCommandInterceptor implements CommandInterceptor {
 			throws Throwable {
 
 		if (transactionLogHandler != null) {
-			Object response = null;
+			Object response;
 			try {
 				response = commandInterceptorChain.proceed();
 				transactionLogHandler.logTransaction(command, response,

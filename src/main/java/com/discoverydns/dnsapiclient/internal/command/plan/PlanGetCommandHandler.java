@@ -32,14 +32,14 @@ public class PlanGetCommandHandler extends
 	@Override
 	public WebTarget getWebTarget(final PlanGetCommand command,
 			final CommandMetaData commandMetaData) {
-		WebTarget webTarget = null;
+		WebTarget webTarget;
 		try {
 			webTarget = planGetTarget.resolveTemplate("planId",
 					command.getIdOrName());
 
 		} catch (Throwable t) {
 			throw new DNSAPIClientException(
-					DNSAPIClientExceptionCode.requiredParameterMissing, t, "id");
+					DNSAPIClientExceptionCode.requiredParameterMissing, t, "idOrName");
 		}
 		return webTarget;
 	}
