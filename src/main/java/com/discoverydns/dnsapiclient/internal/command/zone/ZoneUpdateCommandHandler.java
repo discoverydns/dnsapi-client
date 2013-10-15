@@ -33,7 +33,7 @@ public class ZoneUpdateCommandHandler extends
 	@Override
 	public WebTarget getWebTarget(final ZoneUpdateCommand command,
 			final CommandMetaData commandMetaData) {
-		WebTarget webTarget = null;
+		WebTarget webTarget;
 		try {
 			webTarget = zoneUpdateTarget.resolveTemplate("zoneId",
 					command.getId());
@@ -56,7 +56,7 @@ public class ZoneUpdateCommandHandler extends
 	public InvocationBuildInvoker getInvocationBuildInvoker(
 			final ZoneUpdateCommand command,
 			final CommandMetaData commandMetaData) {
-		return new WithEntityInvocationBuildInvoker<ZoneUpdateView>(
+		return new WithEntityInvocationBuildInvoker<>(
 				new ZoneUpdateView(command));
 	}
 

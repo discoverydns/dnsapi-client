@@ -16,7 +16,7 @@ import com.discoverydns.dnsapiclient.SSLContextFactory;
 
 public class DefaultSSLContextFactory implements SSLContextFactory {
 
-	private static String PROTOCOL_VERSION = "TLSv1.1";
+	private static final String PROTOCOL_VERSION = "TLSv1.1";
 
 	@Override
 	public SSLContext createSSLContext(final DNSAPIClientConfig config)

@@ -38,13 +38,13 @@ public class DefaultTransactionLogHandler implements TransactionLogHandler {
 				.setPattern("%date{\"yyyy-MM-dd HH:mm:ss.SSS z\",UTC} %msg%n");
 		patternLayoutEncoder.setContext(loggerContext);
 		patternLayoutEncoder.start();
-		final RollingFileAppender<ILoggingEvent> fileAppender = new RollingFileAppender<ILoggingEvent>();
+		final RollingFileAppender<ILoggingEvent> fileAppender = new RollingFileAppender<>();
 		fileAppender.setContext(loggerContext);
 		fileAppender.setAppend(true);
 		fileAppender.setEncoder(patternLayoutEncoder);
 		fileAppender.setPrudent(false);
 		fileAppender.setFile(config.getTransactionLogFile());
-		final TimeBasedRollingPolicy<ILoggingEvent> rollingPolicy = new TimeBasedRollingPolicy<ILoggingEvent>();
+		final TimeBasedRollingPolicy<ILoggingEvent> rollingPolicy = new TimeBasedRollingPolicy<>();
 		rollingPolicy.setFileNamePattern(config
 				.getTransactionLogFileRotationPattern());
 		rollingPolicy.setMaxHistory(config.getMaxTransactionLogFileVersions());

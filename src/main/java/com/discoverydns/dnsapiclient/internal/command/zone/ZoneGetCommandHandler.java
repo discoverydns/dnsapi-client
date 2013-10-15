@@ -32,7 +32,7 @@ public class ZoneGetCommandHandler extends
 	@Override
 	public WebTarget getWebTarget(final ZoneGetCommand command,
 			final CommandMetaData commandMetaData) {
-		WebTarget webTarget = null;
+		WebTarget webTarget;
 		try {
 			webTarget = zoneGetTarget
 					.resolveTemplate("zoneId", command.getId());
