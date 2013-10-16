@@ -7,8 +7,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.discoverydns.dnsapiclient.framework.command.CommandInterceptorChain;
-import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.Before;
@@ -18,6 +16,9 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import com.discoverydns.dnsapiclient.framework.command.CommandInterceptorChain;
+import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StopwatchCommandInterceptorTest {
@@ -66,7 +67,8 @@ public class StopwatchCommandInterceptorTest {
                         mockCommand, mockCommandMetaData, mockCommandInterceptorChain));
     }
 
-    @Test
+    @SuppressWarnings("rawtypes")
+	@Test
     public void shouldRethrowExceptionIfCommandWasUnsuccessful() throws Throwable {
         final RuntimeException mockRuntimeException = mock(RuntimeException.class);
         when(mockCommandInterceptorChain.proceed()).thenThrow(mockRuntimeException);
