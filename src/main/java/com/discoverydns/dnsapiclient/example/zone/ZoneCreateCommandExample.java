@@ -38,6 +38,7 @@ public class ZoneCreateCommandExample {
         final ZoneCreateCommand command =
                 new ZoneCreateCommand.Builder()
                         .withName("myzone.com")
+                        .withDnssecSigned(Boolean.FALSE)
                         .withBrandedNameServers(Boolean.TRUE)
                         .withGroup("mygroup")
                         .withNameServerSetId("<my-nss-id>")

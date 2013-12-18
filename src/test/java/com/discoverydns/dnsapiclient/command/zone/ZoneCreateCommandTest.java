@@ -12,12 +12,14 @@ public class ZoneCreateCommandTest {
         String nameServerSetId = "nameServerSetId";
         String planId = "planId";
         String group = "group";
+        Boolean dnssecSigned = true;
         Boolean brandedNameServers = true;
         ZoneCreateCommand command =
                 new ZoneCreateCommand.Builder()
                         .withName(name)
                         .withNameServerSetId(nameServerSetId)
                         .withPlanId(planId)
+                        .withDnssecSigned(dnssecSigned)
                         .withBrandedNameServers(brandedNameServers)
                         .withGroup(group)
                         .build();
@@ -25,6 +27,7 @@ public class ZoneCreateCommandTest {
         assertEquals(name, command.getName());
         assertEquals(nameServerSetId, command.getNameServerSetId());
         assertEquals(planId, command.getPlanId());
+        assertEquals(dnssecSigned, command.isDnssecSigned());
         assertEquals(brandedNameServers, command.isBrandedNameServers());
         assertEquals(group, command.getGroup());
     }
