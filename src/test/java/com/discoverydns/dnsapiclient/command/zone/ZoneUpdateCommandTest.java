@@ -12,6 +12,7 @@ public class ZoneUpdateCommandTest {
         String nameServerSetId = "nameServerSetId";
         String planId = "planId";
         String group = "group";
+        Boolean dnssecSigned = true;
         Boolean brandedNameServers = true;
         Long version = 1L;
         ZoneUpdateCommand command =
@@ -20,6 +21,7 @@ public class ZoneUpdateCommandTest {
                         .withVersion(version)
                         .withNameServerSetId(nameServerSetId)
                         .withPlanId(planId)
+                        .withDnssecSigned(dnssecSigned)
                         .withBrandedNameServers(brandedNameServers)
                         .withGroup(group)
                         .build();
@@ -28,6 +30,7 @@ public class ZoneUpdateCommandTest {
         assertEquals(version, command.getVersion());
         assertEquals(nameServerSetId, command.getNameServerSetId());
         assertEquals(planId, command.getPlanId());
+        assertEquals(dnssecSigned, command.isDnssecSigned());
         assertEquals(brandedNameServers, command.isBrandedNameServers());
         assertEquals(group, command.getGroup());
     }

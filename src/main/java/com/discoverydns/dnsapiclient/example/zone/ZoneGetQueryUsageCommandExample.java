@@ -5,15 +5,18 @@ import com.discoverydns.dnsapiclient.DNSAPIClient;
 import com.discoverydns.dnsapiclient.DNSAPIClientConfig;
 import com.discoverydns.dnsapiclient.DNSAPIClientFactory;
 import com.discoverydns.dnsapiclient.Response;
-import com.discoverydns.dnsapiclient.command.zone.ZoneCreateCommand;
-import com.discoverydns.dnsapiclient.command.zone.ZoneCreateResponse;
+import com.discoverydns.dnsapiclient.command.zone.ZoneGetQueryUsageCommand;
+import com.discoverydns.dnsapiclient.command.zone.ZoneGetQueryUsageResponse;
+import com.discoverydns.dnsapiclient.command.zone.ZoneQueryUsageGranularity;
+import com.discoverydns.dnsapiclient.command.zone.ZoneQueryUsageRecord;
 import com.discoverydns.dnsapiclient.example.ExampleConfig;
+import org.joda.time.LocalDateTime;
 
 /**
- * Example of sending an ZoneCreateCommand and receiving an ZoneCreateResponse
+ * Example of sending an ZoneGetQueryUsageCommand and receiving an ZoneGetQueryUsageResponse
  * @author Arnaud Dumont
  */
-public class ZoneCreateCommandExample {
+public class ZoneGetQueryUsageCommandExample {
 
     public static void main(String[] args) {
         //Configure logging properties, using Logback
@@ -35,19 +38,17 @@ public class ZoneCreateCommandExample {
         }
 
         //Create command
-        final ZoneCreateCommand command =
-                new ZoneCreateCommand.Builder()
-                        .withName("myzone.com")
-                        .withDnssecSigned(Boolean.FALSE)
-                        .withBrandedNameServers(Boolean.TRUE)
-                        .withGroup("mygroup")
-                        .withNameServerSetId("<my-nss-id>")
-                        .withPlanId("<my-plan-id>")
+        final ZoneGetQueryUsageCommand command =
+                new ZoneGetQueryUsageCommand.Builder()
+                        .withId("<my-zone-id>")
+                        .withSearchStartDate(LocalDateTime.now())
+                        .withSearchEndDate(LocalDateTime.now())
+                        .withSearchGranularity(ZoneQueryUsageGranularity.hourly)
                         .build();
 
         //Send command to server and receive response
         try {
-            Response<ZoneCreateResponse> response = client.process(command);
+            Response<ZoneGetQueryUsageResponse> response = client.process(command);
 
             System.out.println("== Successful response ==");
             System.out.println("== Server transaction id: " + response.getServerTransactionId());
@@ -55,10 +56,15 @@ public class ZoneCreateCommandExample {
             System.out.println("== Processing time: " + response.getTransactionProcessingTime() + "ms");
 
             //The response object can now be used
-            System.out.println("Zone URI: " + response.getResponseObject().getURI());
-            System.out.println("Zone UUID: " + response.getResponseObject().getId());
-            System.out.println("Zone version: " + response.getResponseObject().getVersion());
-            System.out.println("Zone name: " + response.getResponseObject().getName());
+            System.out.println("Zone query usage URI: " + response.getResponseObject().getURI());
+            System.out.println("Zone query usage records total count: " +
+                    response.getResponseObject().getTotalRecordCount());
+            System.out.println("-- Zone query usage records: ");
+            for (ZoneQueryUsageRecord queryUsageRecord :
+                    response.getResponseObject().getZoneQueryUsageRecords()) {
+                System.out.println("   Timestamp: " + queryUsageRecord.getTimestamp()
+                        + ", Count: " + queryUsageRecord.getCount());
+            }
         } catch (final Throwable e) {
             e.printStackTrace();
             System.exit(1);

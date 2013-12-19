@@ -39,6 +39,7 @@ public class ZoneUpdateCommandExample {
                 new ZoneUpdateCommand.Builder()
                         .withId("<my-zone-id>")
                         .withVersion(0L)
+                        .withDnssecSigned(Boolean.FALSE)
                         .withBrandedNameServers(Boolean.TRUE)
                         .withGroup("mygroup")
                         .withNameServerSetId("<my-nss-id>")

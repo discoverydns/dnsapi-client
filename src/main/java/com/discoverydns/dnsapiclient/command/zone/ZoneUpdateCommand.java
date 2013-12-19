@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  */
 @JsonRootName("ZoneUpdateCommand")
 @JsonPropertyOrder({ "id", "version", "planId", "group", "nameServerSetId",
-		"brandedNameServers" })
+		"dnssecSigned", "brandedNameServers" })
 public class ZoneUpdateCommand {
 
 	@JsonProperty("id")
@@ -28,6 +28,8 @@ public class ZoneUpdateCommand {
 	private String planId;
 	@JsonProperty("group")
 	private String group;
+	@JsonProperty("dnssecSigned")
+	private Boolean dnssecSigned;
 	@JsonProperty("brandedNameServers")
 	private Boolean brandedNameServers;
 
@@ -41,6 +43,7 @@ public class ZoneUpdateCommand {
 		private String nameServerSetId;
 		private String planId;
 		private String group;
+		private Boolean dnssecSigned;
 		private Boolean brandedNameServers;
 
         /**
@@ -97,6 +100,16 @@ public class ZoneUpdateCommand {
 		}
 
         /**
+         * Sets if the Zone to update will be DNSSEC signed.
+         * @param dnssecSigned true if the Zone to update should be DNSSEC signed, false otherwise
+         * @return The {@link Builder}
+         */
+		public Builder withDnssecSigned(final Boolean dnssecSigned) {
+			this.dnssecSigned = dnssecSigned;
+			return this;
+		}
+
+        /**
          * Sets if the Zone to update uses branded nameServers.
          * @param brandedNameServers true if the Zone to update should use branded nameServers, false otherwise
          * @return The {@link Builder}
@@ -117,6 +130,7 @@ public class ZoneUpdateCommand {
 			zoneUpdateCommand.nameServerSetId = nameServerSetId;
 			zoneUpdateCommand.planId = planId;
 			zoneUpdateCommand.group = group;
+			zoneUpdateCommand.dnssecSigned = dnssecSigned;
 			zoneUpdateCommand.brandedNameServers = brandedNameServers;
 
 			return zoneUpdateCommand;
@@ -146,6 +160,13 @@ public class ZoneUpdateCommand {
      */
 	public String getNameServerSetId() {
 		return nameServerSetId;
+	}
+
+    /**
+     * @return true if the Zone to update should be DNSSEC signed, false otherwise
+     */
+	public Boolean isDnssecSigned() {
+		return dnssecSigned;
 	}
 
     /**
