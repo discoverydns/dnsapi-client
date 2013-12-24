@@ -76,15 +76,12 @@ public class TLSARecordSerializerTest {
 	
 	@Test
 	public void shouldGenerateCertificateAssociationDataField() throws Exception {
-        String escapedCertificateAssociationData = "escapedCertificateAssociationData";
 		tlsaRecordSerializer = spy(tlsaRecordSerializer);
-        when(tlsaRecordSerializer.escapeSpecialCharacters(certificateAssociationData))
-					.thenReturn(escapedCertificateAssociationData);
 		
 		tlsaRecordSerializer.serializeRDataFields(tlsaRecord, mockJsonGenerator,
 				mockSerializerProvider);
 		
 		verify(mockJsonGenerator).writeStringField("certificateAssociationData",
-                escapedCertificateAssociationData);
+                certificateAssociationData);
 	}
 }

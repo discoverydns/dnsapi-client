@@ -26,6 +26,6 @@ public class CERTRecordSerializer extends AbstractRecordSerializer<CERTRecord> {
 		jsonGenerator.writeStringField("algorithm",
 				formatNumber(certRecord.getAlgorithm()));
 		jsonGenerator.writeStringField("cert",
-				escapeSpecialCharacters(certRecord.getTextualCert()));
+				certRecord.getTextualCert());
 	}
 }

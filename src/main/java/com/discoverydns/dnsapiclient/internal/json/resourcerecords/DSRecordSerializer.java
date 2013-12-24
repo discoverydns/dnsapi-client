@@ -26,6 +26,6 @@ public class DSRecordSerializer extends AbstractRecordSerializer<DSRecord> {
 		jsonGenerator.writeStringField("digestId",
 				formatNumber(dsRecord.getDigestID()));
 		jsonGenerator.writeStringField("digest",
-				escapeSpecialCharacters(dsRecord.getTextualDigest()));
+				dsRecord.getTextualDigest());
 	}
 }

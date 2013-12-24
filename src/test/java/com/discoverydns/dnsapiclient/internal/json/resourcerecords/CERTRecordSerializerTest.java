@@ -75,13 +75,11 @@ public class CERTRecordSerializerTest {
 	
 	@Test
 	public void shouldGenerateCertField() throws Exception {
-        String escapedCert = "escapedCert";
 		certRecordSerializer = spy(certRecordSerializer);
-        when(certRecordSerializer.escapeSpecialCharacters(cert)).thenReturn(escapedCert);
-		
+
 		certRecordSerializer.serializeRDataFields(mockCERTRecord, mockJsonGenerator,
 				mockSerializerProvider);
 		
-		verify(mockJsonGenerator).writeStringField("cert", escapedCert);
+		verify(mockJsonGenerator).writeStringField("cert", cert);
 	}	
 }

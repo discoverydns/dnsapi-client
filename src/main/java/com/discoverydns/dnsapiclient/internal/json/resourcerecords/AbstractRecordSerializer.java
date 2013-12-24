@@ -55,14 +55,10 @@ public abstract class AbstractRecordSerializer<T extends Record> extends
 		return String.valueOf(number);
 	}
 
-	public String escapeCharacterString(final String characterString) {
-		final boolean containsWhiteSpaces = characterString.indexOf(' ') >= 0;
-		return (containsWhiteSpaces ? "\\\"" : "")
-				+ characterString.replaceAll("\\\"", "\\\\\\\\\"")
-				+ (containsWhiteSpaces ? "\\\"" : "");
-	}
-
-	public String escapeSpecialCharacters(final String string) {
-		return string.replaceAll("\n", "\\\\n").replaceAll("\t", "\\\\t");
-	}
+    public String escapeCharacterString(String characterString) {
+        boolean containsWhiteSpaces = characterString.indexOf(' ') >= 0;
+        return (containsWhiteSpaces ? "\"" : "")
+                + characterString
+                + (containsWhiteSpaces ? "\"" : "");
+    }
 }
