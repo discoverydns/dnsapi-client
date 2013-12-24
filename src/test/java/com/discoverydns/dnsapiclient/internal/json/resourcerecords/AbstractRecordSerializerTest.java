@@ -120,35 +120,14 @@ public class AbstractRecordSerializerTest {
 		abstractRecordSerializer.serialize(mockRecord, mockJsonGenerator, mockSerializerProvider);
 	}
 
-	@Test
-	public void shouldEscapeCharacterStringIfNecessary() throws Exception {
-		String stringWithoutSpaceNorEscapedQuote = "string1";
-		String stringWithSpaceButNoEscapedQuote = "string 2";
-		String stringWithoutSpaceButWithEscapedQuote = "string\\\"3";
-		String stringWithSpaceAndEscapedQuote = "string\\\" 4";
-		
-		assertEquals(stringWithoutSpaceNorEscapedQuote,
-				abstractRecordSerializer.escapeCharacterString(stringWithoutSpaceNorEscapedQuote));
-		assertEquals("\\\"" + stringWithSpaceButNoEscapedQuote + "\\\"",
-				abstractRecordSerializer.escapeCharacterString(stringWithSpaceButNoEscapedQuote));
-		assertEquals(stringWithoutSpaceButWithEscapedQuote.replaceAll("\\\"", "\\\\\\\\\""),
-				abstractRecordSerializer.escapeCharacterString(stringWithoutSpaceButWithEscapedQuote));
-		assertEquals("\\\""
-				+ stringWithSpaceAndEscapedQuote.replaceAll("\\\"", "\\\\\\\\\"") + "\\\"",
-				abstractRecordSerializer.escapeCharacterString(stringWithSpaceAndEscapedQuote));
-	}
+    @Test
+    public void shouldEscapeCharacterStringIfNecessary() throws Exception {
+        String stringWithoutSpace = "string1";
+        String stringWithSpace = "string 2";
 
-	@Test
-	public void shouldEscapeSpecialCharacterInStringIfNecessary() throws Exception {
-		String stringWithoutSpecialCharacters = "string1";
-		String stringWithNewLineCharacter = "string\n5";
-		String stringWithTabCharacter = "string\t6";
-		
-		assertEquals(stringWithoutSpecialCharacters,
-				abstractRecordSerializer.escapeSpecialCharacters(stringWithoutSpecialCharacters));
-		assertEquals(stringWithNewLineCharacter.replaceAll("\n", "\\\\n"),
-				abstractRecordSerializer.escapeSpecialCharacters(stringWithNewLineCharacter));
-		assertEquals(stringWithTabCharacter.replaceAll("\t", "\\\\t"),
-				abstractRecordSerializer.escapeSpecialCharacters(stringWithTabCharacter));
-	}
+        assertEquals(stringWithoutSpace,
+                abstractRecordSerializer.escapeCharacterString(stringWithoutSpace));
+        assertEquals("\"" + stringWithSpace + "\"",
+                abstractRecordSerializer.escapeCharacterString(stringWithSpace));
+    }
 }

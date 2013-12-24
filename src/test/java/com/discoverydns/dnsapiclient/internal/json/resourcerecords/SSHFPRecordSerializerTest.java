@@ -61,13 +61,11 @@ public class SSHFPRecordSerializerTest {
 
 	@Test
 	public void shouldGenerateDigestField() throws Exception {
-        String escapedDigest = "escapedDigest";
 		sshfpRecordSerializer = spy(sshfpRecordSerializer);
-        when(sshfpRecordSerializer.escapeSpecialCharacters(fingerprint)).thenReturn(escapedDigest);
 
 		sshfpRecordSerializer.serializeRDataFields(mockSSHFPRecord, mockJsonGenerator,
 				mockSerializerProvider);
 
-		verify(mockJsonGenerator).writeStringField("fingerprint", escapedDigest);
+		verify(mockJsonGenerator).writeStringField("fingerprint", fingerprint);
 	}
 }

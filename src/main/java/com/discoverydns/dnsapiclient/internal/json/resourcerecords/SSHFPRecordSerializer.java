@@ -25,6 +25,6 @@ public class SSHFPRecordSerializer extends
 		jsonGenerator.writeStringField("digestType",
 				formatNumber(sshfpRecord.getDigestType()));
 		jsonGenerator.writeStringField("fingerprint",
-				escapeSpecialCharacters(sshfpRecord.getTextualFingerPrint()));
+				sshfpRecord.getTextualFingerPrint());
 	}
 }

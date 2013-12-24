@@ -26,7 +26,6 @@ public class TLSARecordSerializer extends AbstractRecordSerializer<TLSARecord> {
 		jsonGenerator.writeStringField("matchingType",
 				formatNumber(tlsaRecord.getMatchingType()));
 		jsonGenerator.writeStringField("certificateAssociationData",
-				escapeSpecialCharacters(tlsaRecord
-						.getTextualCertificateAssociationData()));
+				tlsaRecord.getTextualCertificateAssociationData());
 	}
 }

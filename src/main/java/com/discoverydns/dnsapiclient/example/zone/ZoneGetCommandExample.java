@@ -74,6 +74,10 @@ public class ZoneGetCommandExample {
                     + response.getResponseObject().getPlanId());
             System.out.println("Zone associated Plan name: "
                     + response.getResponseObject().getPlanName());
+            System.out.println("-- Zone system-generated delegation records: ");
+            for (Record delegationRecord : response.getResponseObject().getDelegationResourceRecords()) {
+                System.out.println("   " + delegationRecord.toString());
+            }
             System.out.println("-- Zone system-generated records: ");
             for (Record ddnsRecord : response.getResponseObject().getDDNSResourceRecords()) {
                 System.out.println("   " + ddnsRecord.toString());

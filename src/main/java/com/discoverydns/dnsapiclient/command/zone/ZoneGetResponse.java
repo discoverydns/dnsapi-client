@@ -31,7 +31,8 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 		"createAccountId", "createAccountIdentifier", "createUserId",
 		"createUserName", "lastUpdateDate", "lastUpdateAccountId",
 		"lastUpdateAccountIdentifier", "lastUpdateUserId",
-		"lastUpdateUserName", "ddnsResourceRecords", "resourceRecords" })
+		"lastUpdateUserName", "delegationResourceRecords",
+        "ddnsResourceRecords", "resourceRecords" })
 public class ZoneGetResponse {
 
 	@JsonIgnore
@@ -87,6 +88,14 @@ public class ZoneGetResponse {
 	@JsonProperty("ddnsResourceRecords")
 	public Set<Record> getDDNSResourceRecords() {
 		return zoneGetView.getDDNSResourceRecords();
+	}
+
+    /**
+     * @return The list of system-generated delegation Resource {@link Record}s of the Zone
+     */
+	@JsonProperty("delegationResourceRecords")
+	public Set<Record> getDelegationResourceRecords() {
+		return zoneGetView.getDelegationResourceRecords();
 	}
 
     /**

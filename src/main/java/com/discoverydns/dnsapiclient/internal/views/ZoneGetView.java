@@ -68,6 +68,8 @@ public class ZoneGetView {
 	private Set<Record> userResourceRecords;
 	@JsonProperty("ddnsResourceRecords")
 	private Set<Record> ddnsResourceRecords;
+	@JsonProperty("delegationResourceRecords")
+    private Set<Record> delegationDDNSResourceRecords;
 
 	public URI getUri() {
 		return uri;
@@ -181,4 +183,7 @@ public class ZoneGetView {
 		return ddnsResourceRecords;
 	}
 
+    public Set<Record> getDelegationResourceRecords() {
+        return delegationDDNSResourceRecords;
+    }
 }

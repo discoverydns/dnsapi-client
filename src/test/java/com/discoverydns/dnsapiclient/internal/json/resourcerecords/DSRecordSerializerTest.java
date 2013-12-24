@@ -75,13 +75,11 @@ public class DSRecordSerializerTest {
 	
 	@Test
 	public void shouldGenerateDigestField() throws Exception {
-        String escapedDigest = "escapedDigest";
 		dsRecordSerializer = spy(dsRecordSerializer);
-        when(dsRecordSerializer.escapeSpecialCharacters(digest)).thenReturn(escapedDigest);
-		
+
 		dsRecordSerializer.serializeRDataFields(mockDSRecord, mockJsonGenerator,
 				mockSerializerProvider);
 		
-		verify(mockJsonGenerator).writeStringField("digest", escapedDigest);
+		verify(mockJsonGenerator).writeStringField("digest", digest);
 	}	
 }
