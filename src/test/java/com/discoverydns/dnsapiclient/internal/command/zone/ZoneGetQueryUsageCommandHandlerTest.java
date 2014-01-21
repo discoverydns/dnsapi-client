@@ -65,10 +65,12 @@ public class ZoneGetQueryUsageCommandHandlerTest {
         LocalDateTime searchStartDate = LocalDateTime.now();
         LocalDateTime searchEndDate = LocalDateTime.now();
         ZoneQueryUsageGranularity searchGranularity = ZoneQueryUsageGranularity.daily;
+        Boolean searchGroupUsage = true;
         when(mockZoneGetQueryUsageCommand.getId()).thenReturn(id);
         when(mockZoneGetQueryUsageCommand.getSearchStartDate()).thenReturn(searchStartDate);
         when(mockZoneGetQueryUsageCommand.getSearchEndDate()).thenReturn(searchEndDate);
         when(mockZoneGetQueryUsageCommand.getSearchGranularity()).thenReturn(searchGranularity);
+        when(mockZoneGetQueryUsageCommand.isSearchGroupUsage()).thenReturn(searchGroupUsage);
         WebTarget resultingWebTarget = mock(WebTarget.class);
         when(mockZoneGetQueryUsageTarget.resolveTemplate("zoneId", id))
                 .thenReturn(resultingWebTarget);
@@ -78,6 +80,8 @@ public class ZoneGetQueryUsageCommandHandlerTest {
                 .thenReturn(resultingWebTarget);
         when(resultingWebTarget.queryParam("searchGranularity", searchGranularity))
                 .thenReturn(resultingWebTarget);
+        when(resultingWebTarget.queryParam("searchGroupUsage", searchGroupUsage))
+                .thenReturn(resultingWebTarget);
 
         assertEquals(resultingWebTarget,
                 zoneGetQueryUsageCommandHandler.getWebTarget(
@@ -86,6 +90,7 @@ public class ZoneGetQueryUsageCommandHandlerTest {
         verify(resultingWebTarget).queryParam("searchStartDate", searchStartDate);
         verify(resultingWebTarget).queryParam("searchEndDate", searchEndDate);
         verify(resultingWebTarget).queryParam("searchGranularity", searchGranularity);
+        verify(resultingWebTarget).queryParam("searchGroupUsage", searchGroupUsage);
     }
 
     @Test
@@ -109,10 +114,12 @@ public class ZoneGetQueryUsageCommandHandlerTest {
         String id = "id";
         LocalDateTime searchEndDate = LocalDateTime.now();
         ZoneQueryUsageGranularity searchGranularity = ZoneQueryUsageGranularity.daily;
+        Boolean searchGroupUsage = true;
         when(mockZoneGetQueryUsageCommand.getId()).thenReturn(id);
         when(mockZoneGetQueryUsageCommand.getSearchStartDate()).thenReturn(null);
         when(mockZoneGetQueryUsageCommand.getSearchEndDate()).thenReturn(searchEndDate);
         when(mockZoneGetQueryUsageCommand.getSearchGranularity()).thenReturn(searchGranularity);
+        when(mockZoneGetQueryUsageCommand.isSearchGroupUsage()).thenReturn(searchGroupUsage);
         WebTarget resultingWebTarget = mock(WebTarget.class);
         when(mockZoneGetQueryUsageTarget.resolveTemplate("zoneId", id))
                 .thenReturn(resultingWebTarget);
@@ -121,6 +128,8 @@ public class ZoneGetQueryUsageCommandHandlerTest {
         when(resultingWebTarget.queryParam("searchEndDate", searchEndDate))
                 .thenReturn(resultingWebTarget);
         when(resultingWebTarget.queryParam("searchGranularity", searchGranularity))
+                .thenReturn(resultingWebTarget);
+        when(resultingWebTarget.queryParam("searchGroupUsage", searchGroupUsage))
                 .thenReturn(resultingWebTarget);
 
         thrown.expect(new BaseExceptionMatcher(DNSAPIClientException.class,
@@ -136,10 +145,12 @@ public class ZoneGetQueryUsageCommandHandlerTest {
         String id = "id";
         LocalDateTime searchStartDate = LocalDateTime.now();
         ZoneQueryUsageGranularity searchGranularity = ZoneQueryUsageGranularity.daily;
+        Boolean searchGroupUsage = true;
         when(mockZoneGetQueryUsageCommand.getId()).thenReturn(id);
         when(mockZoneGetQueryUsageCommand.getSearchStartDate()).thenReturn(searchStartDate);
         when(mockZoneGetQueryUsageCommand.getSearchEndDate()).thenReturn(null);
         when(mockZoneGetQueryUsageCommand.getSearchGranularity()).thenReturn(searchGranularity);
+        when(mockZoneGetQueryUsageCommand.isSearchGroupUsage()).thenReturn(searchGroupUsage);
         WebTarget resultingWebTarget = mock(WebTarget.class);
         when(mockZoneGetQueryUsageTarget.resolveTemplate("zoneId", id))
                 .thenReturn(resultingWebTarget);
@@ -148,6 +159,8 @@ public class ZoneGetQueryUsageCommandHandlerTest {
         when(resultingWebTarget.queryParam("searchEndDate", (LocalDateTime) null))
                 .thenReturn(resultingWebTarget);
         when(resultingWebTarget.queryParam("searchGranularity", searchGranularity))
+                .thenReturn(resultingWebTarget);
+        when(resultingWebTarget.queryParam("searchGroupUsage", searchGroupUsage))
                 .thenReturn(resultingWebTarget);
 
         thrown.expect(new BaseExceptionMatcher(DNSAPIClientException.class,
@@ -163,10 +176,12 @@ public class ZoneGetQueryUsageCommandHandlerTest {
         String id = "id";
         LocalDateTime searchStartDate = LocalDateTime.now();
         LocalDateTime searchEndDate = LocalDateTime.now();
+        Boolean searchGroupUsage = true;
         when(mockZoneGetQueryUsageCommand.getId()).thenReturn(id);
         when(mockZoneGetQueryUsageCommand.getSearchStartDate()).thenReturn(searchStartDate);
         when(mockZoneGetQueryUsageCommand.getSearchEndDate()).thenReturn(searchEndDate);
         when(mockZoneGetQueryUsageCommand.getSearchGranularity()).thenReturn(null);
+        when(mockZoneGetQueryUsageCommand.isSearchGroupUsage()).thenReturn(searchGroupUsage);
         WebTarget resultingWebTarget = mock(WebTarget.class);
         when(mockZoneGetQueryUsageTarget.resolveTemplate("zoneId", id))
                 .thenReturn(resultingWebTarget);
@@ -176,10 +191,43 @@ public class ZoneGetQueryUsageCommandHandlerTest {
                 .thenReturn(resultingWebTarget);
         when(resultingWebTarget.queryParam("searchGranularity", (ZoneQueryUsageGranularity) null))
                 .thenReturn(resultingWebTarget);
+        when(resultingWebTarget.queryParam("searchGroupUsage", searchGroupUsage))
+                .thenReturn(resultingWebTarget);
 
         thrown.expect(new BaseExceptionMatcher(DNSAPIClientException.class,
                 DNSAPIClientException.DNSAPIClientExceptionCode.requiredParameterMissing,
                 new Object[]{"searchGranularity"}, (Throwable) null));
+
+        zoneGetQueryUsageCommandHandler.getWebTarget(
+                mockZoneGetQueryUsageCommand, mockCommandMetaData);
+    }
+
+    @Test
+    public void shouldThrowWrapExceptionIfSearchGroupUsageIsMissing() {
+        String id = "id";
+        LocalDateTime searchStartDate = LocalDateTime.now();
+        LocalDateTime searchEndDate = LocalDateTime.now();
+        ZoneQueryUsageGranularity searchGranularity = ZoneQueryUsageGranularity.daily;
+        when(mockZoneGetQueryUsageCommand.getId()).thenReturn(id);
+        when(mockZoneGetQueryUsageCommand.getSearchStartDate()).thenReturn(searchStartDate);
+        when(mockZoneGetQueryUsageCommand.getSearchEndDate()).thenReturn(searchEndDate);
+        when(mockZoneGetQueryUsageCommand.getSearchGranularity()).thenReturn(searchGranularity);
+        when(mockZoneGetQueryUsageCommand.isSearchGroupUsage()).thenReturn(null);
+        WebTarget resultingWebTarget = mock(WebTarget.class);
+        when(mockZoneGetQueryUsageTarget.resolveTemplate("zoneId", id))
+                .thenReturn(resultingWebTarget);
+        when(resultingWebTarget.queryParam("searchStartDate", searchStartDate))
+                .thenReturn(resultingWebTarget);
+        when(resultingWebTarget.queryParam("searchEndDate", searchEndDate))
+                .thenReturn(resultingWebTarget);
+        when(resultingWebTarget.queryParam("searchGranularity", searchGranularity))
+                .thenReturn(resultingWebTarget);
+        when(resultingWebTarget.queryParam("searchGroupUsage", (Boolean) null))
+                .thenReturn(resultingWebTarget);
+
+        thrown.expect(new BaseExceptionMatcher(DNSAPIClientException.class,
+                DNSAPIClientException.DNSAPIClientExceptionCode.requiredParameterMissing,
+                new Object[]{"searchGroupUsage"}, (Throwable) null));
 
         zoneGetQueryUsageCommandHandler.getWebTarget(
                 mockZoneGetQueryUsageCommand, mockCommandMetaData);
