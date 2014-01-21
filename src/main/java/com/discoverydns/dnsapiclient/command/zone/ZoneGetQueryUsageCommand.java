@@ -15,7 +15,7 @@ import org.joda.time.LocalDateTime;
  * @author Arnaud Dumont
  */
 @JsonRootName("ZoneGetQueryUsageCommand")
-@JsonPropertyOrder({ "id", "searchStartDate", "searchEndDate", "searchGranularity" })
+@JsonPropertyOrder({ "id", "searchStartDate", "searchEndDate", "searchGranularity", "searchGroupUsage" })
 public class ZoneGetQueryUsageCommand {
 
 	@JsonProperty("id")
@@ -30,6 +30,9 @@ public class ZoneGetQueryUsageCommand {
     @JsonProperty("searchGranularity")
     private ZoneQueryUsageGranularity searchGranularity;
 
+    @JsonProperty("searchGroupUsage")
+    private Boolean searchGroupUsage;
+
     /**
      * Builder used to build the desired command.
      */
@@ -38,6 +41,7 @@ public class ZoneGetQueryUsageCommand {
         private LocalDateTime searchStartDate;
         private LocalDateTime searchEndDate;
         private ZoneQueryUsageGranularity searchGranularity;
+        private Boolean searchGroupUsage;
 
         /**
          * Sets the UUID of the Zone to retrieve the query usage for.
@@ -80,6 +84,16 @@ public class ZoneGetQueryUsageCommand {
         }
 
         /**
+         * Sets if the search should be done for the zone, or the zone's whole group.
+         * @param searchGroupUsage True to search for the zone's whole group, false to search only for the single zone.
+         * @return The {@link Builder}
+         */
+        public Builder withSearchGroupUsage(Boolean searchGroupUsage) {
+            this.searchGroupUsage = searchGroupUsage;
+            return this;
+        }
+
+        /**
          * Builds the {@link ZoneGetQueryUsageCommand} from the parameters set on the {@link Builder}.
          * @return The built {@link ZoneGetQueryUsageCommand}
          */
@@ -89,6 +103,7 @@ public class ZoneGetQueryUsageCommand {
 			zoneGetCommand.searchStartDate = searchStartDate;
 			zoneGetCommand.searchEndDate = searchEndDate;
 			zoneGetCommand.searchGranularity = searchGranularity;
+			zoneGetCommand.searchGroupUsage = searchGroupUsage;
 			return zoneGetCommand;
 		}
 	}
@@ -122,5 +137,12 @@ public class ZoneGetQueryUsageCommand {
      */
     public ZoneQueryUsageGranularity getSearchGranularity() {
         return searchGranularity;
+    }
+
+    /**
+     * @return True if the search is for the zone's whole group, false if the search is only for the single zone.
+     */
+    public Boolean isSearchGroupUsage() {
+        return searchGroupUsage;
     }
 }

@@ -34,6 +34,7 @@ public class ZoneGetQueryUsageCommandHandler extends
         webTarget = setParameterOnWebTarget("searchStartDate", command.getSearchStartDate(), webTarget);
         webTarget = setParameterOnWebTarget("searchEndDate", command.getSearchEndDate(), webTarget);
         webTarget = setParameterOnWebTarget("searchGranularity", command.getSearchGranularity(), webTarget);
+        webTarget = setParameterOnWebTarget("searchGroupUsage", command.isSearchGroupUsage(), webTarget);
         return webTarget;
     }
 

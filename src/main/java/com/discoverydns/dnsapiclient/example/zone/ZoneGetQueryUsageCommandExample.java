@@ -44,6 +44,7 @@ public class ZoneGetQueryUsageCommandExample {
                         .withSearchStartDate(LocalDateTime.now())
                         .withSearchEndDate(LocalDateTime.now())
                         .withSearchGranularity(ZoneQueryUsageGranularity.hourly)
+                        .withSearchGroupUsage(false)
                         .build();
 
         //Send command to server and receive response
