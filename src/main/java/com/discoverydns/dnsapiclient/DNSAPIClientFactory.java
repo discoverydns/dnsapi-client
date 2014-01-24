@@ -60,6 +60,7 @@ import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateResourceRec
 import com.discoverydns.dnsapiclient.internal.commandinterceptors.ClientTransactionIdCommandInterceptor;
 import com.discoverydns.dnsapiclient.internal.commandinterceptors.StopwatchCommandInterceptor;
 import com.discoverydns.dnsapiclient.internal.commandinterceptors.TransactionLogCommandInterceptor;
+import com.discoverydns.dnsapiclient.internal.json.ErrorHandlingJacksonJsonProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
@@ -197,7 +198,7 @@ public class DNSAPIClientFactory {
 
 	private Client createClient(final DNSAPIClientConfig config,
 			final ObjectMapper mapper) throws Exception {
-		final JacksonJsonProvider jacksonJsonProvider = new JacksonJsonProvider(
+		final JacksonJsonProvider jacksonJsonProvider = new ErrorHandlingJacksonJsonProvider(
 				mapper);
 		final SSLContext sslContext = sslContextFactory
 				.createSSLContext(config);

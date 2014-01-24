@@ -13,7 +13,11 @@ public class DNSAPIClientJsonGenerationException extends DNSAPIClientException {
         /**
          * Thrown when an unexpected error occurs during JSON serialization
          */
-		unexpectedGenerationError
+        unexpectedGenerationError,
+        /**
+         * Thrown when an unexpected error occurs during JSON serialization of resource records
+         */
+        unexpectedResourceRecordGenerationError
 	}
 
 	public DNSAPIClientJsonGenerationException(
