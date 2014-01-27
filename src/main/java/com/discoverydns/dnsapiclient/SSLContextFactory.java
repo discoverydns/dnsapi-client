@@ -12,12 +12,11 @@ import javax.net.ssl.SSLContext;
 public interface SSLContextFactory {
 
     /**
-     * Creates an {@link SSLContext} instance, from the given {@link DNSAPIClientConfig} configuration.
-     * @param config The configuration to be used to create the instance.
+     * Creates an {@link SSLContext} instance.
      * @return The created {@link SSLContext} instance.
      * @throws Exception In case of any error.
      */
-	public SSLContext createSSLContext(final DNSAPIClientConfig config)
+	public SSLContext createSSLContext()
 			throws Exception;
 
 }
