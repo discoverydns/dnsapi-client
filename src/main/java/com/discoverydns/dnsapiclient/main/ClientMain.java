@@ -3,13 +3,15 @@ package com.discoverydns.dnsapiclient.main;
 import ch.qos.logback.classic.Level;
 
 import com.discoverydns.dnsapiclient.DNSAPIClient;
-import com.discoverydns.dnsapiclient.DNSAPIClientConfig;
 import com.discoverydns.dnsapiclient.DNSAPIClientFactory;
 import com.discoverydns.dnsapiclient.Response;
 import com.discoverydns.dnsapiclient.command.user.UserGetCommand;
 import com.discoverydns.dnsapiclient.command.user.UserGetResponse;
 import com.discoverydns.dnsapiclient.command.user.UserListCommand;
 import com.discoverydns.dnsapiclient.command.user.UserListResponse;
+import com.discoverydns.dnsapiclient.config.DefaultSSLContextFactoryConfig;
+import com.discoverydns.dnsapiclient.config.DefaultTransactionLogHandlerConfig;
+import com.discoverydns.dnsapiclient.config.DNSAPIClientConfig;
 
 public class ClientMain {
 
@@ -21,13 +23,12 @@ public class ClientMain {
 		root.setLevel(Level.TRACE);
 
 		final DNSAPIClientConfig config = new MyConfig();
+        final DefaultSSLContextFactoryConfig sslConfig = new MyDefaultSSLContextFactoryConfig();
+        final DefaultTransactionLogHandlerConfig logConfig = new MyDefaultTransactionLogHandlerConfig();
 		final DNSAPIClientFactory dnsapiClientFactory = new DNSAPIClientFactory();
-		// dnsapiClientFactory.setClientTransactionIdStrategy();
-		// dnsapiClientFactory.setObjectMapperFactory();
-		// dnsapiClientFactory.setSSLContextFactory();
 		DNSAPIClient client = null;
 		try {
-			client = dnsapiClientFactory.createInstance(config);
+			client = dnsapiClientFactory.createInstanceFromDefaultProviders(config, sslConfig, logConfig);
 		} catch (final Exception e) {
 			e.printStackTrace();
 			System.exit(1);

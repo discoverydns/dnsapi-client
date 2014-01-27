@@ -6,10 +6,14 @@ import java.util.Collection;
 import ch.qos.logback.classic.Level;
 
 import com.discoverydns.dnsapiclient.DNSAPIClient;
-import com.discoverydns.dnsapiclient.DNSAPIClientConfig;
+import com.discoverydns.dnsapiclient.config.DNSAPIClientConfig;
 import com.discoverydns.dnsapiclient.DNSAPIClientFactory;
+import com.discoverydns.dnsapiclient.config.DefaultSSLContextFactoryConfig;
+import com.discoverydns.dnsapiclient.config.DefaultTransactionLogHandlerConfig;
 import com.discoverydns.dnsapiclient.internal.util.Stopwatch;
 import com.discoverydns.dnsapiclient.main.MyConfig;
+import com.discoverydns.dnsapiclient.main.MyDefaultSSLContextFactoryConfig;
+import com.discoverydns.dnsapiclient.main.MyDefaultTransactionLogHandlerConfig;
 
 public class DNSAPITestClientMain {
 
@@ -20,20 +24,19 @@ public class DNSAPITestClientMain {
 		root.setLevel(Level.OFF);
 		// root.setLevel(Level.INFO);
 
-		final DNSAPIClientConfig config = new MyConfig();
-		final DNSAPIClientFactory dnsapiClientFactory = new DNSAPIClientFactory();
-		// dnsapiClientFactory.setClientTransactionIdStrategy();
-		// dnsapiClientFactory.setObjectMapperFactory();
-		// dnsapiClientFactory.setSSLContextFactory();
-		DNSAPIClient client = null;
-		try {
-			client = dnsapiClientFactory.createInstance(config);
-		} catch (final Exception e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+        final DNSAPIClientConfig config = new MyConfig();
+        final DefaultSSLContextFactoryConfig sslConfig = new MyDefaultSSLContextFactoryConfig();
+        final DefaultTransactionLogHandlerConfig logConfig = new MyDefaultTransactionLogHandlerConfig();
+        final DNSAPIClientFactory dnsapiClientFactory = new DNSAPIClientFactory();
+        DNSAPIClient client = null;
+        try {
+            client = dnsapiClientFactory.createInstanceFromDefaultProviders(config, sslConfig, logConfig);
+        } catch (final Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
 
-		final Collection<Thread> threadList = new ArrayList<Thread>();
+		final Collection<Thread> threadList = new ArrayList<>();
 		final long count = 1000;
 		final long threads = 1;
 		for (long x = 0; x < threads; x++) {
