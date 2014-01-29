@@ -1,4 +1,4 @@
-package com.discoverydns.dnsapitest.performance;
+package com.discoverydns.dnsapiclient.performance;
 
 public class DNSAPITestClientBlocker {
 

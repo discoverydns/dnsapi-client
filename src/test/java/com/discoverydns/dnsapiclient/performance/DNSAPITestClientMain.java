@@ -1,4 +1,4 @@
-package com.discoverydns.dnsapitest.performance;
+package com.discoverydns.dnsapiclient.performance;
 
 import java.util.ArrayList;
 import java.util.Collection;
