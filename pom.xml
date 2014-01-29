@@ -13,12 +13,11 @@
 	<description>DNS API Client Project</description>
 
 	<licenses>
-		<license>
-			<name>ARI Opensource License</name>
-			<url>http://www.ausregistry.com/TBD.html</url>
-			<distribution>manual</distribution>
-			<comments>This software is opensource</comments>
-		</license>
+        <license>
+            <name>GNU Lesser General Public License, LGPL v3</name>
+            <url>http://www.gnu.org/licenses/lgpl.txt</url>
+			<distribution>repo</distribution>
+        </license>
 	</licenses>
 
 	<organization>
