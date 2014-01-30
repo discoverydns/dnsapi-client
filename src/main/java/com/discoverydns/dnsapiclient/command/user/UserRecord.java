@@ -4,6 +4,7 @@ import java.net.URI;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import org.joda.time.LocalDateTime;
 
 /**
  * List record representing a User, from the list returned in the {@link UserListResponse}.
@@ -27,15 +28,15 @@ public class UserRecord {
 	@JsonProperty("status")
 	private String status;
 	@JsonProperty("createDate")
-	private String createDate;
+	private LocalDateTime createDate;
 	@JsonProperty("lastUpdateDate")
-	private String lastUpdateDate;
+	private LocalDateTime lastUpdateDate;
 
 	public UserRecord() {
 	}
 
 	public UserRecord(URI uri, String id, String name, String username,
-			String status, String createDate, String lastUpdateDate) {
+			String status, LocalDateTime createDate, LocalDateTime lastUpdateDate) {
 		this.uri = uri;
 		this.id = id;
 		this.name = name;
@@ -83,14 +84,14 @@ public class UserRecord {
     /**
      * @return The creation date of the User
      */
-	public String getCreateDate() {
+	public LocalDateTime getCreateDate() {
 		return createDate;
 	}
 
     /**
      * @return The last update date of the User
      */
-	public String getLastUpdateDate() {
+	public LocalDateTime getLastUpdateDate() {
 		return lastUpdateDate;
 	}
 

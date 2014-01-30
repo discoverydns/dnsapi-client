@@ -4,6 +4,7 @@ import java.net.URI;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import org.joda.time.LocalDateTime;
 
 /**
  * List record representing a Plan, from the list returned in the {@link PlanListResponse}.
@@ -25,15 +26,15 @@ public class PlanRecord {
 	@JsonProperty("status")
 	private String status;
 	@JsonProperty("createDate")
-	private String createDate;
+	private LocalDateTime createDate;
 	@JsonProperty("lastUpdateDate")
-	private String lastUpdateDate;
+	private LocalDateTime lastUpdateDate;
 
 	public PlanRecord() {
 	}
 
 	public PlanRecord(URI uri, String id, String name, String status,
-			String createDate, String lastUpdateDate) {
+                      LocalDateTime createDate, LocalDateTime lastUpdateDate) {
 		this.uri = uri;
 		this.id = id;
 		this.name = name;
@@ -73,14 +74,14 @@ public class PlanRecord {
     /**
      * @return The creation date of the Plan
      */
-	public String getCreateDate() {
+	public LocalDateTime getCreateDate() {
 		return createDate;
 	}
 
     /**
      * @return The last update date of the Plan
      */
-	public String getLastUpdateDate() {
+	public LocalDateTime getLastUpdateDate() {
 		return lastUpdateDate;
 	}
 
