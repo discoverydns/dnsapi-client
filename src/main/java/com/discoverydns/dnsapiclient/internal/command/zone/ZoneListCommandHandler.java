@@ -35,6 +35,10 @@ public class ZoneListCommandHandler extends
 			resolvedZoneListTarget = resolvedZoneListTarget.queryParam(
 					"searchName", command.getSearchName());
 		}
+		if (command.getSearchNameSearchType() != null) {
+			resolvedZoneListTarget = resolvedZoneListTarget.queryParam(
+					"searchNameSearchType", command.getSearchNameSearchType());
+		}
 		if (command.getSearchNameServerInterfaceSetId() != null) {
 			resolvedZoneListTarget = resolvedZoneListTarget.queryParam(
 					"searchNameServerInterfaceSetId",
