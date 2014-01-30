@@ -1,5 +1,7 @@
 package com.discoverydns.dnsapiclient.command.zone;
 
+import org.joda.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
@@ -15,14 +17,14 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @JsonRootName("zoneQueryUsageRecord")
 public class ZoneQueryUsageRecord {
     @JsonProperty("timestamp")
-    private String timestamp;
+    private LocalDateTime timestamp;
     @JsonProperty("count")
     private Long count;
 
     public ZoneQueryUsageRecord() {
     }
 
-    public ZoneQueryUsageRecord(String timestamp, Long count) {
+    public ZoneQueryUsageRecord(LocalDateTime timestamp, Long count) {
         this.timestamp = timestamp;
         this.count = count;
     }
@@ -30,7 +32,7 @@ public class ZoneQueryUsageRecord {
     /**
      * @return The start date of the time period the query usage record is for
      */
-    public String getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
