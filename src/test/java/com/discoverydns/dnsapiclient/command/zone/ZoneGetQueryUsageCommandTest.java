@@ -14,6 +14,7 @@ public class ZoneGetQueryUsageCommandTest {
         LocalDateTime searchStartDate = LocalDateTime.now();
         LocalDateTime searchEndDate = LocalDateTime.now();
         ZoneQueryUsageGranularity searchGranularity = ZoneQueryUsageGranularity.daily;
+        Boolean searchGroupUsage = true;
 
         ZoneGetQueryUsageCommand command =
                 new ZoneGetQueryUsageCommand.Builder()
@@ -21,12 +22,14 @@ public class ZoneGetQueryUsageCommandTest {
                     .withSearchStartDate(searchStartDate)
                     .withSearchEndDate(searchEndDate)
                     .withSearchGranularity(searchGranularity)
+                    .withSearchGroupUsage(searchGroupUsage)
                     .build();
 
         assertEquals(id, command.getId());
         assertEquals(searchStartDate, command.getSearchStartDate());
         assertEquals(searchEndDate, command.getSearchEndDate());
         assertEquals(searchGranularity, command.getSearchGranularity());
+        assertEquals(searchGroupUsage, command.isSearchGroupUsage());
     }
 
     @Test
