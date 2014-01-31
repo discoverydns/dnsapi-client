@@ -4,6 +4,7 @@ import java.net.URI;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import org.joda.time.LocalDateTime;
 
 /**
  * List record representing a Zone, from the list returned in the {@link ZoneListResponse}.
@@ -27,16 +28,16 @@ public class ZoneRecord {
 	@JsonProperty("dnssecSigned")
 	private Boolean dnssecSigned;
 	@JsonProperty("createDate")
-	private String createDate;
+	private LocalDateTime createDate;
 	@JsonProperty("lastUpdateDate")
-	private String lastUpdateDate;
+	private LocalDateTime lastUpdateDate;
 
 	public ZoneRecord() {
 	}
 
 	public ZoneRecord(URI uri, String id, String name,
 			Boolean brandedNameServers, Boolean dnssecSigned,
-			String createDate, String lastUpdateDate) {
+            LocalDateTime createDate, LocalDateTime lastUpdateDate) {
 		this.uri = uri;
 		this.id = id;
 		this.name = name;
@@ -84,14 +85,14 @@ public class ZoneRecord {
     /**
      * @return The creation date of the Zone
      */
-	public String getCreateDate() {
+	public LocalDateTime getCreateDate() {
 		return createDate;
 	}
 
     /**
      * @return The last update date of the Zone
      */
-	public String getLastUpdateDate() {
+	public LocalDateTime getLastUpdateDate() {
 		return lastUpdateDate;
 	}
 

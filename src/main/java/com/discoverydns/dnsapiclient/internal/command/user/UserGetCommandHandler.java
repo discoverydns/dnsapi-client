@@ -32,13 +32,13 @@ public class UserGetCommandHandler extends
 	@Override
 	public WebTarget getWebTarget(final UserGetCommand command,
 			final CommandMetaData commandMetaData) {
-		WebTarget webTarget = null;
+		WebTarget webTarget;
 		try {
 			webTarget = userGetTarget.resolveTemplate("userId",
 					command.getIdOrUsername());
 		} catch (Throwable t) {
 			throw new DNSAPIClientException(
-					DNSAPIClientExceptionCode.requiredParameterMissing, t, "id");
+					DNSAPIClientExceptionCode.requiredParameterMissing, t, "idOrUsername");
 		}
 		return webTarget;
 	}

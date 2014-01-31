@@ -35,13 +35,13 @@ public class NameServerInterfaceSetGetCommandHandler
 	public WebTarget getWebTarget(
 			final NameServerInterfaceSetGetCommand command,
 			final CommandMetaData commandMetaData) {
-		WebTarget webTarget = null;
+		WebTarget webTarget;
 		try {
 			webTarget = nameServerInterfaceSetGetTarget.resolveTemplate(
 					"nameServerInterfaceSetId", command.getIdOrName());
 		} catch (Throwable t) {
 			throw new DNSAPIClientException(
-					DNSAPIClientExceptionCode.requiredParameterMissing, t, "id");
+					DNSAPIClientExceptionCode.requiredParameterMissing, t, "idOrName");
 		}
 		return webTarget;
 	}

@@ -11,39 +11,41 @@ import javax.net.ssl.TrustManagerFactory;
 
 import org.eclipse.jetty.util.resource.Resource;
 
-import com.discoverydns.dnsapiclient.DNSAPIClientConfig;
+import com.discoverydns.dnsapiclient.config.DefaultSSLContextFactoryConfig;
 import com.discoverydns.dnsapiclient.SSLContextFactory;
 
 public class DefaultSSLContextFactory implements SSLContextFactory {
 
-	private static String PROTOCOL_VERSION = "TLSv1.1";
+	private static final String PROTOCOL_VERSION = "TLSv1.1";
+
+    private final DefaultSSLContextFactoryConfig sslConfig;
+
+    public DefaultSSLContextFactory(DefaultSSLContextFactoryConfig sslConfig) {
+        this.sslConfig = sslConfig;
+    }
 
 	@Override
-	public SSLContext createSSLContext(final DNSAPIClientConfig config)
+	public SSLContext createSSLContext()
 			throws Exception {
 
-		InputStream keyStoreIS = Resource.newResource(config.getKeyStorePath())
+		InputStream keyStoreIS = Resource.newResource(sslConfig.getKeyStorePath())
 				.getInputStream();
 
-		// final FileInputStream keyStoreFIS = new FileInputStream(
-		// config.getKeyStorePath());
 		final KeyStore keyStore = KeyStore
-				.getInstance(config.getKeyStoreType());
-		keyStore.load(keyStoreIS, config.getKeyStorePassword().toCharArray());
+				.getInstance(sslConfig.getKeyStoreType());
+		keyStore.load(keyStoreIS, sslConfig.getKeyStorePassword().toCharArray());
 
 		InputStream trustStoreIS = Resource.newResource(
-				config.getTrustStorePath()).getInputStream();
+                sslConfig.getTrustStorePath()).getInputStream();
 
-		// final FileInputStream trustStoreFIS = new FileInputStream(
-		// config.getTrustStorePath());
-		final KeyStore trustStore = KeyStore.getInstance(config
+		final KeyStore trustStore = KeyStore.getInstance(sslConfig
 				.getTrustStoreType());
-		trustStore.load(trustStoreIS, config.getTrustStorePassword()
+		trustStore.load(trustStoreIS, sslConfig.getTrustStorePassword()
 				.toCharArray());
 
 		final KeyManagerFactory keyManagerFactory = KeyManagerFactory
 				.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-		keyManagerFactory.init(keyStore, config.getKeyStoreKeyPassword()
+		keyManagerFactory.init(keyStore, sslConfig.getKeyStoreKeyPassword()
 				.toCharArray());
 		final KeyManager keyManagers[] = keyManagerFactory.getKeyManagers();
 

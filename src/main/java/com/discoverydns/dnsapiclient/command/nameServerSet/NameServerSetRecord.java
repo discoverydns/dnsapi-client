@@ -4,6 +4,7 @@ import java.net.URI;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import org.joda.time.LocalDateTime;
 
 /**
  * List record representing a NameServer Set, from the list returned in the {@link NameServerSetListResponse}.
@@ -24,15 +25,15 @@ public class NameServerSetRecord {
 	@JsonProperty("name")
 	private String name;
 	@JsonProperty("createDate")
-	private String createDate;
+	private LocalDateTime createDate;
 	@JsonProperty("lastUpdateDate")
-	private String lastUpdateDate;
+	private LocalDateTime lastUpdateDate;
 
 	public NameServerSetRecord() {
 	}
 
 	public NameServerSetRecord(URI uri, String id, String name,
-			String createDate, String lastUpdateDate) {
+                               LocalDateTime createDate, LocalDateTime lastUpdateDate) {
 		this.uri = uri;
 		this.id = id;
 		this.name = name;
@@ -64,14 +65,14 @@ public class NameServerSetRecord {
     /**
      * @return The creation date of the NameServer Set
      */
-	public String getCreateDate() {
+	public LocalDateTime getCreateDate() {
 		return createDate;
 	}
 
     /**
      * @return The last update date of the NameServer Set
      */
-	public String getLastUpdateDate() {
+	public LocalDateTime getLastUpdateDate() {
 		return lastUpdateDate;
 	}
 

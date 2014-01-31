@@ -15,11 +15,13 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  */
 @JsonRootName("ZoneCreateCommand")
 @JsonPropertyOrder({ "name", "planId", "group", "nameServerSetId",
-        "brandedNameServers" })
+        "dnssecSigned", "brandedNameServers" })
 public class ZoneCreateCommand {
 
 	@JsonProperty("name")
 	private String name;
+	@JsonProperty("dnssecSigned")
+	private Boolean dnssecSigned;
 	@JsonProperty("brandedNameServers")
 	private Boolean brandedNameServers;
 	@JsonProperty("planId")
@@ -34,6 +36,7 @@ public class ZoneCreateCommand {
      */
 	public static class Builder {
 		private String name;
+		private Boolean dnssecSigned;
 		private Boolean brandedNameServers;
 		private String planId;
 		private String group;
@@ -48,6 +51,16 @@ public class ZoneCreateCommand {
 			this.name = name;
 			return this;
 		}
+
+        /**
+         * Sets if the Zone to create will be DNSSEC signed.
+         * @param dnssecSigned true if the Zone to create should be DNSSEC signed, false otherwise
+         * @return The {@link Builder}
+         */
+        public Builder withDnssecSigned(final Boolean dnssecSigned) {
+            this.dnssecSigned = dnssecSigned;
+            return this;
+        }
 
         /**
          * Sets if the Zone to create uses branded nameServers.
@@ -96,6 +109,7 @@ public class ZoneCreateCommand {
 		public ZoneCreateCommand build() {
 			final ZoneCreateCommand zoneCreateCommand = new ZoneCreateCommand();
 			zoneCreateCommand.name = name;
+			zoneCreateCommand.dnssecSigned = dnssecSigned;
 			zoneCreateCommand.brandedNameServers = brandedNameServers;
 			zoneCreateCommand.planId = planId;
 			zoneCreateCommand.group = group;
@@ -115,6 +129,13 @@ public class ZoneCreateCommand {
 	public String getName() {
 		return name;
 	}
+
+    /**
+     * @return true if the Zone to create should be DNSSEC signed, false otherwise
+     */
+    public Boolean isDnssecSigned() {
+        return dnssecSigned;
+    }
 
     /**
      * @return true if the Zone to create should use branded nameServers, false otherwise, set on the command.

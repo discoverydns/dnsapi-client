@@ -6,19 +6,18 @@
 
 	<groupId>com.discoverydns.dnsapi</groupId>
 	<artifactId>dnsapi-client</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>DNSAPI Client</name>
 	<description>DNS API Client Project</description>
 
 	<licenses>
-		<license>
-			<name>ARI Opensource License</name>
-			<url>http://www.ausregistry.com/TBD.html</url>
-			<distribution>manual</distribution>
-			<comments>This software is opensource</comments>
-		</license>
+        <license>
+            <name>GNU Lesser General Public License, LGPL v3</name>
+            <url>http://www.gnu.org/licenses/lgpl.txt</url>
+			<distribution>repo</distribution>
+        </license>
 	</licenses>
 
 	<organization>
@@ -31,13 +30,13 @@
 		<java.version>1.7</java.version>
 
 		<!-- Dependencies -->
-		<ddns-dnsjava.version>1.0.4-r1685</ddns-dnsjava.version>
+		<ddns-dnsjava.version>1.0.5-r1685</ddns-dnsjava.version>
 		<jackson.version>2.2.2</jackson.version>
 		<guava.version>14.0.1</guava.version>
 		<jodatime.version>2.2</jodatime.version>
 		<logback.version>1.0.13</logback.version>
 		<slf4j.version>1.7.2</slf4j.version>
-		<jetty.version>9.0.5.v20130815</jetty.version>
+		<jetty.version>9.0.7.v20131107</jetty.version>
 		<jersey.version>2.2</jersey.version>
 
 		<!-- Test dependencies -->
@@ -118,14 +117,14 @@
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 						</manifest>
 					</archive>
-					<executions>
-						<execution>
-							<goals>
-								<goal>test-jar</goal>
-							</goals>
-						</execution>
-					</executions>
 				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

@@ -46,7 +46,7 @@ public class ZoneCreateCommandHandler extends
 	public InvocationBuildInvoker getInvocationBuildInvoker(
 			final ZoneCreateCommand command,
 			final CommandMetaData commandMetaData) {
-		return new WithEntityInvocationBuildInvoker<ZoneCreateView>(
+		return new WithEntityInvocationBuildInvoker<>(
 				new ZoneCreateView(command));
 	}
 

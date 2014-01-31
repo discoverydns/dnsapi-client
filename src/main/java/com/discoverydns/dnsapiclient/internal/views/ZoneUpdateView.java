@@ -13,6 +13,11 @@ public class ZoneUpdateView {
 		this.zoneUpdateCommand = zoneUpdateCommand;
 	}
 
+    @JsonProperty("dnssecSigned")
+    public Boolean getDnssecSigned() {
+        return zoneUpdateCommand.isDnssecSigned();
+    }
+
 	@JsonProperty("brandedNameServers")
 	public Boolean getBrandedNameServers() {
 		return zoneUpdateCommand.isBrandedNameServers();

@@ -69,27 +69,22 @@ public class BasicCommandFuture implements CommandFuture {
 
 	@Override
 	public void removeListener(final CommandFutureListener commandFutureListener) {
-		return;
 	}
 
 	@Override
 	public void await() throws InterruptedException {
-		return;
 	}
 
 	@Override
 	public void await(final long timeout) throws InterruptedException {
-		return;
 	}
 
 	@Override
 	public void awaitUninterruptibly() {
-		return;
 	}
 
 	@Override
 	public void awaitUninterruptibly(final long timeout) {
-		return;
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package com.discoverydns.dnsapiclient.internal.util;
 public class Stopwatch {
 	private enum stopwatchState {
 		STOPPED, RUNNING
-	};
+	}
 
 	private stopwatchState state = stopwatchState.STOPPED;
 	private long startTime = 0;

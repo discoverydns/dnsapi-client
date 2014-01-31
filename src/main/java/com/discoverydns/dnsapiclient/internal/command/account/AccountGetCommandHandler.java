@@ -32,13 +32,13 @@ public class AccountGetCommandHandler extends
 	@Override
 	public WebTarget getWebTarget(final AccountGetCommand command,
 			final CommandMetaData commandMetaData) {
-		WebTarget webTarget = null;
+		WebTarget webTarget;
 		try {
 			webTarget = accountGetTarget.resolveTemplate("accountId",
 					command.getIdOrIdentifier());
 		} catch (Throwable t) {
 			throw new DNSAPIClientException(
-					DNSAPIClientExceptionCode.requiredParameterMissing, t, "id");
+					DNSAPIClientExceptionCode.requiredParameterMissing, t, "idOrIdentifier");
 		}
 		return webTarget;
 	}

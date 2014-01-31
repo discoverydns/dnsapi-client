@@ -11,8 +11,8 @@ import ch.qos.logback.core.rolling.RollingFileAppender;
 import ch.qos.logback.core.rolling.TimeBasedRollingPolicy;
 
 import com.discoverydns.dnsapiclient.DNSAPIClientCommandMetaData;
-import com.discoverydns.dnsapiclient.DNSAPIClientConfig;
 import com.discoverydns.dnsapiclient.TransactionLogHandler;
+import com.discoverydns.dnsapiclient.config.DefaultTransactionLogHandlerConfig;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.commandinterceptors.StopwatchCommandInterceptor;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,7 +29,7 @@ public class DefaultTransactionLogHandler implements TransactionLogHandler {
 
 	private final ObjectWriter writer;
 
-	public DefaultTransactionLogHandler(final DNSAPIClientConfig config,
+	public DefaultTransactionLogHandler(final DefaultTransactionLogHandlerConfig logConfig,
 			final ObjectMapper mapper) {
 		final LoggerContext loggerContext = (LoggerContext) LoggerFactory
 				.getILoggerFactory();
@@ -38,16 +38,17 @@ public class DefaultTransactionLogHandler implements TransactionLogHandler {
 				.setPattern("%date{\"yyyy-MM-dd HH:mm:ss.SSS z\",UTC} %msg%n");
 		patternLayoutEncoder.setContext(loggerContext);
 		patternLayoutEncoder.start();
-		final RollingFileAppender<ILoggingEvent> fileAppender = new RollingFileAppender<ILoggingEvent>();
+
+		final RollingFileAppender<ILoggingEvent> fileAppender = new RollingFileAppender<>();
 		fileAppender.setContext(loggerContext);
 		fileAppender.setAppend(true);
 		fileAppender.setEncoder(patternLayoutEncoder);
 		fileAppender.setPrudent(false);
-		fileAppender.setFile(config.getTransactionLogFile());
-		final TimeBasedRollingPolicy<ILoggingEvent> rollingPolicy = new TimeBasedRollingPolicy<ILoggingEvent>();
-		rollingPolicy.setFileNamePattern(config
+		fileAppender.setFile(logConfig.getTransactionLogFile());
+		final TimeBasedRollingPolicy<ILoggingEvent> rollingPolicy = new TimeBasedRollingPolicy<>();
+		rollingPolicy.setFileNamePattern(logConfig
 				.getTransactionLogFileRotationPattern());
-		rollingPolicy.setMaxHistory(config.getMaxTransactionLogFileVersions());
+		rollingPolicy.setMaxHistory(logConfig.getMaxTransactionLogFileVersions());
 		rollingPolicy.setCleanHistoryOnStart(false);
 		rollingPolicy.setContext(loggerContext);
 		rollingPolicy.setParent(fileAppender);
@@ -55,11 +56,13 @@ public class DefaultTransactionLogHandler implements TransactionLogHandler {
 		fileAppender.setRollingPolicy(rollingPolicy);
 		fileAppender.setTriggeringPolicy(rollingPolicy);
 		fileAppender.start();
+
 		final ch.qos.logback.classic.Logger logBackLogger = (ch.qos.logback.classic.Logger) transactionLog;
 		logBackLogger.detachAndStopAllAppenders();
 		logBackLogger.addAppender(fileAppender);
 		logBackLogger.setLevel(Level.INFO);
 		logBackLogger.setAdditive(false);
+
 		this.writer = mapper.writer().without(
 				SerializationFeature.INDENT_OUTPUT);
 	}
