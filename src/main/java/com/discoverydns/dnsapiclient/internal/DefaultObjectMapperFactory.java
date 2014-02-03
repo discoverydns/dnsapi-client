@@ -117,10 +117,10 @@ public class DefaultObjectMapperFactory implements ObjectMapperFactory {
 	}
 
 	private SimpleModule zoneResourceRecordModule() {
-        return new ZoneResourceRecordModule("ZoneResourceRecordModule");
+		return new ZoneResourceRecordModule("ZoneResourceRecordModule");
 	}
 
-    private SimpleModule nameServerInterfaceModule() {
+	private SimpleModule nameServerInterfaceModule() {
 		SimpleModule module = new SimpleModule("NameServerInterfaceModule");
 
 		module.addDeserializer(NameServerInterface.class,
@@ -132,11 +132,11 @@ public class DefaultObjectMapperFactory implements ObjectMapperFactory {
 		return module;
 	}
 
-    private NameServerInterfaceDeserializer nameServerInterfaceDeserializer() {
+	private NameServerInterfaceDeserializer nameServerInterfaceDeserializer() {
 		return new NameServerInterfaceDeserializer();
 	}
 
-    private NameServerInterfaceSerializer nameServerInterfaceSerializer() {
+	private NameServerInterfaceSerializer nameServerInterfaceSerializer() {
 		return new NameServerInterfaceSerializer();
 	}
 
