@@ -18,6 +18,21 @@
 		<p>Obtain the latest dnsapi-client library here: <a href="http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.2.jar">dnsapi-client v1.0.2</a> (<a href="http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.2-sources.jar">sources</a>) | <a href="http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.2-javadoc.jar">javadoc</a>))</p>
 		<h2>Javadoc</h2>
 		<p>The online version of the javadoc can be found <a href="http://discoverydns.github.io/dnsapi-client/javadoc/index.html">here</a></p>
+		<h2>Usage</h2>
+		<p>Examples are provided in the com.discoverydns.dnsapiclient.example package. However in short you will need:<p>
+			<ul>
+				<li>To setup SLF4J logging (we use logback's native binding) for log messages</li>
+				<li>Instatiate a DNSAPIClientFactory and use it to create a client</li>
+					<ul>
+						<li>the client factory will require an implementation of the DNSAPIClientConfig interface to provide it with configuration parameters</li>
+						<li>it can be provided with an ObjectMapperFactory, SSLContextFactory &amp; TransactionLogHandler or you can use the default implementations</li>
+						<li>you can also use a custom TransactionIDStratergy if you like, or the default one will be used </li>
+						<li>if you use the default providers you will need to provide implementations of there configuration interfaces</li>
+					</ul>
+				</li>One created you can then create a client. The client is thread safe, and one client can be shared by many threads, however it can only execute one outstanding command per http connection configured</li>
+				<li> then simply follow the examples for how to create and execute each command object</li>
+			</ul>
+		<p>More information can be found in the documentation found <a href="http://discoverydns.github.io/dnsapi-client/doc/">here</a></p>
 		<h2>Contribute</h2>
 		<p>You can view the source on <a href="http://github.com/discoverydns/dnsapi-client">GitHub/DiscoveryDNS</a>. Contributions via pull requests are welcome.</p>
 	</body>
