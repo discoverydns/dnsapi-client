@@ -24,7 +24,7 @@ To build the dnsapi-client, you must have the Java Development Kit (JDK) v6.0 or
 
 #### Direct download
 
-Obtain the latest dnsapi-client here: [dnsapi-client v1.0.0](http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.0.jar) ([sources](http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.0-sources.jar) | [javadoc](http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.0-javadoc.jar))
+Obtain the latest dnsapi-client here: [dnsapi-client v1.0.2](http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.2.jar) ([sources](http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.2-sources.jar) | [javadoc](http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.2-javadoc.jar))
 
 #### Dependency Management
 
@@ -32,7 +32,7 @@ Use your build's dependency management tool to automatically download the dnsapi
 
 * groupId: `com.discoverydns.dnsapi`
 * artifactId: `dnsapi-client`
-* version: `1.0.0`
+* version: `1.0.2`
 
 For example (using Maven):
 
@@ -40,7 +40,7 @@ For example (using Maven):
        <dependency>
           <groupId>com.discoverydns.dnsapi</groupId>
           <artifactId>dnsapi-client</artifactId>
-          <version>1.0.0</version>
+          <version>1.0.2</version>
        </dependency>
     </dependencies>
 
@@ -50,4 +50,4 @@ You can view the source on [GitHub/DiscoveryDNS](http://github.com/discoverydns/
 
 ### Development documentation
 
-The javadoc is available online: [dnsapi-client javadoc](http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.0-javadoc.jar)
+The javadoc is available online: [dnsapi-client javadoc](http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.2-javadoc.jar)
