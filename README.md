@@ -6,29 +6,13 @@ This project is part of the [DiscoveryDNS](http://www.discoverydns.com) solution
 
 This project is placed under the [LGPLv3](http://www.gnu.org/licenses/lgpl.txt) license.
 
-## API Description
-
-Please consult the <a href="http://discoverydns.github.io/dnsapi-client/doc/DDNS%20-%20DiscoveryDNS%20API%20-%20v1.4.pdf">"doc/DDNS - DiscoveryDNS API - v1.4.pdf"</a> document for a full description of all possible REST requests and responses.
-
-## Usage examples
-
-Please consult the sources in the "com.discoverydns.dnsapiclient.example" package for usage examples of all possible REST requests.
-
-## Building
-
-To build the dnsapi-client, you must have the Java Development Kit (JDK) v6.0 or above, as well as Maven v2.2.1 or above installed. The project can be built with the command `mvn package`.
-
 ## Installation and Setup
 
 ### How to get the dnsapi-client
 
-#### Direct download
-
-Obtain the latest dnsapi-client here: [dnsapi-client v1.0.2](http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.2.jar) ([sources](http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.2-sources.jar) | [javadoc](http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.2-javadoc.jar))
-
 #### Dependency Management
 
-Use your build's dependency management tool to automatically download the dnsapi-client from Maven Central.
+The prefered way is to use your build's dependency management tool to automatically download the dnsapi-client and all its dependencies from Maven Central.
 
 * groupId: `com.discoverydns.dnsapi`
 * artifactId: `dnsapi-client`
@@ -44,10 +28,51 @@ For example (using Maven):
        </dependency>
     </dependencies>
 
-#### Contribute
+#### Direct download
+
+Or obtain the latest dnsapi-client here: [dnsapi-client v1.0.2](http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.2.jar) ([sources](http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.2-sources.jar) | [javadoc](http://discoverydns.github.io/dnsapi-client/repo/dnsapi-client-1.0.2-javadoc.jar)).
+
+### Building
+
+To build the dnsapi-client, you must have the Java Development Kit (JDK) v6.0 or above, as well as Maven v2.2.1 or above installed. The project can be built with the command `mvn package`.
+
+## Development documentation
+
+The javadoc is available online: [dnsapi-client javadoc](http://discoverydns.github.io/dnsapi-client/javadoc/index.html).
+
+## Usage examples
+
+Please consult the sources in the `com.discoverydns.dnsapiclient.example` package for usage examples of all possible REST requests. However, here is a small description of what needs to be done:
+* The dnsapi-client library uses a [DNSAPIClient](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/DNSAPIClient.html) to send commmands to the DNSAPI server, through a REST API over the HTTPS protocol.
+* The [DNSAPIClient](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/DNSAPIClient.html) should be obtained from a [DNSAPIClientFactory](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/DNSAPIClientFactory.html).
+* This [DNSAPIClientFactory](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/DNSAPIClientFactory.html) uses several feature providers to create the client:
+    * An implementation of the [DNSAPIClientConfig](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/config/DNSAPIClientConfig.html) interface, to configure the HTTP connection used by the client.
+    * An implementation of the [SSLContextFactory](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/SSLContextFactory.html) interface, to create a `javax.net.ssl.SSLContext` instance, to establish a secure communication between the client and the server.
+    * An implementation of the [ObjectMapperFactory](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/ObjectMapperFactory.html) interface, to create an `com.fasterxml.jackson.databind.ObjectMapper` instance, for the client to serialize and deserialize the JSON data sent to or coming from the server.
+    * An implementation of the [ClientTransactionIdStrategy](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/ClientTransactionIdStrategy.html) interface, to generate a client transaction id to be put in each transaction's meta-data.
+    * An implementation of the [TransactionLogHandler](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/TransactionLogHandler.html) interface, to log the successful and failed transactions between the client and the server.
+* To obtain the [DNSAPIClient](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/DNSAPIClient.html) from the [DNSAPIClientFactory](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/DNSAPIClientFactory.html), you need to:
+    * Setup the SLF4J logging (the client uses the logback's native binding) for log messages.
+    * Instantiate the [DNSAPIClientFactory](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/DNSAPIClientFactory.html).
+    * Then, you can either:
+        * Call its `createInstance` method, passing your custom implementation of all the features providers' interfaces described above.
+            * Call its `createInstanceFromDefaultProviders` method to use the provided default implementation of all the features providers' interfaces. You then only need to pass:
+                * An implementation of the [DNSAPIClientConfig](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/config/DNSAPIClientConfig.html) interface, to configure the HTTP connection used by the client.
+                * An implementation of the [DefaultSSLContextFactoryConfig](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/config/DefaultSSLContextFactoryConfig.html) interface, to configure the provided [DefaultSSLContextFactory](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/internal/DefaultSSLContextFactory.html), using path-accessible keystore and trustore resources.
+                * An implementation of the [DefaultTransactionLogHandlerConfig](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/config/DefaultTransactionLogHandlerConfig.html) interface, to configure the provided [DefaultTransactionLogHandler](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/internal/DefaultTransactionLogHandler.html), using path-accessible log file resources, with a rotation pattern.
+                * A [DefaultObjectMapperFactory](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/internal/DefaultObjectMapperFactory.html) will then be automatically provided, using the Jackson serializers and deserializers provided by the [ddns-dnsjava](http://discoverydns.github.io/ddns-dnsjava/) library.
+                * A [DefaultClientTransactionIdStrategy](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/internal/DefaultClientTransactionIdStrategy.html) will then be automatically provided, using random UUID strings as client transaction Ids.
+* Once the client is created, you can use it to send the commands to the server, thanks to its `process` method. The client is thread safe, and one client can be shared by many threads, however it can only execute one outstanding command per http connection configured.
+* Then simply follow the examples from the `com.discoverydns.dnsapiclient.example` package to see how to create and execute each command object.
+
+## API Description
+
+Please consult the ["doc/DDNS - DiscoveryDNS API - v1.4.pdf"](http://discoverydns.github.io/dnsapi-client/doc/DDNS%20-%20DiscoveryDNS%20API%20-%20v1.4.pdf) document for a full description of all possible REST requests and responses.
+
+## Contribute
 
 You can view the source on [GitHub/DiscoveryDNS](http://github.com/discoverydns/dnsapi-client). Contributions via pull requests are welcome.
 
-### Development documentation
+## Contact
 
-The javadoc is available online: [dnsapi-client javadoc](http://discoverydns.github.io/dnsapi-client/javadoc/index.html)
+Contact us at [support@discoverydns.com](mailto:support@discoverydns.com).
