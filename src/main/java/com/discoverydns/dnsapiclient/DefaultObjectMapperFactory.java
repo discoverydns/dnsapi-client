@@ -1,8 +1,7 @@
-package com.discoverydns.dnsapiclient.internal;
+package com.discoverydns.dnsapiclient;
 
 import org.xbill.DNS.utils.json.resourcerecords.ZoneResourceRecordModule;
 
-import com.discoverydns.dnsapiclient.ObjectMapperFactory;
 import com.discoverydns.dnsapiclient.command.nameServerInterfaceSet.NameServerInterface;
 import com.discoverydns.dnsapiclient.internal.json.nameserverinterfaceset.NameServerInterfaceDeserializer;
 import com.discoverydns.dnsapiclient.internal.json.nameserverinterfaceset.NameServerInterfaceSerializer;

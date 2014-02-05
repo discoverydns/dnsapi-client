@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * used by the created {@link DNSAPIClient} instances
  * to serialize and deserialize the JSON data sent to or coming from the DNSAPI server.
  * @author Chris Wright
- * @see com.discoverydns.dnsapiclient.internal.DefaultObjectMapperFactory
+ * @see com.discoverydns.dnsapiclient.DefaultObjectMapperFactory
  */
 public interface ObjectMapperFactory {
 
