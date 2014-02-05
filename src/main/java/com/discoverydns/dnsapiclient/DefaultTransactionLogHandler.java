@@ -1,4 +1,4 @@
-package com.discoverydns.dnsapiclient.internal;
+package com.discoverydns.dnsapiclient;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +10,6 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.rolling.RollingFileAppender;
 import ch.qos.logback.core.rolling.TimeBasedRollingPolicy;
 
-import com.discoverydns.dnsapiclient.DNSAPIClientCommandMetaData;
-import com.discoverydns.dnsapiclient.TransactionLogHandler;
 import com.discoverydns.dnsapiclient.config.DefaultTransactionLogHandlerConfig;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.commandinterceptors.StopwatchCommandInterceptor;

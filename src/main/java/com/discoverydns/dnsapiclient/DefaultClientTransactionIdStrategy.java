@@ -1,8 +1,7 @@
-package com.discoverydns.dnsapiclient.internal;
+package com.discoverydns.dnsapiclient;
 
 import java.util.UUID;
 
-import com.discoverydns.dnsapiclient.ClientTransactionIdStrategy;
 
 public class DefaultClientTransactionIdStrategy implements
 		ClientTransactionIdStrategy {
