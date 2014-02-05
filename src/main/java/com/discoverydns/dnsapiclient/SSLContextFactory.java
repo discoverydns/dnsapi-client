@@ -7,7 +7,7 @@ import javax.net.ssl.SSLContext;
  * to establish secure communications between the created {@link DNSAPIClient} instances
  * and the DNSAPI server.
  * @author Chris Wright
- * @see com.discoverydns.dnsapiclient.internal.DefaultSSLContextFactory
+ * @see com.discoverydns.dnsapiclient.DefaultSSLContextFactory
  */
 public interface SSLContextFactory {
 

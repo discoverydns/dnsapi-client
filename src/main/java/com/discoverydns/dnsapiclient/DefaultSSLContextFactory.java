@@ -1,4 +1,4 @@
-package com.discoverydns.dnsapiclient.internal;
+package com.discoverydns.dnsapiclient;
 
 import java.io.InputStream;
 import java.security.KeyStore;
@@ -11,7 +11,6 @@ import javax.net.ssl.TrustManagerFactory;
 
 import org.eclipse.jetty.util.resource.Resource;
 
-import com.discoverydns.dnsapiclient.SSLContextFactory;
 import com.discoverydns.dnsapiclient.config.DefaultSSLContextFactoryConfig;
 
 public class DefaultSSLContextFactory implements SSLContextFactory {
