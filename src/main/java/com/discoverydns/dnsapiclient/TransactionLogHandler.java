@@ -6,7 +6,7 @@ import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
  * The bean used to log the transactions between the {@link DNSAPIClient} instances
  * and the DNSAPI server.
  * @author Chris Wright
- * @see com.discoverydns.dnsapiclient.internal.DefaultTransactionLogHandler
+ * @see com.discoverydns.dnsapiclient.DefaultTransactionLogHandler
  */
 public interface TransactionLogHandler {
 

@@ -1,7 +1,7 @@
 package com.discoverydns.dnsapiclient.config;
 
 /**
- * Mandatory config bean for the {@link com.discoverydns.dnsapiclient.internal.DefaultTransactionLogHandler} class.
+ * Mandatory config bean for the {@link com.discoverydns.dnsapiclient.DefaultTransactionLogHandler} class.
  * This configuration enables to point to path-accessible log file resources, with a rotation pattern.
  * @author Arnaud Dumont
  */

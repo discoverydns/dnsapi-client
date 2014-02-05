@@ -4,7 +4,7 @@ package com.discoverydns.dnsapiclient;
  * Bean, used when a command is sent from a {@link DNSAPIClient} to the DNSAPI server,
  * to generate a client transaction id to be put in the meta-data.
  * @author Chris Wright
- * @see com.discoverydns.dnsapiclient.internal.DefaultClientTransactionIdStrategy
+ * @see com.discoverydns.dnsapiclient.DefaultClientTransactionIdStrategy
  */
 public interface ClientTransactionIdStrategy {
 

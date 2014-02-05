@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.discoverydns.dnsapiclient.DefaultClientTransactionIdStrategy;
+
 public class DefaultClientTransactionIdStrategyTest {
     private DefaultClientTransactionIdStrategy defaultClientTransactionIdStrategy;
 
