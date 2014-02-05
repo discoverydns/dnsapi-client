@@ -17,7 +17,6 @@ com.discoverydns.dnsapiclient.exception
 com.discoverydns.dnsapiclient.framework.command
 com.discoverydns.dnsapiclient.framework.impl.basic
 com.discoverydns.dnsapiclient.framework.internationalisation
-com.discoverydns.dnsapiclient.internal
 com.discoverydns.dnsapiclient.internal.command
 com.discoverydns.dnsapiclient.internal.command.account
 com.discoverydns.dnsapiclient.internal.command.nameserverinterfaceset
