@@ -16,7 +16,7 @@ The prefered way is to use your build's dependency management tool to automatica
 
 * groupId: `com.discoverydns.dnsapi`
 * artifactId: `dnsapi-client`
-* version: `1.0.2`
+* version: `1.0.3`
 
 For example (using Maven):
 
@@ -24,7 +24,7 @@ For example (using Maven):
        <dependency>
           <groupId>com.discoverydns.dnsapi</groupId>
           <artifactId>dnsapi-client</artifactId>
-          <version>1.0.2</version>
+          <version>1.0.3</version>
        </dependency>
     </dependencies>
 
