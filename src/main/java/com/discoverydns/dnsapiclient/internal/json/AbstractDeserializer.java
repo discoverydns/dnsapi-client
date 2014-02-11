@@ -56,14 +56,24 @@ public abstract class AbstractDeserializer<T> extends StdDeserializer<T> {
 
 	protected Number getNodeNumberValue(final ObjectNode recordNode,
 			final String fieldName) {
-		try {
-			return NumberFormat.getInstance(Locale.getDefault()).parse(
-					getNodeStringValue(recordNode, fieldName));
-		} catch (final ParseException e) {
-			throw new DNSAPIClientJsonMappingException(
-					DNSAPIClientJsonMappingExceptionCode.invalidFieldValue, e,
-					fieldName, getTextualBeanType(), e.getMessage());
-		}
+        JsonNode fieldNode = findFieldNode(recordNode, fieldName);
+        switch (fieldNode.getNodeType()) {
+            case NUMBER:
+                return fieldNode.numberValue();
+            case STRING:
+                try {
+                    return NumberFormat.getInstance(Locale.getDefault()).parse(
+                        fieldNode.textValue());
+                } catch (final ParseException e) {
+                    throw new DNSAPIClientJsonMappingException(
+                            DNSAPIClientJsonMappingExceptionCode.invalidFieldValue, e,
+                            fieldName, getTextualBeanType(), e.getMessage());
+                }
+            default:
+                throw new DNSAPIClientJsonMappingException(
+                        DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
+                        fieldName, getTextualBeanType(), "Field cannot be read as a number");
+        }
 	}
 
 	protected Long getNodeLongValue(final ObjectNode recordNode,
@@ -94,7 +104,6 @@ public abstract class AbstractDeserializer<T> extends StdDeserializer<T> {
 			throw new DNSAPIClientJsonMappingException(
 					DNSAPIClientJsonMappingExceptionCode.invalidFieldValue, e,
 					fieldName, getTextualBeanType(), e.getMessage());
-
 		}
 	}
 
