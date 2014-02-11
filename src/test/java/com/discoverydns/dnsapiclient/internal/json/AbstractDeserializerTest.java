@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.text.ParseException;
 
-import com.discoverydns.dnsapiclient.exception.DNSAPIClientJsonMappingException;
+import com.discoverydns.dnsapiclient.exception.DNSAPIClientJsonMappingException.DNSAPIClientJsonMappingExceptionCode;
 import com.discoverydns.dnsapiclient.test.infrastructure.DNSAPIClientJsonMappingExceptionMatcher;
 
 import org.junit.Before;
@@ -28,6 +28,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -101,7 +102,7 @@ public class AbstractDeserializerTest {
 		fakeObjectNode.put(fieldName, (JsonNode) null);
 
 		thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
-                DNSAPIClientJsonMappingException.DNSAPIClientJsonMappingExceptionCode.missingField,
+                DNSAPIClientJsonMappingExceptionCode.missingField,
 				new Object[] { textualBeanType, fieldName }));
 
 		abstractDeserializer.findFieldNode(fakeObjectNode, fieldName);
@@ -134,7 +135,7 @@ public class AbstractDeserializerTest {
 				textParseException);
 
 		thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
-                DNSAPIClientJsonMappingException.DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
+                DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
                 textParseException, new Object[] { nameFieldName, textualBeanType, rootErrorMessage }));
 
 		abstractDeserializer.getNodeNameValue(fakeObjectNode,
@@ -153,10 +154,12 @@ public class AbstractDeserializerTest {
 	}
 
 	@Test
-	public void shouldThrowExceptionForInvalidNumberValueWhenGettingNumberValue()
+	public void shouldThrowExceptionForInvalidNumberValueWhenGettingTextualNodeNumberValue()
 			throws Exception {
+        when(mockJsonNode.getNodeType()).thenReturn(JsonNodeType.STRING);
+
 		thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
-                DNSAPIClientJsonMappingException.DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
+                DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
                 ParseException.class,
                 new Object[] { fieldName, textualBeanType, "Unparseable number: \"" + nodeTextValue + "\"" }));
 
@@ -164,15 +167,37 @@ public class AbstractDeserializerTest {
 	}
 
 	@Test
-	public void shouldCreateAndReturnNumberValueIfFieldIsFoundWhenGettingNumberValue()
+	public void shouldCreateAndReturnNumberValueIfFieldIsFoundWhenGettingTextualNodeNumberValue()
 			throws Exception {
 		Long numberValue = 3L;
 		when(mockJsonNode.textValue()).thenReturn(numberValue.toString());
+        when(mockJsonNode.getNodeType()).thenReturn(JsonNodeType.STRING);
 
 		assertEquals(numberValue.longValue(), abstractDeserializer.getNodeNumberValue(
 				fakeObjectNode, fieldName).longValue());
 	}
-	
+
+    @Test
+    public void shouldReturnNumberValueForFoundNumberNode() {
+        Long numberValue = 3L;
+        when(mockJsonNode.numberValue()).thenReturn(numberValue);
+        when(mockJsonNode.getNodeType()).thenReturn(JsonNodeType.NUMBER);
+
+        assertEquals(numberValue.longValue(), abstractDeserializer.getNodeNumberValue(
+                fakeObjectNode, fieldName).longValue());
+    }
+
+    @Test
+    public void shouldThrowExceptionForOtherTypesWhenGettingNodeNumberValue() {
+        when(mockJsonNode.getNodeType()).thenReturn(JsonNodeType.BINARY);
+
+        thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
+                DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
+                new Object[] { fieldName, textualBeanType, "Field cannot be read as a number" }));
+
+        abstractDeserializer.getNodeNumberValue(fakeObjectNode, fieldName);
+    }
+
 	@Test
 	public void shouldCreateAndReturnLongValueIfFieldIsFoundWhenGettingLongValue()
 			throws Exception {
@@ -226,7 +251,7 @@ public class AbstractDeserializerTest {
 				.thenThrow(illegalArgumentException);
 
 		thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
-                DNSAPIClientJsonMappingException.DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
+                DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
                 illegalArgumentException,
 				new Object[] { fieldAddress, textualBeanType, rootErrorMessage }));
 
