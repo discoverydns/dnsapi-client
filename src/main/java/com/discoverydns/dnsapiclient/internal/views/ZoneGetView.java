@@ -26,6 +26,12 @@ public class ZoneGetView {
 	private Boolean brandedNameServers;
 	@JsonProperty("dnssecSigned")
 	private Boolean dnssecSigned;
+	@JsonProperty("zskRollOverState")
+    private String zskRollOverState;
+	@JsonProperty("zskNextActionDate")
+    private LocalDateTime zskNextActionDate;
+	@JsonProperty("zskRRSIGRegenerationDate")
+    private LocalDateTime zskRRSIGRegenerationDate;
 	@JsonProperty("sponsorAccountId")
 	private String sponsorAccountId;
 	@JsonProperty("sponsorAccountIdentifier")
@@ -97,6 +103,18 @@ public class ZoneGetView {
 
 	public Boolean getDNSSECSigned() {
 		return dnssecSigned;
+	}
+
+    public String getZskRollOverState() {
+        return zskRollOverState;
+    }
+
+    public LocalDateTime getZskNextActionDate() {
+        return zskNextActionDate;
+    }
+
+    public LocalDateTime getZskRRSIGRegenerationDate() {
+        return zskRRSIGRegenerationDate;
 	}
 
 	public String getSponsorAccountId() {

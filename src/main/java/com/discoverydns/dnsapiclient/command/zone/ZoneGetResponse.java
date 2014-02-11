@@ -24,8 +24,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  */
 @JsonRootName("ZoneGetResponse")
 @JsonPropertyOrder({ "@uri", "id", "version", "name", "serial",
-		"brandedNameServers", "dnssecSigned", "nameServerSetId",
-		"nameServerSetName", "nameServerInterfaceSetId",
+		"brandedNameServers", "dnssecSigned", "zskRollOverState",
+        "zskNextActionDate", "zskRRSIGRegenerationDate",
+        "nameServerSetId", "nameServerSetName", "nameServerInterfaceSetId",
 		"nameServerInterfaceSetName", "planId", "planName", "group",
 		"sponsorAccountId", "sponsorAccountIdentifier", "createDate",
 		"createAccountId", "createAccountIdentifier", "createUserId",
@@ -104,6 +105,36 @@ public class ZoneGetResponse {
 	@JsonProperty("dnssecSigned")
 	public Boolean getDNSSECSigned() {
 		return zoneGetView.getDNSSECSigned();
+	}
+
+    /**
+     * This returns the state of the zone in the ZSK roll over process.
+     * This process enables the zone's Zone Signing Keys to be replaced after a certain period of time, for security purpose.
+     * The value returned can either be:
+     *     - "scheduled": the process has not started yet, but will start on "zskNextActionDate".
+     *     - "stage1": the new ZSK has been generated and added to the zone, but will only be used on "zskNextActionDate".
+     *     - "stage2": the new ZSK is now in use and the old one is not anymore. The latter will be definitely deleted on "zskNextActionDate".
+     * @return The state of the zone in the ZSK roll over process ("scheduled", "stage1" or "stage2"), if the zone is DNSSEC-signed (null otherwise)
+     */
+    @JsonProperty("zskRollOverState")
+    public String getZskRollOverState() {
+        return zoneGetView.getZskRollOverState();
+    }
+
+    /**
+     * @return The next date of an action for the zone in the ZSK roll over process, if the zone is DNSSEC-signed (null otherwise)
+     */
+    @JsonProperty("zskNextActionDate")
+    public LocalDateTime getZskNextActionDate() {
+        return zoneGetView.getZskNextActionDate();
+    }
+
+    /**
+     * @return The next date of the zone's RRSIG records re-generation, if the zone is DNSSEC-signed (null otherwise)
+     */
+    @JsonProperty("zskRRSIGRegenerationDate")
+    public LocalDateTime getZskRRSIGRegenerationDate() {
+        return zoneGetView.getZskRRSIGRegenerationDate();
 	}
 
     /**
