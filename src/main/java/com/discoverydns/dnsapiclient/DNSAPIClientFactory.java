@@ -32,6 +32,7 @@ import com.discoverydns.dnsapiclient.command.zone.ZoneCreateCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneDeleteCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneGetCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneGetQueryUsageCommand;
+import com.discoverydns.dnsapiclient.command.zone.ZoneGetZoneFileCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneListCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateResourceRecordsCommand;
@@ -53,6 +54,7 @@ import com.discoverydns.dnsapiclient.internal.command.zone.ZoneCreateCommandHand
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneDeleteCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetQueryUsageCommandHandler;
+import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetZoneFileCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneListCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateResourceRecordsCommandHandler;
@@ -259,6 +261,8 @@ public class DNSAPIClientFactory {
                 new ZoneDeleteCommandHandler(baseWebTarget));
         commandProcessor.subscribe(ZoneGetQueryUsageCommand.class,
                 new ZoneGetQueryUsageCommandHandler(baseWebTarget));
+        commandProcessor.subscribe(ZoneGetZoneFileCommand.class,
+        		new ZoneGetZoneFileCommandHandler(baseWebTarget));
 
         // Interceptors
         commandProcessor
