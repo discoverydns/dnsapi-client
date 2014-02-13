@@ -9,6 +9,7 @@ import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInv
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
 import com.discoverydns.dnsapiclient.internal.views.ZoneGetQueryUsageView;
 import com.discoverydns.dnsapiclient.test.infrastructure.BaseExceptionMatcher;
+import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Rule;
@@ -62,8 +63,8 @@ public class ZoneGetQueryUsageCommandHandlerTest {
     @Test
     public void shouldGetTargetRelativeToProvidedCommand() {
         String id = "id";
-        LocalDateTime searchStartDate = LocalDateTime.now();
-        LocalDateTime searchEndDate = LocalDateTime.now();
+        LocalDateTime searchStartDate = LocalDateTime.now(DateTimeZone.UTC);
+        LocalDateTime searchEndDate = LocalDateTime.now(DateTimeZone.UTC);
         ZoneQueryUsageGranularity searchGranularity = ZoneQueryUsageGranularity.daily;
         Boolean searchGroupUsage = true;
         when(mockZoneGetQueryUsageCommand.getId()).thenReturn(id);
@@ -112,7 +113,7 @@ public class ZoneGetQueryUsageCommandHandlerTest {
     @Test
     public void shouldThrowWrapExceptionIfSearchStartDateIsMissing() {
         String id = "id";
-        LocalDateTime searchEndDate = LocalDateTime.now();
+        LocalDateTime searchEndDate = LocalDateTime.now(DateTimeZone.UTC);
         ZoneQueryUsageGranularity searchGranularity = ZoneQueryUsageGranularity.daily;
         Boolean searchGroupUsage = true;
         when(mockZoneGetQueryUsageCommand.getId()).thenReturn(id);
@@ -143,7 +144,7 @@ public class ZoneGetQueryUsageCommandHandlerTest {
     @Test
     public void shouldThrowWrapExceptionIfSearchEndDateIsMissing() {
         String id = "id";
-        LocalDateTime searchStartDate = LocalDateTime.now();
+        LocalDateTime searchStartDate = LocalDateTime.now(DateTimeZone.UTC);
         ZoneQueryUsageGranularity searchGranularity = ZoneQueryUsageGranularity.daily;
         Boolean searchGroupUsage = true;
         when(mockZoneGetQueryUsageCommand.getId()).thenReturn(id);
@@ -174,8 +175,8 @@ public class ZoneGetQueryUsageCommandHandlerTest {
     @Test
     public void shouldThrowWrapExceptionIfSearchGranularityIsMissing() {
         String id = "id";
-        LocalDateTime searchStartDate = LocalDateTime.now();
-        LocalDateTime searchEndDate = LocalDateTime.now();
+        LocalDateTime searchStartDate = LocalDateTime.now(DateTimeZone.UTC);
+        LocalDateTime searchEndDate = LocalDateTime.now(DateTimeZone.UTC);
         Boolean searchGroupUsage = true;
         when(mockZoneGetQueryUsageCommand.getId()).thenReturn(id);
         when(mockZoneGetQueryUsageCommand.getSearchStartDate()).thenReturn(searchStartDate);
@@ -205,8 +206,8 @@ public class ZoneGetQueryUsageCommandHandlerTest {
     @Test
     public void shouldThrowWrapExceptionIfSearchGroupUsageIsMissing() {
         String id = "id";
-        LocalDateTime searchStartDate = LocalDateTime.now();
-        LocalDateTime searchEndDate = LocalDateTime.now();
+        LocalDateTime searchStartDate = LocalDateTime.now(DateTimeZone.UTC);
+        LocalDateTime searchEndDate = LocalDateTime.now(DateTimeZone.UTC);
         ZoneQueryUsageGranularity searchGranularity = ZoneQueryUsageGranularity.daily;
         when(mockZoneGetQueryUsageCommand.getId()).thenReturn(id);
         when(mockZoneGetQueryUsageCommand.getSearchStartDate()).thenReturn(searchStartDate);

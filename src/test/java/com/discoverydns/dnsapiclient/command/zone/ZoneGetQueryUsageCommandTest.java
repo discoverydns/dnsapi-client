@@ -1,5 +1,6 @@
 package com.discoverydns.dnsapiclient.command.zone;
 
+import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
@@ -11,8 +12,8 @@ public class ZoneGetQueryUsageCommandTest {
     @Test
     public void shouldBuildExpectedCommand() {
         String id = "id";
-        LocalDateTime searchStartDate = LocalDateTime.now();
-        LocalDateTime searchEndDate = LocalDateTime.now();
+        LocalDateTime searchStartDate = LocalDateTime.now(DateTimeZone.UTC);
+        LocalDateTime searchEndDate = LocalDateTime.now(DateTimeZone.UTC);
         ZoneQueryUsageGranularity searchGranularity = ZoneQueryUsageGranularity.daily;
         Boolean searchGroupUsage = true;
 

@@ -14,6 +14,7 @@ import com.discoverydns.dnsapiclient.config.DNSAPIClientConfig;
 import com.discoverydns.dnsapiclient.example.ExampleDNSAPIClientConfig;
 import com.discoverydns.dnsapiclient.example.ExampleDefaultSSLContextFactoryConfig;
 import com.discoverydns.dnsapiclient.example.ExampleDefaultTransactionLogHandlerConfig;
+import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -47,8 +48,8 @@ public class ZoneGetQueryUsageCommandExample {
         final ZoneGetQueryUsageCommand command =
                 new ZoneGetQueryUsageCommand.Builder()
                         .withId("<my-zone-id>")
-                        .withSearchStartDate(LocalDateTime.now())
-                        .withSearchEndDate(LocalDateTime.now())
+                        .withSearchStartDate(LocalDateTime.now(DateTimeZone.UTC))
+                        .withSearchEndDate(LocalDateTime.now(DateTimeZone.UTC))
                         .withSearchGranularity(ZoneQueryUsageGranularity.hourly)
                         .withSearchGroupUsage(false)
                         .build();
