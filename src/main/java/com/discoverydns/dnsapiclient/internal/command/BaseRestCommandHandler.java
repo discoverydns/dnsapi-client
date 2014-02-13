@@ -25,12 +25,14 @@ public abstract class BaseRestCommandHandler<T, R> implements CommandHandler<T> 
 	private final Method method;
 	private final int expectedStatusCode;
 	private final MediaType expectedMediaType;
+	private final String expectedMediaTypeString;
 
 	public BaseRestCommandHandler(final Method method,
 			final int expectedResponseCode) {
 		this.method = method;
 		this.expectedStatusCode = expectedResponseCode;
 		this.expectedMediaType = null;
+		this.expectedMediaTypeString = null;
 	}
 
 	public BaseRestCommandHandler(final Method method,
@@ -38,6 +40,15 @@ public abstract class BaseRestCommandHandler<T, R> implements CommandHandler<T> 
 		this.method = method;
 		this.expectedStatusCode = expectedResponseCode;
 		this.expectedMediaType = expectedMediaType;
+		this.expectedMediaTypeString = null;
+	}
+
+	public BaseRestCommandHandler(final Method method,
+			final int expectedResponseCode, final String expectedMediaTypeString) {
+		this.method = method;
+		this.expectedStatusCode = expectedResponseCode;
+		this.expectedMediaType = null;
+		this.expectedMediaTypeString = expectedMediaTypeString;
 	}
 
 	public abstract WebTarget getWebTarget(T command,
@@ -74,6 +85,8 @@ public abstract class BaseRestCommandHandler<T, R> implements CommandHandler<T> 
 				DNSAPIClientHeaders.CLIENT_TRANSACTION_ID, clientTransactionId);
 		if (expectedMediaType != null) {
 			invocationBuilder = invocationBuilder.accept(expectedMediaType);
+		} else if (expectedMediaTypeString != null) {
+			invocationBuilder = invocationBuilder.accept(expectedMediaTypeString);
 		}
 		final Invocation invocation = getInvocationBuildInvoker(command,
 				commandMetaData).invoke(invocationBuilder, method);
