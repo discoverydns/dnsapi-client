@@ -24,7 +24,7 @@ public class ResponseTest {
 
     @Before
     public void setup() {
-        response = new Response<>(mockCommandMetaData, mockResponseObject);
+        response = new Response<AccountGetResponse>(mockCommandMetaData, mockResponseObject);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class ResponseTest {
 
     @Test
     public void shouldReturnNullValuesIfCommandMetaDataIsNull() {
-        response = new Response<>(null, mockResponseObject);
+        response = new Response<AccountGetResponse>(null, mockResponseObject);
 
         assertEquals(mockResponseObject, response.getResponseObject());
         assertNull(response.getServerTransactionId());

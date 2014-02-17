@@ -49,7 +49,7 @@ public class DNSAPIClient {
 
 		T commandResponse = (T) blockingCommandExecutor.process(command,
 				commandMetaData);
-		return new Response<>(commandMetaData, commandResponse);
+		return new Response<T>(commandMetaData, commandResponse);
 	}
 
     /**

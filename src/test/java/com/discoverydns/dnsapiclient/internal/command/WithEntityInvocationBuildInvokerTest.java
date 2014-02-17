@@ -28,7 +28,7 @@ public class WithEntityInvocationBuildInvokerTest {
 
     @Before
     public void setup() throws Throwable {
-        withEntityInvocationBuildInvoker = new WithEntityInvocationBuildInvoker<>(mockZoneCreateView);
+        withEntityInvocationBuildInvoker = new WithEntityInvocationBuildInvoker<ZoneCreateView>(mockZoneCreateView);
     }
 
     @Test

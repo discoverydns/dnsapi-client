@@ -15,7 +15,7 @@ public class InternationalisedException extends RuntimeException {
 	public InternationalisedException(final String propertyName,
 			final Throwable cause, final Object... objects) {
 		super(internationalisedMessages.getMessage(propertyName,
-				Locale.ENGLISH.toLanguageTag(), objects), cause);
+				Locale.ENGLISH, objects), cause);
 		this.propertyName = propertyName;
 		this.objects = objects;
 	}
@@ -23,18 +23,13 @@ public class InternationalisedException extends RuntimeException {
 	public InternationalisedException(final String propertyName,
 			final Object... objects) {
 		super(internationalisedMessages.getMessage(propertyName,
-				Locale.ENGLISH.toLanguageTag(), objects));
+				Locale.ENGLISH, objects));
 		this.propertyName = propertyName;
 		this.objects = objects;
 	}
 
 	public String getProperty() {
 		return propertyName;
-	}
-
-	public String getInternationalisedMessage(final String languageTag) {
-		return internationalisedMessages.getMessage(propertyName, languageTag,
-				objects);
 	}
 
 	public Object[] getObjects() {

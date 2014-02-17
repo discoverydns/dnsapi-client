@@ -13,7 +13,7 @@ public class MyConfig implements DNSAPIClientConfig {
 
 	@Override
 	public int getTimeout() {
-		return 100_000;
+		return 100000;
 	}
 
 	@Override
