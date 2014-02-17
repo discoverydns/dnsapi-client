@@ -13,12 +13,12 @@ public class MyConfig implements DNSAPIClientConfig {
 
 	@Override
 	public int getTimeout() {
-		return 100_000;
+		return 100000;
 	}
 
 	@Override
 	public URI getBaseUri() {
-		return URI.create("https://dnsapi.discoverydns.com:18443/");
+		return URI.create("https://127.0.0.1:28443/");
 	}
 
 }

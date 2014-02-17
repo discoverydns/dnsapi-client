@@ -36,7 +36,7 @@ public class ZoneUpdateResourceRecordsCommand {
 	public static class Builder {
 		public String id;
 		private Long version;
-		public Set<Record> records = new HashSet<>();
+		public Set<Record> records = new HashSet<Record>();
 
         /**
          * Sets the UUID of the Zone to update.

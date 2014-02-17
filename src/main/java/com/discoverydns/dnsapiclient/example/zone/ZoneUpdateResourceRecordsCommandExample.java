@@ -1,7 +1,6 @@
 package com.discoverydns.dnsapiclient.example.zone;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import ch.qos.logback.classic.Level;
 import com.discoverydns.dnsapiclient.DNSAPIClient;
@@ -20,7 +19,6 @@ import org.xbill.DNS.ARecord;
 import org.xbill.DNS.DClass;
 import org.xbill.DNS.Name;
 import org.xbill.DNS.Record;
-import org.xbill.DNS.TextParseException;
 
 /**
  * Example of sending an ZoneUpdateResourceRecordsCommand and receiving an ZoneUpdateResourceRecordsResponse
@@ -60,7 +58,7 @@ public class ZoneUpdateResourceRecordsCommandExample {
                                     (Record) new ARecord(Name.fromString("myzone.com."), DClass.IN, 3600,
                                             InetAddress.getByName("1.2.3.4"))))
                     .build();
-        } catch (TextParseException | UnknownHostException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
         }

@@ -13,12 +13,10 @@ public final class InternationalisedMessages {
 	}
 
 	public String getMessage(final String propertyName,
-			final String languageTag, final Object... objects) {
-		final Locale locale = Locale.forLanguageTag(languageTag);
+			final Locale locale, final Object... objects) {
 		final ResourceBundle resourceBundle = ResourceBundle.getBundle(
 				resourceName, locale);
 		return MessageFormat.format(resourceBundle.getString(propertyName),
 				objects);
 	}
-
 }
