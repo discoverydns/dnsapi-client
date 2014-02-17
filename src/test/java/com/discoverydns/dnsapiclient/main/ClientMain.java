@@ -43,7 +43,7 @@ public class ClientMain {
 		final UserListResponse userListResponse = null;
 		UserGetResponse userGetResponse = null;
 
-		for (int x = 1; x < 100000000; x++) {
+		for (int x = 1; x < 2; x++) {
 			try {
 				Response<UserGetResponse> response = client
 						.process(userGetCommand);

@@ -18,7 +18,7 @@ public class MyConfig implements DNSAPIClientConfig {
 
 	@Override
 	public URI getBaseUri() {
-		return URI.create("https://dnsapi.discoverydns.com:18443/");
+		return URI.create("https://127.0.0.1:28443/");
 	}
 
 }

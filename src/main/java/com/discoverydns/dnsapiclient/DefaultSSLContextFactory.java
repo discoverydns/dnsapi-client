@@ -9,9 +9,8 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
-import org.eclipse.jetty.util.resource.Resource;
-
 import com.discoverydns.dnsapiclient.config.DefaultSSLContextFactoryConfig;
+import com.discoverydns.dnsapiclient.internal.util.ResourceURLBuilder;
 
 public class DefaultSSLContextFactory implements SSLContextFactory {
 
@@ -26,8 +25,8 @@ public class DefaultSSLContextFactory implements SSLContextFactory {
 	@Override
 	public SSLContext createSSLContext() throws Exception {
 
-		InputStream keyStoreIS = Resource.newResource(
-				sslConfig.getKeyStorePath()).getInputStream();
+		InputStream keyStoreIS = ResourceURLBuilder.buildResourceURL(
+				sslConfig.getKeyStorePath()).openStream();
 
 		final KeyStore keyStore = KeyStore.getInstance(sslConfig
 				.getKeyStoreType());
@@ -41,8 +40,9 @@ public class DefaultSSLContextFactory implements SSLContextFactory {
 
 		TrustManager trustManagers[] = null;
 		if (sslConfig.getTrustStorePath() != null) {
-			InputStream trustStoreIS = Resource.newResource(
-					sslConfig.getTrustStorePath()).getInputStream();
+
+			InputStream trustStoreIS = ResourceURLBuilder.buildResourceURL(
+					sslConfig.getTrustStorePath()).openStream();
 
 			final KeyStore trustStore = KeyStore.getInstance(sslConfig
 					.getTrustStoreType());
@@ -51,8 +51,8 @@ public class DefaultSSLContextFactory implements SSLContextFactory {
 
 			final TrustManagerFactory trustManagerFactory = TrustManagerFactory
 					.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-			 trustManagerFactory.init(trustStore);
-//			trustManagerFactory.init((KeyStore) null);
+			trustManagerFactory.init(trustStore);
+			// trustManagerFactory.init((KeyStore) null);
 			trustManagers = trustManagerFactory.getTrustManagers();
 		}
 
