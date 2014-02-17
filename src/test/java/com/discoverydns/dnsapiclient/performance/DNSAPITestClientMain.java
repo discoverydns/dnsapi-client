@@ -36,7 +36,7 @@ public class DNSAPITestClientMain {
             System.exit(1);
         }
 
-		final Collection<Thread> threadList = new ArrayList<>();
+		final Collection<Thread> threadList = new ArrayList<Thread>();
 		final long count = 1000;
 		final long threads = 1;
 		for (long x = 0; x < threads; x++) {

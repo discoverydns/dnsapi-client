@@ -16,7 +16,7 @@ public class DNSAPIClientCommandMetaData implements CommandMetaData {
 	final public static String CLIENT_TRANSACTION_ID = "clientTransactionId";
 
 	final private static int EXPECTED_META_DATA_COUNT = 10;
-	final private Map<String, Object> metaData = new HashMap<>(
+	final private Map<String, Object> metaData = new HashMap<String, Object>(
 			EXPECTED_META_DATA_COUNT);
 
 	@Override

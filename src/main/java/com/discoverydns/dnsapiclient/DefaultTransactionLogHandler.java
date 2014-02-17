@@ -37,13 +37,13 @@ public class DefaultTransactionLogHandler implements TransactionLogHandler {
 		patternLayoutEncoder.setContext(loggerContext);
 		patternLayoutEncoder.start();
 
-		final RollingFileAppender<ILoggingEvent> fileAppender = new RollingFileAppender<>();
+		final RollingFileAppender<ILoggingEvent> fileAppender = new RollingFileAppender<ILoggingEvent>();
 		fileAppender.setContext(loggerContext);
 		fileAppender.setAppend(true);
 		fileAppender.setEncoder(patternLayoutEncoder);
 		fileAppender.setPrudent(false);
 		fileAppender.setFile(logConfig.getTransactionLogFile());
-		final TimeBasedRollingPolicy<ILoggingEvent> rollingPolicy = new TimeBasedRollingPolicy<>();
+		final TimeBasedRollingPolicy<ILoggingEvent> rollingPolicy = new TimeBasedRollingPolicy<ILoggingEvent>();
 		rollingPolicy.setFileNamePattern(logConfig
 				.getTransactionLogFileRotationPattern());
 		rollingPolicy.setMaxHistory(logConfig.getMaxTransactionLogFileVersions());

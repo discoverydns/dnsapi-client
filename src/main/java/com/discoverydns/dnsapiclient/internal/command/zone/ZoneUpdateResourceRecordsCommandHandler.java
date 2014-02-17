@@ -59,7 +59,7 @@ public class ZoneUpdateResourceRecordsCommandHandler
 	public InvocationBuildInvoker getInvocationBuildInvoker(
 			final ZoneUpdateResourceRecordsCommand command,
 			final CommandMetaData commandMetaData) {
-		return new WithEntityInvocationBuildInvoker<>(
+		return new WithEntityInvocationBuildInvoker<ZoneUpdateResourceRecordsView>(
 				new ZoneUpdateResourceRecordsView(command));
 	}
 

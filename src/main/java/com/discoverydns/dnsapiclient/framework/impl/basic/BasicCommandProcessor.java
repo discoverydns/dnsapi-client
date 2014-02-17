@@ -16,8 +16,8 @@ import com.discoverydns.dnsapiclient.framework.command.CommandProcessor;
 
 public class BasicCommandProcessor implements CommandProcessor {
 
-	private final ConcurrentMap<Class<?>, CommandHandler<?>> commandHandlers = new ConcurrentHashMap<>();
-	private final List<CommandInterceptor> commandInterceptors = new CopyOnWriteArrayList<>();
+	private final ConcurrentMap<Class<?>, CommandHandler<?>> commandHandlers = new ConcurrentHashMap<Class<?>, CommandHandler<?>>();
+	private final List<CommandInterceptor> commandInterceptors = new CopyOnWriteArrayList<CommandInterceptor>();
 
 	public BasicCommandProcessor() {
 	}
