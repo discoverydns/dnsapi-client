@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  * @author Chris Wright
  */
 @JsonRootName("ZoneListCommand")
-@JsonPropertyOrder({ "searchName", "searchGroup",
+@JsonPropertyOrder({ "searchName", "searchNameSearchType","searchGroup",
 		"searchNameServerInterfaceSetId", "searchNameServerSetId",
 		"searchBrandedNameServers", "searchDNSSECSigned" })
 public class ZoneListCommand {
