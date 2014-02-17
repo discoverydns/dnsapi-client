@@ -51,8 +51,6 @@
 		<jodatime.version>2.2</jodatime.version>
 		<logback.version>1.0.13</logback.version>
 		<slf4j.version>1.7.2</slf4j.version>
-		<!--<jetty.version>8.1.14.v20131031</jetty.version>-->
-		<!--		<jetty.version>9.0.7.v20131107</jetty.version>-->
 		<jersey.version>2.2</jersey.version>
 
 		<!-- Test dependencies -->
@@ -270,12 +268,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- Jetty Util -->
-		<!--<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-util</artifactId>
-			<version>${jetty.version}</version>
-		</dependency>-->
 		<!-- Misc. Utils -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
