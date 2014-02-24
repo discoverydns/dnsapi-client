@@ -1,10 +1,12 @@
 package com.discoverydns.dnsapiclient.internal.json;
 
 import java.net.InetAddress;
+import java.net.URI;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
+import org.joda.time.LocalDateTime;
 import org.xbill.DNS.Name;
 import org.xbill.DNS.TextParseException;
 
@@ -110,6 +112,28 @@ public abstract class AbstractDeserializer<T> extends StdDeserializer<T> {
 	public InetAddress getAddressFromString(final String address) {
 		return InetAddresses.forString(address);
 	}
+
+    public LocalDateTime getNodeLocalDateTimeValue(final ObjectNode recordNode,
+                                                   final String fieldName) {
+        try {
+            return LocalDateTime.parse(getNodeStringValue(recordNode, fieldName));
+        } catch (final Throwable e) {
+            throw new DNSAPIClientJsonMappingException(
+                    DNSAPIClientJsonMappingExceptionCode.invalidFieldValue, e,
+                    fieldName, getTextualBeanType(), e.getMessage());
+        }
+    }
+
+    public URI getNodeURIValue(final ObjectNode recordNode,
+                               final String fieldName) {
+        try {
+            return new URI(getNodeStringValue(recordNode, fieldName));
+        } catch (final Throwable e) {
+            throw new DNSAPIClientJsonMappingException(
+                    DNSAPIClientJsonMappingExceptionCode.invalidFieldValue, e,
+                    fieldName, getTextualBeanType(), e.getMessage());
+        }
+    }
 
 	protected abstract String getTextualBeanType();
 }

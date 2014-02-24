@@ -8,11 +8,15 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 
 import com.discoverydns.dnsapiclient.exception.DNSAPIClientJsonMappingException.DNSAPIClientJsonMappingExceptionCode;
 import com.discoverydns.dnsapiclient.test.infrastructure.DNSAPIClientJsonMappingExceptionMatcher;
 
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,6 +47,10 @@ public class AbstractDeserializerTest {
 	private JsonNode mockNameJsonNode;
 	@Mock
 	private JsonNode mockAddressJsonNode;
+    @Mock
+    private JsonNode mockLocalDateTimeJsonNode;
+    @Mock
+    private JsonNode mockURIJsonNode;
 	@Mock
 	private JsonObject mockJsonObject;
 	@Mock
@@ -66,9 +74,14 @@ public class AbstractDeserializerTest {
 	private String fieldAddress = "address";
 	private String address = "1.2.3.4";
 	private String textualBeanType = "textualBeanType";
+    private String fieldLocalDateTime = "localDateTime";
+    private LocalDateTime localDateTime = LocalDateTime.now(DateTimeZone.UTC);
+    private String fieldURI = "uri";
+    private URI uri;
 	
 	@Before
 	public void setup() throws Throwable {
+        uri = new URI("example.com");
 		fakeObjectNode = new ObjectNode(mockJsonNodeFactory);
 		
 		when(mockJsonNode.textValue()).thenReturn(nodeTextValue);
@@ -79,6 +92,12 @@ public class AbstractDeserializerTest {
 		
 		fakeObjectNode.put(fieldAddress, mockAddressJsonNode);
 		when(mockAddressJsonNode.textValue()).thenReturn(address);
+
+        fakeObjectNode.put(fieldLocalDateTime, mockLocalDateTimeJsonNode);
+        when(mockLocalDateTimeJsonNode.textValue()).thenReturn(localDateTime.toString());
+
+        fakeObjectNode.put(fieldURI, mockURIJsonNode);
+        when(mockURIJsonNode.textValue()).thenReturn(uri.toString());
 		
 		abstractDeserializer =
 				new AbstractDeserializer<AbstractDeserializerTest.JsonObject>(AbstractDeserializerTest.JsonObject.class) {
@@ -268,4 +287,45 @@ public class AbstractDeserializerTest {
 		assertEquals(mockInetAddress,
 				abstractDeserializer.getNodeAddressValue(fakeObjectNode, fieldAddress));
 	}
+
+    @Test
+    public void shouldThrowExceptionForInvalidLocalDateTimeWhenGettingLocalDateTimeValue()
+            throws Exception {
+        when(mockLocalDateTimeJsonNode.textValue()).thenReturn("invalidDateTime");
+
+        thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
+                DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
+                IllegalArgumentException.class,
+                new Object[] { fieldLocalDateTime, textualBeanType, "Invalid format: \"invalidDateTime\"" }));
+
+        abstractDeserializer.getNodeLocalDateTimeValue(fakeObjectNode, fieldLocalDateTime);
+    }
+
+    @Test
+    public void shouldCreateAndReturnLocalDateTimeIfFieldIsFoundWhenGettingLocalDateTimeValue()
+            throws Exception {
+        assertEquals(localDateTime,
+                abstractDeserializer.getNodeLocalDateTimeValue(fakeObjectNode, fieldLocalDateTime));
+    }
+
+    @Test
+    public void shouldThrowExceptionForInvalidURIWhenGettingURIValue()
+            throws Exception {
+        when(mockURIJsonNode.textValue()).thenReturn("\ninvalidURI");
+
+        thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
+                DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
+                URISyntaxException.class,
+                new Object[] { fieldURI, textualBeanType, "Illegal character in path at index 0: \n" +
+                        "invalidURI" }));
+
+        abstractDeserializer.getNodeURIValue(fakeObjectNode, fieldURI);
+    }
+
+    @Test
+    public void shouldCreateAndReturnUriIfFieldIsFoundWhenGettingUriValue()
+            throws Exception {
+        assertEquals(uri,
+                abstractDeserializer.getNodeURIValue(fakeObjectNode, fieldURI));
+    }
 }

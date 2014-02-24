@@ -21,6 +21,8 @@ import org.glassfish.jersey.client.filter.CsrfProtectionFilter;
 import org.glassfish.jersey.client.spi.Connector;
 
 import com.discoverydns.dnsapiclient.command.account.AccountGetCommand;
+import com.discoverydns.dnsapiclient.command.message.MessageAcknowledgeCommand;
+import com.discoverydns.dnsapiclient.command.message.MessagePollCommand;
 import com.discoverydns.dnsapiclient.command.nameServerInterfaceSet.NameServerInterfaceSetGetCommand;
 import com.discoverydns.dnsapiclient.command.nameServerSet.NameServerSetGetCommand;
 import com.discoverydns.dnsapiclient.command.nameServerSet.NameServerSetListCommand;
@@ -43,6 +45,8 @@ import com.discoverydns.dnsapiclient.framework.command.BlockingCommandExecutor;
 import com.discoverydns.dnsapiclient.framework.command.CommandProcessor;
 import com.discoverydns.dnsapiclient.framework.impl.basic.BasicCommandProcessor;
 import com.discoverydns.dnsapiclient.internal.command.account.AccountGetCommandHandler;
+import com.discoverydns.dnsapiclient.internal.command.message.MessageAcknowledgeCommandHandler;
+import com.discoverydns.dnsapiclient.internal.command.message.MessagePollCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.nameserverinterfaceset.NameServerInterfaceSetGetCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.nameserverset.NameServerSetGetCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.nameserverset.NameServerSetListCommandHandler;
@@ -263,6 +267,11 @@ public class DNSAPIClientFactory {
                 new ZoneGetQueryUsageCommandHandler(baseWebTarget));
         commandProcessor.subscribe(ZoneGetZoneFileCommand.class,
         		new ZoneGetZoneFileCommandHandler(baseWebTarget));
+        //MessageCommands
+        commandProcessor.subscribe(MessagePollCommand.class,
+                new MessagePollCommandHandler(baseWebTarget));
+        commandProcessor.subscribe(MessageAcknowledgeCommand.class,
+                new MessageAcknowledgeCommandHandler(baseWebTarget));
 
         // Interceptors
         commandProcessor

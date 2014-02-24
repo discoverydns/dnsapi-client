@@ -25,7 +25,15 @@ public class DNSAPIClientJsonMappingException extends DNSAPIClientException {
         /**
          * Thrown when a resource record of unknown type is received in the incoming JSON stream
          */
-        unknownResourceRecordType
+        unknownResourceRecordType,
+        /**
+         * Thrown when a message of unknown type is received in the incoming JSON stream
+         */
+        unknownMessageType,
+        /**
+         * Thrown when a message of unhandled type is received in the incoming JSON stream
+         */
+        unhandledMessageType
 	}
 
 	public DNSAPIClientJsonMappingException(

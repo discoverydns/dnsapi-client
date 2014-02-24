@@ -2,7 +2,12 @@ package com.discoverydns.dnsapiclient;
 
 import org.xbill.DNS.utils.json.resourcerecords.ZoneResourceRecordModule;
 
+import com.discoverydns.dnsapiclient.command.message.Message;
+import com.discoverydns.dnsapiclient.command.message.MessageType;
+import com.discoverydns.dnsapiclient.command.message.contents.ZoneDNSSECSigningCompletedMessageContents;
+import com.discoverydns.dnsapiclient.command.message.contents.ZoneDNSSECSigningFailedMessageContents;
 import com.discoverydns.dnsapiclient.command.nameServerInterfaceSet.NameServerInterface;
+import com.discoverydns.dnsapiclient.internal.json.message.MessageDeserializer;
 import com.discoverydns.dnsapiclient.internal.json.nameserverinterfaceset.NameServerInterfaceDeserializer;
 import com.discoverydns.dnsapiclient.internal.json.nameserverinterfaceset.NameServerInterfaceSerializer;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -112,6 +117,7 @@ public class DefaultObjectMapperFactory implements ObjectMapperFactory {
 
 		mapper.registerModule(zoneResourceRecordModule());
 		mapper.registerModule(nameServerInterfaceModule());
+        mapper.registerModule(messageModule());
 		return mapper;
 	}
 
@@ -139,4 +145,21 @@ public class DefaultObjectMapperFactory implements ObjectMapperFactory {
 		return new NameServerInterfaceSerializer();
 	}
 
+    private SimpleModule messageModule() {
+        SimpleModule module = new SimpleModule("MessageModule");
+
+        module.addDeserializer(Message.class,
+                messageDeserializer());
+
+        return module;
+    }
+
+    private MessageDeserializer messageDeserializer() {
+        MessageDeserializer messageDeserializer = new MessageDeserializer();
+        messageDeserializer.registerRecordType(MessageType.zoneDNSSECSigningCompleted,
+                ZoneDNSSECSigningCompletedMessageContents.class);
+        messageDeserializer.registerRecordType(MessageType.zoneDNSSECSigningFailed,
+                ZoneDNSSECSigningFailedMessageContents.class);
+        return messageDeserializer;
+    }
 }
