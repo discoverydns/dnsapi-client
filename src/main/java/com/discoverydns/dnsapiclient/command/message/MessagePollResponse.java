@@ -1,5 +1,6 @@
 package com.discoverydns.dnsapiclient.command.message;
 
+import com.discoverydns.dnsapiclient.internal.views.MessagePollView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,10 +20,10 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @JsonPropertyOrder({ "message" })
 public class MessagePollResponse {
     @JsonIgnore
-    private final Message message;
+    private final MessagePollView messagePollView;
 
-    public MessagePollResponse(final Message message) {
-        this.message = message;
+    public MessagePollResponse(final MessagePollView messagePollView) {
+        this.messagePollView = messagePollView;
     }
 
     /**
@@ -30,6 +31,14 @@ public class MessagePollResponse {
      */
     @JsonProperty("message")
     public Message getMessage() {
-        return message;
+        return messagePollView.getMessage();
+    }
+
+    /**
+     * @return The count of outstanding Messages on the DNSAPI server, in the Account's message queue
+     */
+    @JsonProperty("outstandingMessagesCount")
+    public Integer getOutstandingMessagesCount() {
+        return messagePollView.getOutstandingMessagesCount();
     }
 }

@@ -69,15 +69,15 @@ public class MessageDeserializer extends AbstractDeserializer<Message> {
         }
 
         return new Message(
-                getNodeURIValue(recordNode, "@uri"),
                 getNodeStringValue(recordNode, "id"),
                 messageType,
                 getNodeStringValue(recordNode, "relatedObjectId"),
                 getNodeStringValue(recordNode, "sponsorAccountId"),
                 getNodeLocalDateTimeValue(recordNode, "createDate"),
                 getNodeLocalDateTimeValue(recordNode, "acknowledgedDate"),
+                getNodeStringValue(recordNode, "acknowledgedByUserId"),
                 getNodeStringValue(recordNode, "message"),
                 (MessageContents) reader.withType(messageContentsClass).readValue(
-                        getNodeStringValue(recordNode, "messageContents")));
+                        recordNode.get("messageContents").toString()));
     }
 }

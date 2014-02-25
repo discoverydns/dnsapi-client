@@ -6,6 +6,7 @@ import com.discoverydns.dnsapiclient.command.message.MessagePollResponse;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
+import com.discoverydns.dnsapiclient.internal.views.MessagePollView;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -102,16 +103,21 @@ public class MessagePollCommandHandlerTest {
 
     @Test
     public void shouldReturnExpectedResponse() throws Throwable {
+        String id = "id";
+        Integer outstandingMessagesCount = 3;
         Response mockRestResponse = mock(Response.class);
         when(mockRestResponse.hasEntity()).thenReturn(true);
         Message mockMessage = mock(Message.class);
-        String id = "id";
         when(mockMessage.getId()).thenReturn(id);
-        when(mockRestResponse.readEntity(Message.class)).thenReturn(mockMessage);
+        MessagePollView mockMessagePollView = mock(MessagePollView.class);
+        when(mockMessagePollView.getMessage()).thenReturn(mockMessage);
+        when(mockMessagePollView.getOutstandingMessagesCount()).thenReturn(outstandingMessagesCount);
+        when(mockRestResponse.readEntity(MessagePollView.class)).thenReturn(mockMessagePollView);
 
         MessagePollResponse messagePollResponse =
                 messagePollCommandHandler.getCommandResponse(mockRestResponse, mockCommandMetaData);
 
         assertEquals(id, messagePollResponse.getMessage().getId());
+        assertEquals(outstandingMessagesCount, messagePollResponse.getOutstandingMessagesCount());
     }
 }

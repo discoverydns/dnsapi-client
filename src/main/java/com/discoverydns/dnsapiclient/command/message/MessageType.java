@@ -10,19 +10,13 @@ package com.discoverydns.dnsapiclient.command.message;
  */
 public enum MessageType {
     /**
-     * Message received when a Zone has been successfully DNSSEC-signed,
-     * subsequently to either a {@link com.discoverydns.dnsapiclient.command.zone.ZoneDNSSECSignCommand},
-     * a {@link com.discoverydns.dnsapiclient.command.zone.ZoneUpdateCommand}
-     * or a {@link com.discoverydns.dnsapiclient.command.zone.ZoneUpdateResourceRecordsCommand}.
+     * Message received when a Zone has been successfully DNSSEC-signed.
      * The message contents will then be
      * of type {@link com.discoverydns.dnsapiclient.command.message.contents.ZoneDNSSECSigningCompletedMessageContents}.
      */
     zoneDNSSECSigningCompleted,
     /**
-     * Message received when an error occurred while DNSSEC-signing a Zone,
-     * subsequently to either a {@link com.discoverydns.dnsapiclient.command.zone.ZoneDNSSECSignCommand},
-     * a {@link com.discoverydns.dnsapiclient.command.zone.ZoneUpdateCommand}
-     * or a {@link com.discoverydns.dnsapiclient.command.zone.ZoneUpdateResourceRecordsCommand}.
+     * Message received when an error occurred while DNSSEC-signing a Zone.
      * The message contents will then be
      * of type {@link com.discoverydns.dnsapiclient.command.message.contents.ZoneDNSSECSigningFailedMessageContents}.
      */

@@ -24,8 +24,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.net.URI;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.when;
@@ -60,6 +58,8 @@ public class MessageDeserializerTest {
     @Mock
     private JsonNode mockAcknowledgedDateJsonNode;
     @Mock
+    private JsonNode mockAcknowledgedByUserIdJsonNode;
+    @Mock
     private JsonNode mockMessageJsonNode;
     @Mock
     private JsonNode mockMessageContentsJsonNode;
@@ -68,19 +68,18 @@ public class MessageDeserializerTest {
 
     private MessageDeserializer messageDeserializer;
 
-    private URI uri;
     private String id = "id";
     private MessageType type = MessageType.zoneDNSSECSigningCompleted;
     private String relatedObjectId = "relatedObjectId";
     private String sponsorAccountId = "sponsorAccountId";
     private LocalDateTime createDate = LocalDateTime.now(DateTimeZone.UTC);
     private LocalDateTime acknowledgedDate = LocalDateTime.now(DateTimeZone.UTC);
+    private String acknowledgedByUserId = "acknowledgedByUserId";
     private String message = "message";
     private Class<ZoneDNSSECSigningCompletedMessageContents> messageContentsClass = ZoneDNSSECSigningCompletedMessageContents.class;
 
     @Before
     public void setup() throws Throwable {
-        uri = new URI("http://example.com");
         ObjectNode fakeObjectNode = new ObjectNode(mockJsonNodeFactory);
 
         when(mockJsonParser.getCodec()).thenReturn(mockObjectMapper);
@@ -88,9 +87,6 @@ public class MessageDeserializerTest {
         when(mockObjectReader.without(DeserializationFeature.UNWRAP_ROOT_VALUE)).thenReturn(mockObjectReader);
         when(mockObjectReader.readTree(mockJsonParser)).thenReturn(
                 fakeObjectNode);
-
-        when(mockURIJsonNode.textValue()).thenReturn(uri.toString());
-        fakeObjectNode.put("@uri", mockURIJsonNode);
 
         when(mockIdJsonNode.textValue()).thenReturn(id);
         fakeObjectNode.put("id", mockIdJsonNode);
@@ -110,13 +106,15 @@ public class MessageDeserializerTest {
         when(mockAcknowledgedDateJsonNode.textValue()).thenReturn(acknowledgedDate.toString());
         fakeObjectNode.put("acknowledgedDate", mockAcknowledgedDateJsonNode);
 
+        when(mockAcknowledgedByUserIdJsonNode.textValue()).thenReturn(acknowledgedByUserId);
+        fakeObjectNode.put("acknowledgedByUserId", mockAcknowledgedByUserIdJsonNode);
+
         when(mockMessageJsonNode.textValue()).thenReturn(message);
         fakeObjectNode.put("message", mockMessageJsonNode);
 
         String messageContents = "messageContents";
-        when(mockMessageContentsJsonNode.textValue()).thenReturn(messageContents);
+        when(mockMessageContentsJsonNode.toString()).thenReturn(messageContents);
         fakeObjectNode.put("messageContents", mockMessageContentsJsonNode);
-
         when(mockObjectReader.withType(messageContentsClass)).thenReturn(mockObjectReader);
         when(mockObjectReader.readValue(messageContents)).thenReturn(mockMessageContents);
 
@@ -159,13 +157,13 @@ public class MessageDeserializerTest {
     public void shouldReturnExpectedMessageOtherwise() throws Exception {
         Message deserializedMessage = messageDeserializer.deserialize(mockJsonParser, mockDeserializationContext);
 
-        assertEquals(uri, deserializedMessage.getURI());
         assertEquals(id, deserializedMessage.getId());
         assertEquals(type, deserializedMessage.getMessageType());
         assertEquals(relatedObjectId, deserializedMessage.getRelatedObjectId());
         assertEquals(sponsorAccountId, deserializedMessage.getSponsorAccountId());
         assertEquals(createDate, deserializedMessage.getCreateDate());
         assertEquals(acknowledgedDate, deserializedMessage.getAcknowledgedDate());
+        assertEquals(acknowledgedByUserId, deserializedMessage.getAcknowledgedByUserId());
         assertEquals(message, deserializedMessage.getMessage());
         assertEquals(mockMessageContents, deserializedMessage.getMessageContents());
     }

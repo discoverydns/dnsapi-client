@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 /**
  * Command sent from a {@link com.discoverydns.dnsapiclient.DNSAPIClient} to the DNSAPI server,
- * to poll for the oldest non-acknowledged Message corresponding to the given search criteria,
+ * to poll for the oldest outstanding Message corresponding to the given search criteria,
  * in the Account's message queue on the server.
  *
  * A Message is a notification from the DNSAPI server, for the targeted sponsor Account's Users,

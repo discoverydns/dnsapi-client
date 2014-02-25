@@ -1,10 +1,15 @@
 package com.discoverydns.dnsapiclient.internal.command.message;
 
-import com.discoverydns.dnsapiclient.command.message.Message;
 import com.discoverydns.dnsapiclient.command.message.MessagePollCommand;
 import com.discoverydns.dnsapiclient.command.message.MessagePollResponse;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
-import com.discoverydns.dnsapiclient.internal.command.*;
+import com.discoverydns.dnsapiclient.internal.command.BaseRestCommandHandler;
+import com.discoverydns.dnsapiclient.internal.command.InvocationBuildInvoker;
+import com.discoverydns.dnsapiclient.internal.command.InvocationBuilderFactory;
+import com.discoverydns.dnsapiclient.internal.command.Method;
+import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
+import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
+import com.discoverydns.dnsapiclient.internal.views.MessagePollView;
 
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -49,8 +54,8 @@ public class MessagePollCommandHandler extends
     @Override
     public MessagePollResponse getCommandResponse(Response restResponse,
                                                   CommandMetaData commandMetaData) {
-        final Message message = getResponseEntity(Message.class, restResponse);
+        final MessagePollView messagePollView = getResponseEntity(MessagePollView.class, restResponse);
 
-        return new MessagePollResponse(message);
+        return new MessagePollResponse(messagePollView);
     }
 }

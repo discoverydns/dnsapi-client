@@ -59,13 +59,13 @@ public class MessagePollCommandExample {
             if (response.getResponseObject().getMessage() == null) {
                 System.out.println("No message found");
             } else {
-                System.out.println("Poll request URI: " + response.getResponseObject().getMessage().getURI());
                 System.out.println("Message UUID: " + response.getResponseObject().getMessage().getId());
                 System.out.println("Message type: " + response.getResponseObject().getMessage().getMessageType());
                 System.out.println("Related object UUID: " + response.getResponseObject().getMessage().getRelatedObjectId());
                 System.out.println("Sponsor account UUID: " + response.getResponseObject().getMessage().getSponsorAccountId());
                 System.out.println("Message create date: " + response.getResponseObject().getMessage().getCreateDate());
                 System.out.println("Message acknowledged date: " + response.getResponseObject().getMessage().getAcknowledgedDate());
+                System.out.println("Message acknowledged user id: " + response.getResponseObject().getMessage().getAcknowledgedByUserId());
                 System.out.println("Human-readable message: " + response.getResponseObject().getMessage().getMessage());
                 System.out.println("Message contents: " + response.getResponseObject().getMessage().getMessageContents());
             }
