@@ -7,8 +7,6 @@ import java.text.ParseException;
 import java.util.Locale;
 
 import org.joda.time.LocalDateTime;
-import org.xbill.DNS.Name;
-import org.xbill.DNS.TextParseException;
 
 import com.discoverydns.dnsapiclient.exception.DNSAPIClientJsonMappingException;
 import com.discoverydns.dnsapiclient.exception.DNSAPIClientJsonMappingException.DNSAPIClientJsonMappingExceptionCode;
@@ -38,22 +36,6 @@ public abstract class AbstractDeserializer<T> extends StdDeserializer<T> {
 	protected String getNodeStringValue(final ObjectNode recordNode,
 			final String fieldName) {
 		return findFieldNode(recordNode, fieldName).textValue();
-	}
-
-	public Name getNameFromString(final String nodeValue)
-			throws TextParseException {
-		return Name.fromString(nodeValue);
-	}
-
-	protected Name getNodeNameValue(final ObjectNode recordNode,
-			final String fieldName) {
-		try {
-			return getNameFromString(getNodeStringValue(recordNode, fieldName));
-		} catch (final TextParseException e) {
-			throw new DNSAPIClientJsonMappingException(
-					DNSAPIClientJsonMappingExceptionCode.invalidFieldValue, e,
-					fieldName, getTextualBeanType(), e.getMessage());
-		}
 	}
 
 	protected Number getNodeNumberValue(final ObjectNode recordNode,

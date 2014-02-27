@@ -24,8 +24,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.xbill.DNS.Name;
-import org.xbill.DNS.TextParseException;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -54,8 +52,6 @@ public class AbstractDeserializerTest {
 	@Mock
 	private JsonObject mockJsonObject;
 	@Mock
-	private Name mockName;
-	@Mock
 	private Number mockNumber;
 	@Mock
 	private InetAddress mockInetAddress;
@@ -69,9 +65,7 @@ public class AbstractDeserializerTest {
 	private ObjectNode fakeObjectNode;
 	private String fieldName = "fieldName";
 	private String nodeTextValue = "nodeTextValue";
-	private String nameFieldName = "nameFieldName";
-	private String name = "name";
-	private String fieldAddress = "address";
+    private String fieldAddress = "address";
 	private String address = "1.2.3.4";
 	private String textualBeanType = "textualBeanType";
     private String fieldLocalDateTime = "localDateTime";
@@ -86,9 +80,11 @@ public class AbstractDeserializerTest {
 		
 		when(mockJsonNode.textValue()).thenReturn(nodeTextValue);
 		fakeObjectNode.put(fieldName, mockJsonNode);
-		
-		when(mockNameJsonNode.textValue()).thenReturn(name);
-		fakeObjectNode.put(nameFieldName, mockNameJsonNode);
+
+        String name = "name";
+        when(mockNameJsonNode.textValue()).thenReturn(name);
+        String nameFieldName = "nameFieldName";
+        fakeObjectNode.put(nameFieldName, mockNameJsonNode);
 		
 		fakeObjectNode.put(fieldAddress, mockAddressJsonNode);
 		when(mockAddressJsonNode.textValue()).thenReturn(address);
@@ -115,14 +111,15 @@ public class AbstractDeserializerTest {
 			}
 		};
 	}
-	
+
+    @Test
 	public void shouldThrowExceptionIfNodeFoundWhenSearchingForFieldNode()
 			throws Exception {
 		fakeObjectNode.put(fieldName, (JsonNode) null);
 
 		thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
                 DNSAPIClientJsonMappingExceptionCode.missingField,
-				new Object[] { textualBeanType, fieldName }));
+				new Object[] { fieldName, textualBeanType }));
 
 		abstractDeserializer.findFieldNode(fakeObjectNode, fieldName);
 	}
@@ -141,35 +138,6 @@ public class AbstractDeserializerTest {
 				fakeObjectNode, fieldName));
 
 		verify(mockJsonNode).textValue();
-	}
-	
-	@Test
-	public void shouldThrowExceptionForInvalidNameWhenGettingNameValue()
-			throws Exception {
-		abstractDeserializer = spy(abstractDeserializer);
-		String rootErrorMessage = "rootErrorMessage";
-		final TextParseException textParseException = new TextParseException(
-				rootErrorMessage);
-		when(abstractDeserializer.getNameFromString(name)).thenThrow(
-				textParseException);
-
-		thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
-                DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
-                textParseException, new Object[] { nameFieldName, textualBeanType, rootErrorMessage }));
-
-		abstractDeserializer.getNodeNameValue(fakeObjectNode,
-				nameFieldName);
-	}
-
-	@Test
-	public void shouldCreateAndReturnNameIfFieldIsFoundWhenGettingNameValue()
-			throws Exception {
-		abstractDeserializer = spy(abstractDeserializer);
-		when(abstractDeserializer.getNameFromString(name)).thenReturn(
-				mockName);
-
-		assertEquals(mockName, abstractDeserializer.getNodeNameValue(
-				fakeObjectNode, nameFieldName));
 	}
 
 	@Test
