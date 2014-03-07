@@ -1,6 +1,7 @@
 package com.discoverydns.dnsapiclient.internal.json;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -8,8 +9,6 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.text.ParseException;
 
 import com.discoverydns.dnsapiclient.exception.DNSAPIClientJsonMappingException.DNSAPIClientJsonMappingExceptionCode;
@@ -70,12 +69,9 @@ public class AbstractDeserializerTest {
 	private String textualBeanType = "textualBeanType";
     private String fieldLocalDateTime = "localDateTime";
     private LocalDateTime localDateTime = LocalDateTime.now(DateTimeZone.UTC);
-    private String fieldURI = "uri";
-    private URI uri;
-	
+
 	@Before
 	public void setup() throws Throwable {
-        uri = new URI("example.com");
 		fakeObjectNode = new ObjectNode(mockJsonNodeFactory);
 		
 		when(mockJsonNode.textValue()).thenReturn(nodeTextValue);
@@ -92,9 +88,6 @@ public class AbstractDeserializerTest {
         fakeObjectNode.put(fieldLocalDateTime, mockLocalDateTimeJsonNode);
         when(mockLocalDateTimeJsonNode.textValue()).thenReturn(localDateTime.toString());
 
-        fakeObjectNode.put(fieldURI, mockURIJsonNode);
-        when(mockURIJsonNode.textValue()).thenReturn(uri.toString());
-		
 		abstractDeserializer =
 				new AbstractDeserializer<AbstractDeserializerTest.JsonObject>(AbstractDeserializerTest.JsonObject.class) {
 			private static final long serialVersionUID = -400379380279488958L;
@@ -277,23 +270,30 @@ public class AbstractDeserializerTest {
     }
 
     @Test
-    public void shouldThrowExceptionForInvalidURIWhenGettingURIValue()
+    public void shouldThrowExceptionForInvalidLocalDateTimeWhenGettingOptionalLocalDateTimeValue()
             throws Exception {
-        when(mockURIJsonNode.textValue()).thenReturn("\ninvalidURI");
+        when(mockLocalDateTimeJsonNode.textValue()).thenReturn("invalidDateTime");
 
         thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
                 DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
-                URISyntaxException.class,
-                new Object[] { fieldURI, textualBeanType, "Illegal character in path at index 0: \n" +
-                        "invalidURI" }));
+                IllegalArgumentException.class,
+                new Object[] { fieldLocalDateTime, textualBeanType, "Invalid format: \"invalidDateTime\"" }));
 
-        abstractDeserializer.getNodeURIValue(fakeObjectNode, fieldURI);
+        abstractDeserializer.getOptionalNodeLocalDateTimeValue(fakeObjectNode, fieldLocalDateTime);
     }
 
     @Test
-    public void shouldCreateAndReturnUriIfFieldIsFoundWhenGettingUriValue()
+    public void shouldReturnNullIfFieldIsNullWhenGettingOptionalLocalDateTimeValue()
             throws Exception {
-        assertEquals(uri,
-                abstractDeserializer.getNodeURIValue(fakeObjectNode, fieldURI));
+        when(mockLocalDateTimeJsonNode.textValue()).thenReturn(null);
+
+        assertNull(abstractDeserializer.getOptionalNodeLocalDateTimeValue(fakeObjectNode, fieldLocalDateTime));
+    }
+
+    @Test
+    public void shouldCreateAndReturnLocalDateTimeIfFieldIsFoundWhenGettingOptionalLocalDateTimeValue()
+            throws Exception {
+        assertEquals(localDateTime,
+                abstractDeserializer.getOptionalNodeLocalDateTimeValue(fakeObjectNode, fieldLocalDateTime));
     }
 }

@@ -10,7 +10,7 @@ import static org.mockito.Mockito.when;
 public class MessagePollResponseTest {
     @Test
     public void shouldReturnExpectedResponse() throws Exception {
-        Integer outstandingMessagesCount = 3;
+        Long outstandingMessagesCount = 3L;
         Message mockMessage = mock(Message.class);
         MessagePollView mockMessagePollView = mock(MessagePollView.class);
         when(mockMessagePollView.getMessage()).thenReturn(mockMessage);

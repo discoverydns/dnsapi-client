@@ -20,5 +20,41 @@ public enum MessageType {
      * The message contents will then be
      * of type {@link com.discoverydns.dnsapiclient.command.message.contents.ZoneDNSSECSigningFailedMessageContents}.
      */
-    zoneDNSSECSigningFailed
+    zoneDNSSECSigningFailed,
+    /**
+     * Message received when a Zone usage has reached the Warning threshold.
+     * The message contents will then be
+     * of type {@link com.discoverydns.dnsapiclient.command.message.contents.WarningZoneUsageMessageContents}.
+     */
+    warningZoneUsage,
+    /**
+     * Message received when a Zone usage has reached the Critical threshold.
+     * The message contents will then be
+     * of type {@link com.discoverydns.dnsapiclient.command.message.contents.CriticalZoneUsageMessageContents}.
+     */
+    criticalZoneUsage,
+    /**
+     * Message received when a Zone usage has exceeded its limit.
+     * The message contents will then be
+     * of type {@link com.discoverydns.dnsapiclient.command.message.contents.OverLimitZoneUsageMessageContents}.
+     */
+    overLimitZoneUsage,
+    /**
+     * Message received when a Zone group usage has reached the Warning threshold.
+     * The message contents will then be
+     * of type {@link com.discoverydns.dnsapiclient.command.message.contents.WarningZoneGroupUsageMessageContents}.
+     */
+    warningZoneGroupUsage,
+    /**
+     * Message received when a Zone usage has reached the Critical threshold.
+     * The message contents will then be
+     * of type {@link com.discoverydns.dnsapiclient.command.message.contents.CriticalZoneGroupUsageMessageContents}.
+     */
+    criticalZoneGroupUsage,
+    /**
+     * Message received when a Zone usage has exceeded its limit.
+     * The message contents will then be
+     * of type {@link com.discoverydns.dnsapiclient.command.message.contents.OverLimitZoneGroupUsageMessageContents}.
+     */
+    overLimitZoneGroupUsage
 }

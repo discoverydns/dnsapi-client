@@ -74,7 +74,7 @@ public class MessageDeserializer extends AbstractDeserializer<Message> {
                 getNodeStringValue(recordNode, "relatedObjectId"),
                 getNodeStringValue(recordNode, "sponsorAccountId"),
                 getNodeLocalDateTimeValue(recordNode, "createDate"),
-                getNodeLocalDateTimeValue(recordNode, "acknowledgedDate"),
+                getOptionalNodeLocalDateTimeValue(recordNode, "acknowledgedDate"),
                 getNodeStringValue(recordNode, "acknowledgedByUserId"),
                 getNodeStringValue(recordNode, "message"),
                 (MessageContents) reader.withType(messageContentsClass).readValue(

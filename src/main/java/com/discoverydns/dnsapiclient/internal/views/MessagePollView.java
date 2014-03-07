@@ -9,13 +9,13 @@ public class MessagePollView {
     @JsonProperty("message")
     private Message message;
     @JsonProperty("outstandingMessagesCount")
-    private Integer outstandingMessagesCount;
+    private Long outstandingMessagesCount;
 
     public Message getMessage() {
         return message;
     }
 
-    public Integer getOutstandingMessagesCount() {
+    public Long getOutstandingMessagesCount() {
         return outstandingMessagesCount;
     }
 }

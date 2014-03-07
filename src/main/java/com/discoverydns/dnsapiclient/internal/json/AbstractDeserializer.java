@@ -1,7 +1,6 @@
 package com.discoverydns.dnsapiclient.internal.json;
 
 import java.net.InetAddress;
-import java.net.URI;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
@@ -106,10 +105,14 @@ public abstract class AbstractDeserializer<T> extends StdDeserializer<T> {
         }
     }
 
-    public URI getNodeURIValue(final ObjectNode recordNode,
-                               final String fieldName) {
+    public LocalDateTime getOptionalNodeLocalDateTimeValue(final ObjectNode recordNode,
+                                                           final String fieldName) {
         try {
-            return new URI(getNodeStringValue(recordNode, fieldName));
+            String nodeStringValue = getNodeStringValue(recordNode, fieldName);
+            if (nodeStringValue == null) {
+                return null;
+            }
+            return LocalDateTime.parse(nodeStringValue);
         } catch (final Throwable e) {
             throw new DNSAPIClientJsonMappingException(
                     DNSAPIClientJsonMappingExceptionCode.invalidFieldValue, e,

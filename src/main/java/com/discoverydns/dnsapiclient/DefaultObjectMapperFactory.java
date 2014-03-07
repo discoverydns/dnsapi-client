@@ -4,6 +4,12 @@ import org.xbill.DNS.utils.json.resourcerecords.ZoneResourceRecordModule;
 
 import com.discoverydns.dnsapiclient.command.message.Message;
 import com.discoverydns.dnsapiclient.command.message.MessageType;
+import com.discoverydns.dnsapiclient.command.message.contents.CriticalZoneGroupUsageMessageContents;
+import com.discoverydns.dnsapiclient.command.message.contents.CriticalZoneUsageMessageContents;
+import com.discoverydns.dnsapiclient.command.message.contents.OverLimitZoneGroupUsageMessageContents;
+import com.discoverydns.dnsapiclient.command.message.contents.OverLimitZoneUsageMessageContents;
+import com.discoverydns.dnsapiclient.command.message.contents.WarningZoneGroupUsageMessageContents;
+import com.discoverydns.dnsapiclient.command.message.contents.WarningZoneUsageMessageContents;
 import com.discoverydns.dnsapiclient.command.message.contents.ZoneDNSSECSigningCompletedMessageContents;
 import com.discoverydns.dnsapiclient.command.message.contents.ZoneDNSSECSigningFailedMessageContents;
 import com.discoverydns.dnsapiclient.command.nameServerInterfaceSet.NameServerInterface;
@@ -160,6 +166,18 @@ public class DefaultObjectMapperFactory implements ObjectMapperFactory {
                 ZoneDNSSECSigningCompletedMessageContents.class);
         messageDeserializer.registerRecordType(MessageType.zoneDNSSECSigningFailed,
                 ZoneDNSSECSigningFailedMessageContents.class);
+        messageDeserializer.registerRecordType(MessageType.criticalZoneGroupUsage,
+                CriticalZoneGroupUsageMessageContents.class);
+        messageDeserializer.registerRecordType(MessageType.criticalZoneUsage,
+                CriticalZoneUsageMessageContents.class);
+        messageDeserializer.registerRecordType(MessageType.overLimitZoneGroupUsage,
+                OverLimitZoneGroupUsageMessageContents.class);
+        messageDeserializer.registerRecordType(MessageType.overLimitZoneUsage,
+                OverLimitZoneUsageMessageContents.class);
+        messageDeserializer.registerRecordType(MessageType.warningZoneGroupUsage,
+                WarningZoneGroupUsageMessageContents.class);
+        messageDeserializer.registerRecordType(MessageType.warningZoneUsage,
+                WarningZoneUsageMessageContents.class);
         return messageDeserializer;
     }
 }

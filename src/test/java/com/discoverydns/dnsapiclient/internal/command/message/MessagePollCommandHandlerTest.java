@@ -104,7 +104,7 @@ public class MessagePollCommandHandlerTest {
     @Test
     public void shouldReturnExpectedResponse() throws Throwable {
         String id = "id";
-        Integer outstandingMessagesCount = 3;
+        Long outstandingMessagesCount = 3L;
         Response mockRestResponse = mock(Response.class);
         when(mockRestResponse.hasEntity()).thenReturn(true);
         Message mockMessage = mock(Message.class);

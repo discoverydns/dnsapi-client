@@ -167,4 +167,15 @@ public class MessageDeserializerTest {
         assertEquals(message, deserializedMessage.getMessage());
         assertEquals(mockMessageContents, deserializedMessage.getMessageContents());
     }
+
+    @Test
+    public void shouldIgnoreNullFieldsIfMessageIsNotAcknowledgedYet() throws Exception {
+        when(mockAcknowledgedDateJsonNode.textValue()).thenReturn(null);
+        when(mockAcknowledgedByUserIdJsonNode.textValue()).thenReturn(null);
+
+        Message deserializedMessage = messageDeserializer.deserialize(mockJsonParser, mockDeserializationContext);
+
+        assertNull(deserializedMessage.getAcknowledgedDate());
+        assertNull(deserializedMessage.getAcknowledgedByUserId());
+    }
 }

@@ -2,26 +2,25 @@ package com.discoverydns.dnsapiclient.command.message.contents;
 
 import com.discoverydns.dnsapiclient.command.message.MessageType;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.xbill.DNS.Record;
-
-import java.util.Set;
 
 /**
  * Contents for a {@link com.discoverydns.dnsapiclient.command.message.Message}
- * of type {@link com.discoverydns.dnsapiclient.command.message.MessageType}.zoneDNSSECSigningCompleted.
+ * of type {@link com.discoverydns.dnsapiclient.command.message.MessageType}.overLimitZoneUsage.
  *
  * @author Arnaud Dumont
  */
-public class ZoneDNSSECSigningCompletedMessageContents extends MessageContents {
+public class OverLimitZoneUsageMessageContents extends MessageContents {
     @JsonProperty("zoneId")
     private String zoneId;
     @JsonProperty("zoneName")
     private String zoneName;
-    @JsonProperty("delegationResourceRecords")
-    private Set<Record> delegationResourceRecords;
+    @JsonProperty("currentZoneUsage")
+    private long currentZoneUsage;
+    @JsonProperty("zoneUsageLimit")
+    private long zoneUsageLimit;
 
-    public ZoneDNSSECSigningCompletedMessageContents() {
-        super(MessageType.zoneDNSSECSigningCompleted);
+    public OverLimitZoneUsageMessageContents() {
+        super(MessageType.overLimitZoneUsage);
     }
 
     public String getZoneId() {
@@ -32,7 +31,11 @@ public class ZoneDNSSECSigningCompletedMessageContents extends MessageContents {
         return zoneName;
     }
 
-    public Set<Record> getDelegationResourceRecords() {
-        return delegationResourceRecords;
+    public long getCurrentZoneUsage() {
+        return currentZoneUsage;
+    }
+
+    public long getZoneUsageLimit() {
+        return zoneUsageLimit;
     }
 }

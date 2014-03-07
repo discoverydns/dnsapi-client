@@ -1,13 +1,11 @@
 package com.discoverydns.dnsapiclient.command.message.contents;
 
+import com.discoverydns.dnsapiclient.command.message.MessageType;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.xbill.DNS.Record;
-
-import java.util.Set;
 
 /**
  * Contents for a {@link com.discoverydns.dnsapiclient.command.message.Message}
- * of type {@link com.discoverydns.dnsapiclient.command.message.MessageType}.zoneDNSSECSigningCompleted.
+ * of type {@link com.discoverydns.dnsapiclient.command.message.MessageType}.zoneDNSSECSigningFailed.
  *
  * @author Arnaud Dumont
  */
@@ -18,6 +16,10 @@ public class ZoneDNSSECSigningFailedMessageContents extends MessageContents {
     private String zoneName;
     @JsonProperty("errorMessage")
     private String errorMessage;
+
+    public ZoneDNSSECSigningFailedMessageContents() {
+        super(MessageType.zoneDNSSECSigningFailed);
+    }
 
     public String getZoneId() {
         return zoneId;

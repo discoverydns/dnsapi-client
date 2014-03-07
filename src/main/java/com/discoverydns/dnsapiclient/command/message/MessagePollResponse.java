@@ -38,7 +38,7 @@ public class MessagePollResponse {
      * @return The count of outstanding Messages on the DNSAPI server, in the Account's message queue
      */
     @JsonProperty("outstandingMessagesCount")
-    public Integer getOutstandingMessagesCount() {
+    public Long getOutstandingMessagesCount() {
         return messagePollView.getOutstandingMessagesCount();
     }
 }
