@@ -64,6 +64,7 @@ public class AccountGetCommandExample {
             System.out.println("Account status: " + response.getResponseObject().getStatus());
             System.out.println("Account minimum commitment: " + response.getResponseObject().getMinimumCommitment());
             System.out.println("Account currency: " + response.getResponseObject().getCurrency());
+            System.out.println("Account email: " + response.getResponseObject().getEmail());
             System.out.println("Account minimum commitment start date: "
                     + response.getResponseObject().getMinimumCommitmentStartDate());
             System.out.println("Account create Account UUID: " + response.getResponseObject().getCreateAccountId());

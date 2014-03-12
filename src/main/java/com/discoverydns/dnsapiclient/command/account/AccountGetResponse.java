@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  */
 @JsonRootName("AccountGetResponse")
 @JsonPropertyOrder({ "@uri", "id", "version", "name", "identifier", "status",
-		"currency", "minimumCommitment", "minimumCommitmentStartDate",
+		"currency", "minimumCommitment", "minimumCommitmentStartDate", "email",
 		"createDate", "createAccountId", "createAccountIdentifier",
 		"createUserId", "createUserName", "lastUpdateDate",
 		"lastUpdateAccountId", "lastUpdateAccountIdentifier",
@@ -106,6 +106,14 @@ public class AccountGetResponse {
 	@JsonProperty("minimumCommitmentStartDate")
 	public LocalDateTime getMinimumCommitmentStartDate() {
 		return accountGetView.getMinimumCommitmentStartDate();
+	}
+
+    /**
+     * @return The email of this account, or null if no notification emails should be sent to it
+     */
+    @JsonProperty("email")
+    public String getEmail() {
+        return accountGetView.getEmail();
 	}
 
     /**
