@@ -65,9 +65,9 @@ public class ZoneGetCommandExample {
             System.out.println("Zone DNSSEC signed: " + response.getResponseObject().getDNSSECSigned());
             if (response.getResponseObject().getDNSSECSigned()) {
                 System.out.println("   ZSK Rollover state: " + response.getResponseObject().getZskRollOverState());
-                System.out.println("   ZSK Rollover next action date: " + response.getResponseObject().getZskNextActionDate());
-                System.out.println("   Next RRSIG regeneration: " + response.getResponseObject().getZskRRSIGRegenerationDate());
             }
+            System.out.println("Zone pending operation: " + response.getResponseObject().getPendingOperation());
+            System.out.println("Zone last publish date: " + response.getResponseObject().getLastPublishDate());
             System.out.println("Zone serial: " + response.getResponseObject().getSerial());
             System.out.println("Zone group: " + response.getResponseObject().getGroup());
             System.out.println("Zone sponsor Account UUID: " + response.getResponseObject().getSponsorAccountId());

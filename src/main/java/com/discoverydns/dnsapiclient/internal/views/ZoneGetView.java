@@ -28,10 +28,10 @@ public class ZoneGetView {
 	private Boolean dnssecSigned;
 	@JsonProperty("zskRollOverState")
     private String zskRollOverState;
-	@JsonProperty("zskNextActionDate")
-    private LocalDateTime zskNextActionDate;
-	@JsonProperty("zskRRSIGRegenerationDate")
-    private LocalDateTime zskRRSIGRegenerationDate;
+    @JsonProperty("pendingOperation")
+    private String pendingOperation;
+    @JsonProperty("lastPublishDate")
+    private LocalDateTime lastPublishDate;
 	@JsonProperty("sponsorAccountId")
 	private String sponsorAccountId;
 	@JsonProperty("sponsorAccountIdentifier")
@@ -109,13 +109,13 @@ public class ZoneGetView {
         return zskRollOverState;
     }
 
-    public LocalDateTime getZskNextActionDate() {
-        return zskNextActionDate;
+    public String getPendingOperation() {
+        return pendingOperation;
     }
 
-    public LocalDateTime getZskRRSIGRegenerationDate() {
-        return zskRRSIGRegenerationDate;
-	}
+    public LocalDateTime getLastPublishDate() {
+        return lastPublishDate;
+    }
 
 	public String getSponsorAccountId() {
 		return sponsorAccountId;

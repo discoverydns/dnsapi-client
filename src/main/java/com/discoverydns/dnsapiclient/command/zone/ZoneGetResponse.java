@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @JsonRootName("ZoneGetResponse")
 @JsonPropertyOrder({ "@uri", "id", "version", "name", "serial",
 		"brandedNameServers", "dnssecSigned", "zskRollOverState",
-        "zskNextActionDate", "zskRRSIGRegenerationDate",
+        "pendingOperation", "lastPublishDate",
         "nameServerSetId", "nameServerSetName", "nameServerInterfaceSetId",
 		"nameServerInterfaceSetName", "planId", "planName", "group",
 		"sponsorAccountId", "sponsorAccountIdentifier", "createDate",
@@ -122,19 +122,19 @@ public class ZoneGetResponse {
     }
 
     /**
-     * @return The next date of an action for the zone in the ZSK roll over process, if the zone is DNSSEC-signed (null otherwise)
+     * @return The pending operation that will soon be actioned on the zone ('zoneSigning', 'zoneUnSigning' or 'delete'), or 'none'
      */
-    @JsonProperty("zskNextActionDate")
-    public LocalDateTime getZskNextActionDate() {
-        return zoneGetView.getZskNextActionDate();
+    @JsonProperty("pendingOperation")
+    public String getPendingOperation() {
+        return zoneGetView.getPendingOperation();
     }
 
     /**
-     * @return The next date of the zone's RRSIG records re-generation, if the zone is DNSSEC-signed (null otherwise)
+     * @return The last time the zone was published on the DNS anycast cloud
      */
-    @JsonProperty("zskRRSIGRegenerationDate")
-    public LocalDateTime getZskRRSIGRegenerationDate() {
-        return zoneGetView.getZskRRSIGRegenerationDate();
+    @JsonProperty("lastPublishDate")
+    public LocalDateTime getLastPublishDate() {
+        return zoneGetView.getLastPublishDate();
 	}
 
     /**
