@@ -7,8 +7,8 @@ import ch.qos.logback.classic.Level;
 import com.discoverydns.dnsapiclient.DNSAPIClient;
 import com.discoverydns.dnsapiclient.DNSAPIClientFactory;
 import com.discoverydns.dnsapiclient.Response;
-import com.discoverydns.dnsapiclient.command.message.MessagePollCommand;
-import com.discoverydns.dnsapiclient.command.message.MessagePollResponse;
+import com.discoverydns.dnsapiclient.command.message.MessageGetCommand;
+import com.discoverydns.dnsapiclient.command.message.MessageGetResponse;
 import com.discoverydns.dnsapiclient.config.DNSAPIClientConfig;
 import com.discoverydns.dnsapiclient.config.DefaultSSLContextFactoryConfig;
 import com.discoverydns.dnsapiclient.config.DefaultTransactionLogHandlerConfig;
@@ -24,7 +24,7 @@ import com.discoverydns.dnsapiclient.example.ExampleDefaultTransactionLogHandler
  * 
  * @author Arnaud Dumont
  */
-public class MessagePollCommandExample {
+public class MessageGetCommandExample {
 
 	public static void main(String[] args) {
 		// Configure logging properties, using Logback
@@ -49,12 +49,12 @@ public class MessagePollCommandExample {
 		}
 
 		// Create command
-		final MessagePollCommand command = new MessagePollCommand.Builder()
-				.build();
+		final MessageGetCommand command = new MessageGetCommand.Builder()
+				.withId("<my-message-id>").build();
 
 		// Send command to server and receive response
 		try {
-			Response<MessagePollResponse> response = client.process(command);
+			Response<MessageGetResponse> response = client.process(command);
 
 			System.out.println("== Successful response ==");
 			System.out.println("== Server transaction id: "
@@ -64,39 +64,25 @@ public class MessagePollCommandExample {
 			System.out.println("== Processing time: "
 					+ response.getTransactionProcessingTime() + "ms");
 
-			System.out.println("Outstanding Message Count: "
-					+ response.getResponseObject()
-							.getOutstandingMessageCount());
 			// The response object can now be used
-			if (response.getResponseObject().getMessageRecord() == null) {
-				System.out.println("No message found");
-			} else {
-				System.out.println("URI: "
-						+ response.getResponseObject().getMessageRecord().getUri());
-				System.out.println("Message UUID: "
-						+ response.getResponseObject().getMessageRecord().getId());
-				System.out.println("Message code: "
-						+ response.getResponseObject().getMessageRecord()
-								.getMessageCode());
-				System.out.println("Target account UUID: "
-						+ response.getResponseObject().getMessageRecord()
-								.getTargetAccountId());
-				System.out.println("Message enqueue date: "
-						+ response.getResponseObject().getMessageRecord()
-								.getEnqueueDate());
-				System.out.println("Subject: "
-						+ response.getResponseObject().getMessageRecord()
-								.getSubject());
-				System.out.println("Message: "
-						+ response.getResponseObject().getMessageRecord()
-								.getMessage());
-				System.out.println("Parameters:");
-				for (Map.Entry<String, String> entry : response
-						.getResponseObject().getMessageRecord().getParameters()
-						.entrySet()) {
-					System.out.println("	Key: " + entry.getKey() + " Value: "
-							+ entry.getValue());
-				}
+			System.out.println("URI: " + response.getResponseObject().getURI());
+			System.out.println("Message UUID: "
+					+ response.getResponseObject().getId());
+			System.out.println("Message code: "
+					+ response.getResponseObject().getMessageCode());
+			System.out.println("Target account UUID: "
+					+ response.getResponseObject().getTargetAccountId());
+			System.out.println("Message enqueue date: "
+					+ response.getResponseObject().getEnqueueDate());
+			System.out.println("Subject: "
+					+ response.getResponseObject().getSubject());
+			System.out.println("Message: "
+					+ response.getResponseObject().getMessage());
+			System.out.println("Parameters:");
+			for (Map.Entry<String, String> entry : response.getResponseObject()
+					.getParameters().entrySet()) {
+				System.out.println("	Key: " + entry.getKey() + " Value: "
+						+ entry.getValue());
 			}
 		} catch (final Throwable e) {
 			e.printStackTrace();

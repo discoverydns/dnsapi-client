@@ -32,7 +32,7 @@ public class NameServerSetGetView {
 	private Set<NameServerInterface> nameServerInterfaceSetInterfaces;
 	@JsonProperty("name")
 	private String name;
-	@JsonProperty("email")
+	@JsonProperty("emailAddress")
 	private String email;
 	@JsonProperty("createAccountId")
 	private String createAccountId;

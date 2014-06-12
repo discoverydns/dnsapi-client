@@ -1,24 +1,28 @@
 package com.discoverydns.dnsapiclient.command.message;
 
-import com.discoverydns.dnsapiclient.internal.views.MessagePollView;
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import org.junit.Test;
+
+import com.discoverydns.dnsapiclient.internal.views.MessagePollView;
+
 public class MessagePollResponseTest {
-    @Test
-    public void shouldReturnExpectedResponse() throws Exception {
-        Long outstandingMessagesCount = 3L;
-        Message mockMessage = mock(Message.class);
-        MessagePollView mockMessagePollView = mock(MessagePollView.class);
-        when(mockMessagePollView.getMessage()).thenReturn(mockMessage);
-        when(mockMessagePollView.getOutstandingMessagesCount()).thenReturn(outstandingMessagesCount);
+	@Test
+	public void shouldReturnExpectedResponse() throws Exception {
+		Long outstandingMessagesCount = 3L;
+		MessageRecord mockMessage = mock(MessageRecord.class);
+		MessagePollView mockMessagePollView = mock(MessagePollView.class);
+		when(mockMessagePollView.getMessageRecord()).thenReturn(mockMessage);
+		when(mockMessagePollView.getOutstandingMessageCount()).thenReturn(
+				outstandingMessagesCount);
 
-        MessagePollResponse messagePollResponse = new MessagePollResponse(mockMessagePollView);
+		MessagePollResponse messagePollResponse = new MessagePollResponse(
+				mockMessagePollView);
 
-        assertEquals(outstandingMessagesCount, messagePollResponse.getOutstandingMessagesCount());
-        assertEquals(mockMessage, messagePollResponse.getMessage());
-    }
+		assertEquals(outstandingMessagesCount,
+				messagePollResponse.getOutstandingMessageCount());
+		assertEquals(mockMessage, messagePollResponse.getMessageRecord());
+	}
 }

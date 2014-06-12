@@ -1,4 +1,4 @@
-package com.discoverydns.dnsapiclient.internal.command.nameserverset;
+package com.discoverydns.dnsapiclient.internal.command.message;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
@@ -18,105 +18,102 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.discoverydns.dnsapiclient.command.nameServerSet.NameServerSetGetCommand;
-import com.discoverydns.dnsapiclient.command.nameServerSet.NameServerSetGetResponse;
+import com.discoverydns.dnsapiclient.command.message.MessageGetCommand;
+import com.discoverydns.dnsapiclient.command.message.MessageGetResponse;
 import com.discoverydns.dnsapiclient.exception.DNSAPIClientException;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.NameServerSetGetView;
+import com.discoverydns.dnsapiclient.internal.views.MessageGetView;
 import com.discoverydns.dnsapiclient.test.infrastructure.BaseExceptionMatcher;
 
 @RunWith(MockitoJUnitRunner.class)
-public class NameServerSetGetCommandHandlerTest {
+public class MessageGetCommandHandlerTest {
+
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
 	@Mock
 	private WebTarget mockBaseWebTarget;
 	@Mock
-	private WebTarget mockNameServerSetGetTarget;
+	private WebTarget mockMessageGetTarget;
 	@Mock
-	private NameServerSetGetCommand mockNameServerSetGetCommand;
+	private MessageGetCommand mockMessageGetCommand;
 	@Mock
 	private CommandMetaData mockCommandMetaData;
 
-	private NameServerSetGetCommandHandler nameServerSetGetCommandHandler;
+	private MessageGetCommandHandler messageGetCommandHandler;
 
 	@Before
 	public void setup() throws Throwable {
-		when(mockBaseWebTarget.path("nameserversets/{nameServerSetId}"))
-				.thenReturn(mockNameServerSetGetTarget);
+		when(mockBaseWebTarget.path("messages/{messageId}")).thenReturn(
+				mockMessageGetTarget);
 
-		nameServerSetGetCommandHandler = new NameServerSetGetCommandHandler(
+		messageGetCommandHandler = new MessageGetCommandHandler(
 				mockBaseWebTarget);
 	}
 
 	@Test
 	public void shouldInitialiseNameServerSetGetTarget() {
-		verify(mockBaseWebTarget).path("nameserversets/{nameServerSetId}");
+		verify(mockBaseWebTarget).path("messages/{messageId}");
 	}
 
 	@Test
 	public void shouldGetTargetRelativeToProvidedCommand() {
-		String idOrName = "idOrName";
-		when(mockNameServerSetGetCommand.getIdOrName()).thenReturn(idOrName);
+		String id = "<message-id>";
+		when(mockMessageGetCommand.getId()).thenReturn(id);
 		WebTarget resultingWebTarget = mock(WebTarget.class);
-		when(
-				mockNameServerSetGetTarget.resolveTemplate("nameServerSetId",
-						idOrName)).thenReturn(resultingWebTarget);
+		when(mockMessageGetTarget.resolveTemplate("messageId", id)).thenReturn(
+				resultingWebTarget);
 
-		assertEquals(resultingWebTarget,
-				nameServerSetGetCommandHandler.getWebTarget(
-						mockNameServerSetGetCommand, mockCommandMetaData));
+		assertEquals(resultingWebTarget, messageGetCommandHandler.getWebTarget(
+				mockMessageGetCommand, mockCommandMetaData));
 	}
 
 	@Test
 	public void shouldWrapExceptionOccurringDuringResolvingTemplate() {
-		String idOrName = "idOrName";
-		when(mockNameServerSetGetCommand.getIdOrName()).thenReturn(idOrName);
+		String id = "<message-id>";
+		when(mockMessageGetCommand.getId()).thenReturn(id);
 		RuntimeException mockRuntimeException = mock(RuntimeException.class);
-		when(
-				mockNameServerSetGetTarget.resolveTemplate("nameServerSetId",
-						idOrName)).thenThrow(mockRuntimeException);
+		when(mockMessageGetTarget.resolveTemplate("messageId", id)).thenThrow(
+				mockRuntimeException);
 
 		thrown.expect(new BaseExceptionMatcher(
 				DNSAPIClientException.class,
 				DNSAPIClientException.DNSAPIClientExceptionCode.requiredParameterMissing,
-				new Object[] { "idOrName" }, mockRuntimeException));
+				new Object[] { "id" }, mockRuntimeException));
 
-		nameServerSetGetCommandHandler.getWebTarget(
-				mockNameServerSetGetCommand, mockCommandMetaData);
+		messageGetCommandHandler.getWebTarget(mockMessageGetCommand,
+				mockCommandMetaData);
 	}
 
 	@Test
 	public void shouldReturnNoEntityInvocationBuilderFactory() {
-		assertThat(nameServerSetGetCommandHandler.getInvocationBuilderFactory(
-				mockNameServerSetGetCommand, mockCommandMetaData),
+		assertThat(messageGetCommandHandler.getInvocationBuilderFactory(
+				mockMessageGetCommand, mockCommandMetaData),
 				instanceOf(NoEntityInvocationBuilderFactory.class));
 	}
 
 	@Test
 	public void shouldReturnNoEntityInvocationBuildInvoker() {
-		assertThat(nameServerSetGetCommandHandler.getInvocationBuildInvoker(
-				mockNameServerSetGetCommand, mockCommandMetaData),
+		assertThat(messageGetCommandHandler.getInvocationBuildInvoker(
+				mockMessageGetCommand, mockCommandMetaData),
 				instanceOf(NoEntityInvocationBuildInvoker.class));
 	}
 
 	@Test
-	public void shouldReturnExpectedNameServerSetGetResponse() {
+	public void shouldReturnExpectedMessageGetResponse() {
 		Response mockRestResponse = mock(Response.class);
-		NameServerSetGetView mockNameServerSetGetView = mock(NameServerSetGetView.class);
+		MessageGetView mockMessageGetView = mock(MessageGetView.class);
 		when(mockRestResponse.hasEntity()).thenReturn(true);
-		when(mockRestResponse.readEntity(NameServerSetGetView.class))
-				.thenReturn(mockNameServerSetGetView);
+		when(mockRestResponse.readEntity(MessageGetView.class)).thenReturn(
+				mockMessageGetView);
 		String id = "id";
-		when(mockNameServerSetGetView.getId()).thenReturn(id);
+		when(mockMessageGetView.getId()).thenReturn(id);
 
-		NameServerSetGetResponse commandResponse = nameServerSetGetCommandHandler
+		MessageGetResponse commandResponse = messageGetCommandHandler
 				.getCommandResponse(mockRestResponse, mockCommandMetaData);
 
 		assertEquals(id, commandResponse.getId());
 	}
-
 }

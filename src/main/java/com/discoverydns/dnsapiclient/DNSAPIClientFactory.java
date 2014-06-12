@@ -22,6 +22,7 @@ import org.glassfish.jersey.client.spi.Connector;
 
 import com.discoverydns.dnsapiclient.command.account.AccountGetCommand;
 import com.discoverydns.dnsapiclient.command.message.MessageAcknowledgeCommand;
+import com.discoverydns.dnsapiclient.command.message.MessageGetCommand;
 import com.discoverydns.dnsapiclient.command.message.MessagePollCommand;
 import com.discoverydns.dnsapiclient.command.nameServerInterfaceSet.NameServerInterfaceSetGetCommand;
 import com.discoverydns.dnsapiclient.command.nameServerSet.NameServerSetGetCommand;
@@ -46,6 +47,7 @@ import com.discoverydns.dnsapiclient.framework.command.CommandProcessor;
 import com.discoverydns.dnsapiclient.framework.impl.basic.BasicCommandProcessor;
 import com.discoverydns.dnsapiclient.internal.command.account.AccountGetCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.message.MessageAcknowledgeCommandHandler;
+import com.discoverydns.dnsapiclient.internal.command.message.MessageGetCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.message.MessagePollCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.nameserverinterfaceset.NameServerInterfaceSetGetCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.nameserverset.NameServerSetGetCommandHandler;
@@ -71,74 +73,101 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 /**
  * The factory to create {@link DNSAPIClient} instances.
+ * 
  * @author Chris Wright
  */
 public class DNSAPIClientFactory {
-    /**
-     * Creates a {@link DNSAPIClient} instance from the given {@link com.discoverydns.dnsapiclient.config.DNSAPIClientConfig} configuration.
-     * The given {@link SSLContextFactory} will be used to create {@link SSLContext} instances,
-     * to establish secure communications between the {@link DNSAPIClient} instances and the DNSAPI server.
-     * The given {@link ObjectMapperFactory} will be used to create {@link ObjectMapper} instances,
-     * used by the created {@link DNSAPIClient} instances to serialize/deserialize the JSON data
-     * sent to/coming from the DNSAPI server.
-     * The given {@link ClientTransactionIdStrategy} used by the framework when a command is sent to the DNSAPI server,
-     * to generate a client transaction id to be put in the meta-data.
-     * The given {@link TransactionLogHandler} will be used for transaction logging.
-     * @param config The configuration to be used to create the instance
-     * @param sslContextFactory The {@link SSLContextFactory} to be used
-     * @param objectMapperFactory The {@link ObjectMapperFactory} to be used
-     * @param clientTransactionIdStrategy The {@link ClientTransactionIdStrategy} to be used
-     * @param transactionLogHandler The {@link TransactionLogHandler} to be used for transaction logging
-     * @return The created {@link DNSAPIClient} instance
-     * @throws Exception In case of any error
-     */
+	/**
+	 * Creates a {@link DNSAPIClient} instance from the given
+	 * {@link com.discoverydns.dnsapiclient.config.DNSAPIClientConfig}
+	 * configuration. The given {@link SSLContextFactory} will be used to create
+	 * {@link SSLContext} instances, to establish secure communications between
+	 * the {@link DNSAPIClient} instances and the DNSAPI server. The given
+	 * {@link ObjectMapperFactory} will be used to create {@link ObjectMapper}
+	 * instances, used by the created {@link DNSAPIClient} instances to
+	 * serialize/deserialize the JSON data sent to/coming from the DNSAPI
+	 * server. The given {@link ClientTransactionIdStrategy} used by the
+	 * framework when a command is sent to the DNSAPI server, to generate a
+	 * client transaction id to be put in the meta-data. The given
+	 * {@link TransactionLogHandler} will be used for transaction logging.
+	 * 
+	 * @param config
+	 *            The configuration to be used to create the instance
+	 * @param sslContextFactory
+	 *            The {@link SSLContextFactory} to be used
+	 * @param objectMapperFactory
+	 *            The {@link ObjectMapperFactory} to be used
+	 * @param clientTransactionIdStrategy
+	 *            The {@link ClientTransactionIdStrategy} to be used
+	 * @param transactionLogHandler
+	 *            The {@link TransactionLogHandler} to be used for transaction
+	 *            logging
+	 * @return The created {@link DNSAPIClient} instance
+	 * @throws Exception
+	 *             In case of any error
+	 */
 	public DNSAPIClient createInstance(final DNSAPIClientConfig config,
-                                       final SSLContextFactory sslContextFactory,
-                                       final ObjectMapperFactory objectMapperFactory,
-                                       final ClientTransactionIdStrategy clientTransactionIdStrategy,
-                                       final TransactionLogHandler transactionLogHandler) throws Exception {
+			final SSLContextFactory sslContextFactory,
+			final ObjectMapperFactory objectMapperFactory,
+			final ClientTransactionIdStrategy clientTransactionIdStrategy,
+			final TransactionLogHandler transactionLogHandler) throws Exception {
 		final ObjectMapper mapper = objectMapperFactory.createInstance();
-		final Client client = createRESTClient(config, mapper, sslContextFactory);
+		final Client client = createRESTClient(config, mapper,
+				sslContextFactory);
 
 		final WebTarget baseWebTarget = client.target(config.getBaseUri());
-        final BlockingCommandExecutor blockingCommandExecutor =
-                createBlockingCommandExecutor(clientTransactionIdStrategy,
-                        transactionLogHandler, baseWebTarget);
+		final BlockingCommandExecutor blockingCommandExecutor = createBlockingCommandExecutor(
+				clientTransactionIdStrategy, transactionLogHandler,
+				baseWebTarget);
 
 		return new DNSAPIClient(client, blockingCommandExecutor);
 	}
 
-    /**
-     * Convenience method to create a {@link DNSAPIClient} instance from the given {@link DNSAPIClientConfig} configuration,
-     * using all the dependencies' default implementations.
-     * A {@link DefaultSSLContextFactory} will be used as the {@link SSLContextFactory},
-     * using the KeyStore and TrustStore files provided in the given {@link DefaultSSLContextFactoryConfig}.
-     * A {@link DefaultObjectMapperFactory} will be used as the {@link ObjectMapperFactory}.
-     * A {@link DefaultClientTransactionIdStrategy} will be used as the {@link ClientTransactionIdStrategy}.
-     * A {@link DefaultTransactionLogHandler} will be used as the {@link TransactionLogHandler},
-     * using the log files provided in the given {@link DefaultTransactionLogHandlerConfig}.
-     * @param config The configuration to be used to create the instance
-     * @param defaultSSLContextFactoryConfig The config that will be used by the instantiated {@link DefaultSSLContextFactory}.
-     * @param defaultTransactionLogHandlerConfig The config that will be used by the instantiated {@link DefaultTransactionLogHandler}.
-     * @return The created {@link DNSAPIClient} instance
-     * @throws Exception In case of any error
-     */
-    public DNSAPIClient createInstanceFromDefaultProviders(final DNSAPIClientConfig config,
-                                                           final DefaultSSLContextFactoryConfig defaultSSLContextFactoryConfig,
-                                                           final DefaultTransactionLogHandlerConfig defaultTransactionLogHandlerConfig)
-            throws Exception {
-        DefaultObjectMapperFactory objectMapperFactory = new DefaultObjectMapperFactory();
-        return createInstance(config,
-                new DefaultSSLContextFactory(defaultSSLContextFactoryConfig),
-                objectMapperFactory,
-                new DefaultClientTransactionIdStrategy(),
-                new DefaultTransactionLogHandler(defaultTransactionLogHandlerConfig,
-                        objectMapperFactory.createInstance()));
-    }
+	/**
+	 * Convenience method to create a {@link DNSAPIClient} instance from the
+	 * given {@link DNSAPIClientConfig} configuration, using all the
+	 * dependencies' default implementations. A {@link DefaultSSLContextFactory}
+	 * will be used as the {@link SSLContextFactory}, using the KeyStore and
+	 * TrustStore files provided in the given
+	 * {@link DefaultSSLContextFactoryConfig}. A
+	 * {@link DefaultObjectMapperFactory} will be used as the
+	 * {@link ObjectMapperFactory}. A {@link DefaultClientTransactionIdStrategy}
+	 * will be used as the {@link ClientTransactionIdStrategy}. A
+	 * {@link DefaultTransactionLogHandler} will be used as the
+	 * {@link TransactionLogHandler}, using the log files provided in the given
+	 * {@link DefaultTransactionLogHandlerConfig}.
+	 * 
+	 * @param config
+	 *            The configuration to be used to create the instance
+	 * @param defaultSSLContextFactoryConfig
+	 *            The config that will be used by the instantiated
+	 *            {@link DefaultSSLContextFactory}.
+	 * @param defaultTransactionLogHandlerConfig
+	 *            The config that will be used by the instantiated
+	 *            {@link DefaultTransactionLogHandler}.
+	 * @return The created {@link DNSAPIClient} instance
+	 * @throws Exception
+	 *             In case of any error
+	 */
+	public DNSAPIClient createInstanceFromDefaultProviders(
+			final DNSAPIClientConfig config,
+			final DefaultSSLContextFactoryConfig defaultSSLContextFactoryConfig,
+			final DefaultTransactionLogHandlerConfig defaultTransactionLogHandlerConfig)
+			throws Exception {
+		DefaultObjectMapperFactory objectMapperFactory = new DefaultObjectMapperFactory();
+		return createInstance(
+				config,
+				new DefaultSSLContextFactory(defaultSSLContextFactoryConfig),
+				objectMapperFactory,
+				new DefaultClientTransactionIdStrategy(),
+				new DefaultTransactionLogHandler(
+						defaultTransactionLogHandlerConfig, objectMapperFactory
+								.createInstance()));
+	}
 
 	private Client createRESTClient(final DNSAPIClientConfig config,
-                                    final ObjectMapper mapper,
-                                    final SSLContextFactory sslContextFactory) throws Exception {
+			final ObjectMapper mapper, final SSLContextFactory sslContextFactory)
+			throws Exception {
 		final JacksonJsonProvider jacksonJsonProvider = new ErrorHandlingJacksonJsonProvider(
 				mapper);
 
@@ -160,7 +189,7 @@ public class DNSAPIClientFactory {
 		final ClientBuilder clientBuilder = ClientBuilder.newBuilder();
 		clientBuilder.withConfig(clientConfig);
 
-        return clientBuilder.build();
+		return clientBuilder.build();
 	}
 
 	private ClientConfig createClientConfig(final DNSAPIClientConfig config,
@@ -201,7 +230,7 @@ public class DNSAPIClientFactory {
 	}
 
 	private HttpParams createHttpParams() {
-        return new BasicHttpParams();
+		return new BasicHttpParams();
 	}
 
 	private SchemeRegistry createSchemeRegistry(
@@ -225,65 +254,66 @@ public class DNSAPIClientFactory {
 		return port;
 	}
 
-    private BlockingCommandExecutor createBlockingCommandExecutor(
-            ClientTransactionIdStrategy clientTransactionIdStrategy,
-            TransactionLogHandler transactionLogHandler, WebTarget baseWebTarget) {
-        final CommandProcessor commandProcessor = new BasicCommandProcessor();
-        // UserCommands
-        commandProcessor.subscribe(UserGetCommand.class,
-                new UserGetCommandHandler(baseWebTarget));
-        commandProcessor.subscribe(UserListCommand.class,
-                new UserListCommandHandler(baseWebTarget));
-        // PlanCommands
-        commandProcessor.subscribe(PlanGetCommand.class,
-                new PlanGetCommandHandler(baseWebTarget));
-        commandProcessor.subscribe(PlanListCommand.class,
-                new PlanListCommandHandler(baseWebTarget));
-        // NameServerSetCommands
-        commandProcessor.subscribe(NameServerSetGetCommand.class,
-                new NameServerSetGetCommandHandler(baseWebTarget));
-        commandProcessor.subscribe(NameServerSetListCommand.class,
-                new NameServerSetListCommandHandler(baseWebTarget));
-        // NameServerInterfaceSetCommands
-        commandProcessor.subscribe(NameServerInterfaceSetGetCommand.class,
-                new NameServerInterfaceSetGetCommandHandler(baseWebTarget));
-        // AccountCommands
-        commandProcessor.subscribe(AccountGetCommand.class,
-                new AccountGetCommandHandler(baseWebTarget));
-        // ZoneCommands
-        commandProcessor.subscribe(ZoneGetCommand.class,
-                new ZoneGetCommandHandler(baseWebTarget));
-        commandProcessor.subscribe(ZoneListCommand.class,
-                new ZoneListCommandHandler(baseWebTarget));
-        commandProcessor.subscribe(ZoneCreateCommand.class,
-                new ZoneCreateCommandHandler(baseWebTarget));
-        commandProcessor.subscribe(ZoneUpdateCommand.class,
-                new ZoneUpdateCommandHandler(baseWebTarget));
-        commandProcessor.subscribe(ZoneUpdateResourceRecordsCommand.class,
-                new ZoneUpdateResourceRecordsCommandHandler(baseWebTarget));
-        commandProcessor.subscribe(ZoneDeleteCommand.class,
-                new ZoneDeleteCommandHandler(baseWebTarget));
-        commandProcessor.subscribe(ZoneGetQueryUsageCommand.class,
-                new ZoneGetQueryUsageCommandHandler(baseWebTarget));
-        commandProcessor.subscribe(ZoneGetZoneFileCommand.class,
-        		new ZoneGetZoneFileCommandHandler(baseWebTarget));
-        //MessageCommands
-        commandProcessor.subscribe(MessagePollCommand.class,
-                new MessagePollCommandHandler(baseWebTarget));
-        commandProcessor.subscribe(MessageAcknowledgeCommand.class,
-                new MessageAcknowledgeCommandHandler(baseWebTarget));
+	private BlockingCommandExecutor createBlockingCommandExecutor(
+			ClientTransactionIdStrategy clientTransactionIdStrategy,
+			TransactionLogHandler transactionLogHandler, WebTarget baseWebTarget) {
+		final CommandProcessor commandProcessor = new BasicCommandProcessor();
+		// UserCommands
+		commandProcessor.subscribe(UserGetCommand.class,
+				new UserGetCommandHandler(baseWebTarget));
+		commandProcessor.subscribe(UserListCommand.class,
+				new UserListCommandHandler(baseWebTarget));
+		// PlanCommands
+		commandProcessor.subscribe(PlanGetCommand.class,
+				new PlanGetCommandHandler(baseWebTarget));
+		commandProcessor.subscribe(PlanListCommand.class,
+				new PlanListCommandHandler(baseWebTarget));
+		// NameServerSetCommands
+		commandProcessor.subscribe(NameServerSetGetCommand.class,
+				new NameServerSetGetCommandHandler(baseWebTarget));
+		commandProcessor.subscribe(NameServerSetListCommand.class,
+				new NameServerSetListCommandHandler(baseWebTarget));
+		// NameServerInterfaceSetCommands
+		commandProcessor.subscribe(NameServerInterfaceSetGetCommand.class,
+				new NameServerInterfaceSetGetCommandHandler(baseWebTarget));
+		// AccountCommands
+		commandProcessor.subscribe(AccountGetCommand.class,
+				new AccountGetCommandHandler(baseWebTarget));
+		// ZoneCommands
+		commandProcessor.subscribe(ZoneGetCommand.class,
+				new ZoneGetCommandHandler(baseWebTarget));
+		commandProcessor.subscribe(ZoneListCommand.class,
+				new ZoneListCommandHandler(baseWebTarget));
+		commandProcessor.subscribe(ZoneCreateCommand.class,
+				new ZoneCreateCommandHandler(baseWebTarget));
+		commandProcessor.subscribe(ZoneUpdateCommand.class,
+				new ZoneUpdateCommandHandler(baseWebTarget));
+		commandProcessor.subscribe(ZoneUpdateResourceRecordsCommand.class,
+				new ZoneUpdateResourceRecordsCommandHandler(baseWebTarget));
+		commandProcessor.subscribe(ZoneDeleteCommand.class,
+				new ZoneDeleteCommandHandler(baseWebTarget));
+		commandProcessor.subscribe(ZoneGetQueryUsageCommand.class,
+				new ZoneGetQueryUsageCommandHandler(baseWebTarget));
+		commandProcessor.subscribe(ZoneGetZoneFileCommand.class,
+				new ZoneGetZoneFileCommandHandler(baseWebTarget));
+		// MessageCommands
+		commandProcessor.subscribe(MessagePollCommand.class,
+				new MessagePollCommandHandler(baseWebTarget));
+		commandProcessor.subscribe(MessageGetCommand.class,
+				new MessageGetCommandHandler(baseWebTarget));
+		commandProcessor.subscribe(MessageAcknowledgeCommand.class,
+				new MessageAcknowledgeCommandHandler(baseWebTarget));
 
-        // Interceptors
-        commandProcessor
-                .addCommandInterceptor(new TransactionLogCommandInterceptor(
-                        transactionLogHandler));
-        commandProcessor
-                .addCommandInterceptor(new ClientTransactionIdCommandInterceptor(
-                        clientTransactionIdStrategy));
-        commandProcessor
-                .addCommandInterceptor(new StopwatchCommandInterceptor());
+		// Interceptors
+		commandProcessor
+				.addCommandInterceptor(new TransactionLogCommandInterceptor(
+						transactionLogHandler));
+		commandProcessor
+				.addCommandInterceptor(new ClientTransactionIdCommandInterceptor(
+						clientTransactionIdStrategy));
+		commandProcessor
+				.addCommandInterceptor(new StopwatchCommandInterceptor());
 
-        return new BlockingCommandExecutor(
-                commandProcessor);
-    }
+		return new BlockingCommandExecutor(commandProcessor);
+	}
 }

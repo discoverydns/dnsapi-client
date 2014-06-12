@@ -1,58 +1,71 @@
 package com.discoverydns.dnsapiclient.internal.command.message;
 
-import com.discoverydns.dnsapiclient.command.message.MessageAcknowledgeCommand;
-import com.discoverydns.dnsapiclient.command.message.MessageAcknowledgeResponse;
-import com.discoverydns.dnsapiclient.exception.DNSAPIClientException;
-import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
-import com.discoverydns.dnsapiclient.internal.command.*;
-import com.discoverydns.dnsapiclient.internal.views.MessageAcknowledgeView;
-
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-public class MessageAcknowledgeCommandHandler extends
-        BaseRestCommandHandler<MessageAcknowledgeCommand, MessageAcknowledgeResponse> {
+import com.discoverydns.dnsapiclient.command.message.MessageAcknowledgeCommand;
+import com.discoverydns.dnsapiclient.command.message.MessageAcknowledgeResponse;
+import com.discoverydns.dnsapiclient.exception.DNSAPIClientException;
+import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
+import com.discoverydns.dnsapiclient.internal.command.BaseRestCommandHandler;
+import com.discoverydns.dnsapiclient.internal.command.InvocationBuildInvoker;
+import com.discoverydns.dnsapiclient.internal.command.InvocationBuilderFactory;
+import com.discoverydns.dnsapiclient.internal.command.Method;
+import com.discoverydns.dnsapiclient.internal.command.WithEntityInvocationBuildInvoker;
+import com.discoverydns.dnsapiclient.internal.command.WithEntityInvocationBuilderFactory;
+import com.discoverydns.dnsapiclient.internal.views.MessageAcknowledgeView;
+import com.discoverydns.dnsapiclient.internal.views.MessageGetView;
 
-    private final WebTarget messageAcknowledgeTarget;
+public class MessageAcknowledgeCommandHandler
+		extends
+		BaseRestCommandHandler<MessageAcknowledgeCommand, MessageAcknowledgeResponse> {
 
-    public MessageAcknowledgeCommandHandler(final WebTarget baseWebTarget) {
-        super(Method.PUT, Response.Status.NO_CONTENT.getStatusCode(),
-                MediaType.APPLICATION_JSON_TYPE);
-        this.messageAcknowledgeTarget = baseWebTarget.path("messages/{messageId}/acknowledge");
-    }
+	private final WebTarget messageAcknowledgeTarget;
 
-    @Override
-    public WebTarget getWebTarget(MessageAcknowledgeCommand command, CommandMetaData commandMetaData) {
-        WebTarget webTarget;
-        try {
-            webTarget = messageAcknowledgeTarget.resolveTemplate("messageId",
-                    command.getId());
-        } catch (Throwable t) {
-            throw new DNSAPIClientException(
-                    DNSAPIClientException.DNSAPIClientExceptionCode.requiredParameterMissing, t, "id");
-        }
-        return webTarget;
-    }
+	public MessageAcknowledgeCommandHandler(final WebTarget baseWebTarget) {
+		super(Method.PUT, Response.Status.OK.getStatusCode(),
+				MediaType.APPLICATION_JSON_TYPE);
+		this.messageAcknowledgeTarget = baseWebTarget
+				.path("messages/{messageId}/acknowledge");
+	}
 
-    @Override
-    public InvocationBuilderFactory getInvocationBuilderFactory(
-            final MessageAcknowledgeCommand command,
-            final CommandMetaData commandMetaData) {
-        return new WithEntityInvocationBuilderFactory(
-                MediaType.APPLICATION_JSON_TYPE);
-    }
+	@Override
+	public WebTarget getWebTarget(MessageAcknowledgeCommand command,
+			CommandMetaData commandMetaData) {
+		WebTarget webTarget;
+		try {
+			webTarget = messageAcknowledgeTarget.resolveTemplate("messageId",
+					command.getId());
+		} catch (Throwable t) {
+			throw new DNSAPIClientException(
+					DNSAPIClientException.DNSAPIClientExceptionCode.requiredParameterMissing,
+					t, "id");
+		}
+		return webTarget;
+	}
 
-    @Override
-    public InvocationBuildInvoker getInvocationBuildInvoker(
-            final MessageAcknowledgeCommand command,
-            final CommandMetaData commandMetaData) {
-        return new WithEntityInvocationBuildInvoker<MessageAcknowledgeView>(
-                new MessageAcknowledgeView());
-    }
+	@Override
+	public InvocationBuilderFactory getInvocationBuilderFactory(
+			final MessageAcknowledgeCommand command,
+			final CommandMetaData commandMetaData) {
+		return new WithEntityInvocationBuilderFactory(
+				MediaType.APPLICATION_JSON_TYPE);
+	}
 
-    @Override
-    public MessageAcknowledgeResponse getCommandResponse(Response restResponse, CommandMetaData commandMetaData) {
-        return new MessageAcknowledgeResponse();
-    }
+	@Override
+	public InvocationBuildInvoker getInvocationBuildInvoker(
+			final MessageAcknowledgeCommand command,
+			final CommandMetaData commandMetaData) {
+		return new WithEntityInvocationBuildInvoker<MessageAcknowledgeView>(
+				new MessageAcknowledgeView());
+	}
+
+	@Override
+	public MessageAcknowledgeResponse getCommandResponse(Response restResponse,
+			CommandMetaData commandMetaData) {
+		final MessageGetView messageGetView = getResponseEntity(
+				MessageGetView.class, restResponse);
+		return new MessageAcknowledgeResponse(messageGetView);
+	}
 }

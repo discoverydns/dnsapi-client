@@ -1,21 +1,21 @@
 package com.discoverydns.dnsapiclient.internal.views;
 
-import com.discoverydns.dnsapiclient.command.message.Message;
+import com.discoverydns.dnsapiclient.command.message.MessageRecord;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("messagePoll")
 public class MessagePollView {
-    @JsonProperty("message")
-    private Message message;
-    @JsonProperty("outstandingMessagesCount")
-    private Long outstandingMessagesCount;
+	@JsonProperty("message")
+	private MessageRecord messageRecord;
+	@JsonProperty("outstandingMessageCount")
+	private Long outstandingMessageCount;
 
-    public Message getMessage() {
-        return message;
-    }
+	public MessageRecord getMessageRecord() {
+		return messageRecord;
+	}
 
-    public Long getOutstandingMessagesCount() {
-        return outstandingMessagesCount;
-    }
+	public Long getOutstandingMessageCount() {
+		return outstandingMessageCount;
+	}
 }
