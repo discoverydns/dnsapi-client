@@ -72,6 +72,8 @@ public class MessageGetCommandExample {
 					+ response.getResponseObject().getMessageCode());
 			System.out.println("Target account UUID: "
 					+ response.getResponseObject().getTargetAccountId());
+			System.out.println("Target account name: "
+					+ response.getResponseObject().getTargetAccountName());
 			System.out.println("Message enqueue date: "
 					+ response.getResponseObject().getEnqueueDate());
 			System.out.println("Subject: "
@@ -83,6 +85,18 @@ public class MessageGetCommandExample {
 					.getParameters().entrySet()) {
 				System.out.println("	Key: " + entry.getKey() + " Value: "
 						+ entry.getValue());
+			}
+            if (response.getResponseObject().getAcknowledgeDate() != null) {
+                System.out.println("Message acknowledge date: "
+                        + response.getResponseObject().getAcknowledgeDate());
+            }
+            if (response.getResponseObject().getAcknowledgeByUserId() != null) {
+                System.out.println("Message acknowledge by user id: "
+                        + response.getResponseObject().getAcknowledgeByUserId());
+            }
+            if (response.getResponseObject().getAcknowledgeByUserName() != null) {
+                System.out.println("Message acknowledge by user name: "
+                        + response.getResponseObject().getAcknowledgeByUserName());
 			}
 		} catch (final Throwable e) {
 			e.printStackTrace();
