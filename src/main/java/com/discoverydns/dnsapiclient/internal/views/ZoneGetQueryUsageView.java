@@ -7,11 +7,11 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import java.net.URI;
 import java.util.List;
 
-@JsonRootName("queryUsage")
+@JsonRootName("zoneGetQueryUsage")
 public class ZoneGetQueryUsageView {
     @JsonProperty("@uri")
     private URI uri;
-    @JsonProperty("queryUsageRecords")
+    @JsonProperty("zoneQueryUsageRecords")
     public List<ZoneQueryUsageRecord> zoneQueryUsageRecords;
     @JsonProperty("totalRecordCount")
     public long totalRecordCount;
