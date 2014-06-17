@@ -68,6 +68,8 @@ public class NameServerSetGetCommandExample {
                     + response.getResponseObject().getNameServerInterfaceSetId());
             System.out.println("NameServerSet associated NameServerInterfaceSet name: "
                     + response.getResponseObject().getNameServerInterfaceSetName());
+            System.out.println("NameServerSet associated NameServerInterfaceSet status: "
+                    + response.getResponseObject().getNameServerInterfaceSetStatus());
             for (NameServerInterface nameServerInterface :
                     response.getResponseObject().getNameServerInterfaceSetInterfaces()) {
                 System.out.println("-- Associated NameServerInterfaceSet's NameServerInterface:");

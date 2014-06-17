@@ -11,6 +11,7 @@ public class ZoneListCommandTest {
         String searchName = "searchName";
         String searchNameServerInterfaceSetId = "searchNameServerInterfaceSetId";
         String searchNameServerSetId = "searchNameServerSetId";
+        String searchPlanId = "searchPlanId";
         String searchGroup = "searchGroup";
         Boolean searchBrandedNameServers = true;
         Boolean searchDNSSECSigned = false;
@@ -19,6 +20,7 @@ public class ZoneListCommandTest {
                         .withSearchName(searchName)
                         .withSearchNameServerInterfaceSetId(searchNameServerInterfaceSetId)
                         .withSearchNameServerSetId(searchNameServerSetId)
+                        .withSearchPlanId(searchPlanId)
                         .withSearchGroup(searchGroup)
                         .withSearchBrandedNameServers(searchBrandedNameServers)
                         .withSearchDNSSECSigned(searchDNSSECSigned)
@@ -29,6 +31,8 @@ public class ZoneListCommandTest {
                 command.getSearchNameServerInterfaceSetId());
         assertEquals(searchNameServerSetId,
                 command.getSearchNameServerSetId());
+        assertEquals(searchPlanId,
+                command.getSearchPlanId());
         assertEquals(searchGroup, command.getSearchGroup());
         assertEquals(searchBrandedNameServers, command.getSearchBrandedNameServers());
         assertEquals(searchDNSSECSigned, command.getSearchDNSSECSigned());

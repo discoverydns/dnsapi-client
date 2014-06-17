@@ -24,8 +24,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  */
 @JsonRootName("ZoneGetResponse")
 @JsonPropertyOrder({ "@uri", "id", "version", "name", "serial",
-		"brandedNameServers", "dnssecSigned", "nameServerSetId",
-		"nameServerSetName", "nameServerInterfaceSetId",
+		"brandedNameServers", "dnssecSigned", "zskRollOverState",
+        "pendingOperation", "lastPublishDate",
+        "nameServerSetId", "nameServerSetName", "nameServerInterfaceSetId",
 		"nameServerInterfaceSetName", "planId", "planName", "group",
 		"sponsorAccountId", "sponsorAccountIdentifier", "createDate",
 		"createAccountId", "createAccountIdentifier", "createUserId",
@@ -104,6 +105,36 @@ public class ZoneGetResponse {
 	@JsonProperty("dnssecSigned")
 	public Boolean getDNSSECSigned() {
 		return zoneGetView.getDNSSECSigned();
+	}
+
+    /**
+     * This returns the state of the zone in the ZSK roll over process.
+     * This process enables the zone's Zone Signing Keys to be replaced after a certain period of time, for security purpose.
+     * The value returned can either be:
+     *     - "scheduled": the process has not started yet, but will start on "zskNextActionDate".
+     *     - "stage1": the new ZSK has been generated and added to the zone, but will only be used on "zskNextActionDate".
+     *     - "stage2": the new ZSK is now in use and the old one is not anymore. The latter will be definitely deleted on "zskNextActionDate".
+     * @return The state of the zone in the ZSK roll over process ("scheduled", "stage1" or "stage2"), if the zone is DNSSEC-signed (null otherwise)
+     */
+    @JsonProperty("zskRollOverState")
+    public String getZskRollOverState() {
+        return zoneGetView.getZskRollOverState();
+    }
+
+    /**
+     * @return The pending operation that will soon be actioned on the zone ('zoneSigning', 'zoneUnSigning' or 'delete'), or 'none'
+     */
+    @JsonProperty("pendingOperation")
+    public String getPendingOperation() {
+        return zoneGetView.getPendingOperation();
+    }
+
+    /**
+     * @return The last time the zone was published on the DNS anycast cloud
+     */
+    @JsonProperty("lastPublishDate")
+    public LocalDateTime getLastPublishDate() {
+        return zoneGetView.getLastPublishDate();
 	}
 
     /**

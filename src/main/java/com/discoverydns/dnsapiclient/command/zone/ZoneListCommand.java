@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  * @author Chris Wright
  */
 @JsonRootName("ZoneListCommand")
-@JsonPropertyOrder({ "searchName", "searchGroup",
+@JsonPropertyOrder({ "searchName", "searchNameSearchType","searchGroup",
 		"searchNameServerInterfaceSetId", "searchNameServerSetId",
 		"searchBrandedNameServers", "searchDNSSECSigned" })
 public class ZoneListCommand {
@@ -27,6 +27,8 @@ public class ZoneListCommand {
 	private String searchNameServerInterfaceSetId;
 	@JsonProperty("searchNameServerSetId")
 	private String searchNameServerSetId;
+	@JsonProperty("searchPlanId")
+	private String searchPlanId;
 	@JsonProperty("searchGroup")
 	private String searchGroup;
 	@JsonProperty("searchBrandedNameServers")
@@ -42,6 +44,7 @@ public class ZoneListCommand {
 		private String searchNameSearchType;
 		private String searchNameServerInterfaceSetId;
 		private String searchNameServerSetId;
+		private String searchPlanId;
 		private String searchGroup;
 		private Boolean searchBrandedNameServers;
 		private Boolean searchDNSSECSigned;
@@ -112,6 +115,20 @@ public class ZoneListCommand {
 		}
 
 		/**
+		 * Sets the UUID of the Plan that the Zones to look for are
+		 * associated with.
+		 *
+		 * @param searchPlanId
+		 *            The UUID of the associated Plan
+		 * @return The {@link Builder}
+		 */
+		public Builder withSearchPlanId(
+				final String searchPlanId) {
+			this.searchPlanId = searchPlanId;
+			return this;
+		}
+
+		/**
 		 * Sets if the Zones to look for use branded nameServers.
 		 * 
 		 * @param searchBrandedNameServers
@@ -151,6 +168,7 @@ public class ZoneListCommand {
 			zoneListCommand.searchGroup = searchGroup;
 			zoneListCommand.searchNameServerInterfaceSetId = searchNameServerInterfaceSetId;
 			zoneListCommand.searchNameServerSetId = searchNameServerSetId;
+			zoneListCommand.searchPlanId = searchPlanId;
 			zoneListCommand.searchBrandedNameServers = searchBrandedNameServers;
 			zoneListCommand.searchDNSSECSigned = searchDNSSECSigned;
 
@@ -190,6 +208,14 @@ public class ZoneListCommand {
 	 */
 	public String getSearchNameServerSetId() {
 		return searchNameServerSetId;
+	}
+
+	/**
+	 * @return The UUID of the Plan associated to the Zones to look
+	 *         for, set on the command.
+	 */
+	public String getSearchPlanId() {
+		return searchPlanId;
 	}
 
 	/**

@@ -26,6 +26,8 @@ public class NameServerSetGetView {
 	private String nameServerInterfaceSetId;
 	@JsonProperty("nameServerInterfaceSetName")
 	private String nameServerInterfaceSetName;
+	@JsonProperty("nameServerInterfaceSetStatus")
+	private String nameServerInterfaceSetStatus;
 	@JsonProperty("nameServerInterfaceSetInterfaces")
 	private Set<NameServerInterface> nameServerInterfaceSetInterfaces;
 	@JsonProperty("name")
@@ -79,6 +81,10 @@ public class NameServerSetGetView {
 
 	public String getNameServerInterfaceSetName() {
 		return nameServerInterfaceSetName;
+	}
+
+	public String getNameServerInterfaceSetStatus() {
+		return nameServerInterfaceSetStatus;
 	}
 
 	public Set<NameServerInterface> getNameServerInterfaceSetInterfaces() {

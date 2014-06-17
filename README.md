@@ -1,6 +1,12 @@
 ## Introduction
 
-This project is part of the [DiscoveryDNS](http://www.discoverydns.com) solution. It is a client to the DiscoveryDNS Server REST API.
+This project is part of the [DiscoveryDNS](http://www.discoverydns.com) solution. It is a Java client to the DiscoveryDNS Server REST API.
+
+## API Description
+
+The details of the DiscoveryDNS REST API commands and responses can be found in the ["doc/DDNS - DiscoveryDNS API - v1.6.pdf"](http://discoverydns.github.io/dnsapi-client/doc/DDNS%20-%20DiscoveryDNS%20API%20-%20v1.6.pdf) document.
+
+If you want to develop a client to the API in a language different from Java, you will have to consult this document to find out what REST calls are to be implemented and what responses are to be expected.
 
 ## License
 
@@ -16,7 +22,7 @@ The prefered way is to use your build's dependency management tool to automatica
 
 * groupId: `com.discoverydns.dnsapi`
 * artifactId: `dnsapi-client`
-* version: `1.0.4`
+* version: `1.2.0`
 
 For example (using Maven):
 
@@ -24,7 +30,7 @@ For example (using Maven):
        <dependency>
           <groupId>com.discoverydns.dnsapi</groupId>
           <artifactId>dnsapi-client</artifactId>
-          <version>1.0.4</version>
+          <version>1.2.0</version>
        </dependency>
     </dependencies>
 
@@ -60,10 +66,6 @@ Please consult the sources in the `com.discoverydns.dnsapiclient.example` packag
                 * A [DefaultClientTransactionIdStrategy](http://discoverydns.github.io/dnsapi-client/javadoc/com/discoverydns/dnsapiclient/DefaultClientTransactionIdStrategy.html) will then be automatically provided, using random UUID strings as client transaction Ids.
 * Once the client is created, you can use it to send the commands to the server, thanks to its `process` method. The client is thread safe, and one client can be shared by many threads, however it can only execute one outstanding command per http connection configured.
 * Then simply follow the examples from the `com.discoverydns.dnsapiclient.example` package to see how to create and execute each command object.
-
-## API Description
-
-Please consult the ["doc/DDNS - DiscoveryDNS API - v1.4.pdf"](http://discoverydns.github.io/dnsapi-client/doc/DDNS%20-%20DiscoveryDNS%20API%20-%20v1.4.pdf) document for a full description of all possible REST requests and responses.
 
 ## Contribute
 

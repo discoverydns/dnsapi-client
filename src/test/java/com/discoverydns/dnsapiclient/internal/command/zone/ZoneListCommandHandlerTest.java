@@ -91,6 +91,19 @@ public class ZoneListCommandHandlerTest {
         verify(mockZoneListTarget).queryParam("searchNameServerSetId",
                 searchNameServerSetId);
     }
+
+    @Test
+    public void shouldAddSearchPlanIdAsQueryParamIfNotNull() {
+        String searchPlanId = "searchPlanId";
+        when(mockZoneListCommand.getSearchPlanId())
+                .thenReturn(searchPlanId);
+
+        zoneListCommandHandler.getWebTarget(
+                mockZoneListCommand, mockCommandMetaData);
+
+        verify(mockZoneListTarget).queryParam("searchPlanId",
+                searchPlanId);
+    }
     
     @Test
     public void shouldAddSearchGroupAsQueryParamIfNotNull() {

@@ -49,6 +49,11 @@ public class ZoneListCommandHandler extends
 					.queryParam("searchNameServerSetId",
 							command.getSearchNameServerSetId());
 		}
+		if (command.getSearchPlanId() != null) {
+			resolvedZoneListTarget = resolvedZoneListTarget
+					.queryParam("searchPlanId",
+							command.getSearchPlanId());
+		}
 		if (command.getSearchGroup() != null) {
 			resolvedZoneListTarget = resolvedZoneListTarget.queryParam(
 					"searchGroup", command.getSearchGroup());

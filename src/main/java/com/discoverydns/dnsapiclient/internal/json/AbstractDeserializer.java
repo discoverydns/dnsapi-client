@@ -5,8 +5,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
-import org.xbill.DNS.Name;
-import org.xbill.DNS.TextParseException;
+import org.joda.time.LocalDateTime;
 
 import com.discoverydns.dnsapiclient.exception.DNSAPIClientJsonMappingException;
 import com.discoverydns.dnsapiclient.exception.DNSAPIClientJsonMappingException.DNSAPIClientJsonMappingExceptionCode;
@@ -38,32 +37,26 @@ public abstract class AbstractDeserializer<T> extends StdDeserializer<T> {
 		return findFieldNode(recordNode, fieldName).textValue();
 	}
 
-	public Name getNameFromString(final String nodeValue)
-			throws TextParseException {
-		return Name.fromString(nodeValue);
-	}
-
-	protected Name getNodeNameValue(final ObjectNode recordNode,
-			final String fieldName) {
-		try {
-			return getNameFromString(getNodeStringValue(recordNode, fieldName));
-		} catch (final TextParseException e) {
-			throw new DNSAPIClientJsonMappingException(
-					DNSAPIClientJsonMappingExceptionCode.invalidFieldValue, e,
-					fieldName, getTextualBeanType(), e.getMessage());
-		}
-	}
-
 	protected Number getNodeNumberValue(final ObjectNode recordNode,
 			final String fieldName) {
-		try {
-			return NumberFormat.getInstance(Locale.getDefault()).parse(
-					getNodeStringValue(recordNode, fieldName));
-		} catch (final ParseException e) {
-			throw new DNSAPIClientJsonMappingException(
-					DNSAPIClientJsonMappingExceptionCode.invalidFieldValue, e,
-					fieldName, getTextualBeanType(), e.getMessage());
-		}
+        JsonNode fieldNode = findFieldNode(recordNode, fieldName);
+        switch (fieldNode.getNodeType()) {
+            case NUMBER:
+                return fieldNode.numberValue();
+            case STRING:
+                try {
+                    return NumberFormat.getInstance(Locale.getDefault()).parse(
+                        fieldNode.textValue());
+                } catch (final ParseException e) {
+                    throw new DNSAPIClientJsonMappingException(
+                            DNSAPIClientJsonMappingExceptionCode.invalidFieldValue, e,
+                            fieldName, getTextualBeanType(), e.getMessage());
+                }
+            default:
+                throw new DNSAPIClientJsonMappingException(
+                        DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
+                        fieldName, getTextualBeanType(), "Field cannot be read as a number");
+        }
 	}
 
 	protected Long getNodeLongValue(final ObjectNode recordNode,
@@ -94,13 +87,38 @@ public abstract class AbstractDeserializer<T> extends StdDeserializer<T> {
 			throw new DNSAPIClientJsonMappingException(
 					DNSAPIClientJsonMappingExceptionCode.invalidFieldValue, e,
 					fieldName, getTextualBeanType(), e.getMessage());
-
 		}
 	}
 
 	public InetAddress getAddressFromString(final String address) {
 		return InetAddresses.forString(address);
 	}
+
+    public LocalDateTime getNodeLocalDateTimeValue(final ObjectNode recordNode,
+                                                   final String fieldName) {
+        try {
+            return LocalDateTime.parse(getNodeStringValue(recordNode, fieldName));
+        } catch (final Throwable e) {
+            throw new DNSAPIClientJsonMappingException(
+                    DNSAPIClientJsonMappingExceptionCode.invalidFieldValue, e,
+                    fieldName, getTextualBeanType(), e.getMessage());
+        }
+    }
+
+    public LocalDateTime getOptionalNodeLocalDateTimeValue(final ObjectNode recordNode,
+                                                           final String fieldName) {
+        try {
+            String nodeStringValue = getNodeStringValue(recordNode, fieldName);
+            if (nodeStringValue == null) {
+                return null;
+            }
+            return LocalDateTime.parse(nodeStringValue);
+        } catch (final Throwable e) {
+            throw new DNSAPIClientJsonMappingException(
+                    DNSAPIClientJsonMappingExceptionCode.invalidFieldValue, e,
+                    fieldName, getTextualBeanType(), e.getMessage());
+        }
+    }
 
 	protected abstract String getTextualBeanType();
 }
