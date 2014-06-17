@@ -1,6 +1,7 @@
 package com.discoverydns.dnsapiclient.internal.json;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -10,9 +11,11 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.text.ParseException;
 
-import com.discoverydns.dnsapiclient.exception.DNSAPIClientJsonMappingException;
+import com.discoverydns.dnsapiclient.exception.DNSAPIClientJsonMappingException.DNSAPIClientJsonMappingExceptionCode;
 import com.discoverydns.dnsapiclient.test.infrastructure.DNSAPIClientJsonMappingExceptionMatcher;
 
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,14 +23,13 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.xbill.DNS.Name;
-import org.xbill.DNS.TextParseException;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -42,10 +44,12 @@ public class AbstractDeserializerTest {
 	private JsonNode mockNameJsonNode;
 	@Mock
 	private JsonNode mockAddressJsonNode;
+    @Mock
+    private JsonNode mockLocalDateTimeJsonNode;
+    @Mock
+    private JsonNode mockURIJsonNode;
 	@Mock
 	private JsonObject mockJsonObject;
-	@Mock
-	private Name mockName;
 	@Mock
 	private Number mockNumber;
 	@Mock
@@ -60,25 +64,30 @@ public class AbstractDeserializerTest {
 	private ObjectNode fakeObjectNode;
 	private String fieldName = "fieldName";
 	private String nodeTextValue = "nodeTextValue";
-	private String nameFieldName = "nameFieldName";
-	private String name = "name";
-	private String fieldAddress = "address";
+    private String fieldAddress = "address";
 	private String address = "1.2.3.4";
 	private String textualBeanType = "textualBeanType";
-	
+    private String fieldLocalDateTime = "localDateTime";
+    private LocalDateTime localDateTime = LocalDateTime.now(DateTimeZone.UTC);
+
 	@Before
 	public void setup() throws Throwable {
 		fakeObjectNode = new ObjectNode(mockJsonNodeFactory);
 		
 		when(mockJsonNode.textValue()).thenReturn(nodeTextValue);
 		fakeObjectNode.put(fieldName, mockJsonNode);
-		
-		when(mockNameJsonNode.textValue()).thenReturn(name);
-		fakeObjectNode.put(nameFieldName, mockNameJsonNode);
+
+        String name = "name";
+        when(mockNameJsonNode.textValue()).thenReturn(name);
+        String nameFieldName = "nameFieldName";
+        fakeObjectNode.put(nameFieldName, mockNameJsonNode);
 		
 		fakeObjectNode.put(fieldAddress, mockAddressJsonNode);
 		when(mockAddressJsonNode.textValue()).thenReturn(address);
-		
+
+        fakeObjectNode.put(fieldLocalDateTime, mockLocalDateTimeJsonNode);
+        when(mockLocalDateTimeJsonNode.textValue()).thenReturn(localDateTime.toString());
+
 		abstractDeserializer =
 				new AbstractDeserializer<AbstractDeserializerTest.JsonObject>(AbstractDeserializerTest.JsonObject.class) {
 			private static final long serialVersionUID = -400379380279488958L;
@@ -95,14 +104,15 @@ public class AbstractDeserializerTest {
 			}
 		};
 	}
-	
+
+    @Test
 	public void shouldThrowExceptionIfNodeFoundWhenSearchingForFieldNode()
 			throws Exception {
 		fakeObjectNode.put(fieldName, (JsonNode) null);
 
 		thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
-                DNSAPIClientJsonMappingException.DNSAPIClientJsonMappingExceptionCode.missingField,
-				new Object[] { textualBeanType, fieldName }));
+                DNSAPIClientJsonMappingExceptionCode.missingField,
+				new Object[] { fieldName, textualBeanType }));
 
 		abstractDeserializer.findFieldNode(fakeObjectNode, fieldName);
 	}
@@ -122,41 +132,14 @@ public class AbstractDeserializerTest {
 
 		verify(mockJsonNode).textValue();
 	}
-	
+
 	@Test
-	public void shouldThrowExceptionForInvalidNameWhenGettingNameValue()
+	public void shouldThrowExceptionForInvalidNumberValueWhenGettingTextualNodeNumberValue()
 			throws Exception {
-		abstractDeserializer = spy(abstractDeserializer);
-		String rootErrorMessage = "rootErrorMessage";
-		final TextParseException textParseException = new TextParseException(
-				rootErrorMessage);
-		when(abstractDeserializer.getNameFromString(name)).thenThrow(
-				textParseException);
+        when(mockJsonNode.getNodeType()).thenReturn(JsonNodeType.STRING);
 
 		thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
-                DNSAPIClientJsonMappingException.DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
-                textParseException, new Object[] { nameFieldName, textualBeanType, rootErrorMessage }));
-
-		abstractDeserializer.getNodeNameValue(fakeObjectNode,
-				nameFieldName);
-	}
-
-	@Test
-	public void shouldCreateAndReturnNameIfFieldIsFoundWhenGettingNameValue()
-			throws Exception {
-		abstractDeserializer = spy(abstractDeserializer);
-		when(abstractDeserializer.getNameFromString(name)).thenReturn(
-				mockName);
-
-		assertEquals(mockName, abstractDeserializer.getNodeNameValue(
-				fakeObjectNode, nameFieldName));
-	}
-
-	@Test
-	public void shouldThrowExceptionForInvalidNumberValueWhenGettingNumberValue()
-			throws Exception {
-		thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
-                DNSAPIClientJsonMappingException.DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
+                DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
                 ParseException.class,
                 new Object[] { fieldName, textualBeanType, "Unparseable number: \"" + nodeTextValue + "\"" }));
 
@@ -164,15 +147,37 @@ public class AbstractDeserializerTest {
 	}
 
 	@Test
-	public void shouldCreateAndReturnNumberValueIfFieldIsFoundWhenGettingNumberValue()
+	public void shouldCreateAndReturnNumberValueIfFieldIsFoundWhenGettingTextualNodeNumberValue()
 			throws Exception {
 		Long numberValue = 3L;
 		when(mockJsonNode.textValue()).thenReturn(numberValue.toString());
+        when(mockJsonNode.getNodeType()).thenReturn(JsonNodeType.STRING);
 
 		assertEquals(numberValue.longValue(), abstractDeserializer.getNodeNumberValue(
 				fakeObjectNode, fieldName).longValue());
 	}
-	
+
+    @Test
+    public void shouldReturnNumberValueForFoundNumberNode() {
+        Long numberValue = 3L;
+        when(mockJsonNode.numberValue()).thenReturn(numberValue);
+        when(mockJsonNode.getNodeType()).thenReturn(JsonNodeType.NUMBER);
+
+        assertEquals(numberValue.longValue(), abstractDeserializer.getNodeNumberValue(
+                fakeObjectNode, fieldName).longValue());
+    }
+
+    @Test
+    public void shouldThrowExceptionForOtherTypesWhenGettingNodeNumberValue() {
+        when(mockJsonNode.getNodeType()).thenReturn(JsonNodeType.BINARY);
+
+        thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
+                DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
+                new Object[] { fieldName, textualBeanType, "Field cannot be read as a number" }));
+
+        abstractDeserializer.getNodeNumberValue(fakeObjectNode, fieldName);
+    }
+
 	@Test
 	public void shouldCreateAndReturnLongValueIfFieldIsFoundWhenGettingLongValue()
 			throws Exception {
@@ -226,7 +231,7 @@ public class AbstractDeserializerTest {
 				.thenThrow(illegalArgumentException);
 
 		thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
-                DNSAPIClientJsonMappingException.DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
+                DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
                 illegalArgumentException,
 				new Object[] { fieldAddress, textualBeanType, rootErrorMessage }));
 
@@ -243,4 +248,52 @@ public class AbstractDeserializerTest {
 		assertEquals(mockInetAddress,
 				abstractDeserializer.getNodeAddressValue(fakeObjectNode, fieldAddress));
 	}
+
+    @Test
+    public void shouldThrowExceptionForInvalidLocalDateTimeWhenGettingLocalDateTimeValue()
+            throws Exception {
+        when(mockLocalDateTimeJsonNode.textValue()).thenReturn("invalidDateTime");
+
+        thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
+                DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
+                IllegalArgumentException.class,
+                new Object[] { fieldLocalDateTime, textualBeanType, "Invalid format: \"invalidDateTime\"" }));
+
+        abstractDeserializer.getNodeLocalDateTimeValue(fakeObjectNode, fieldLocalDateTime);
+    }
+
+    @Test
+    public void shouldCreateAndReturnLocalDateTimeIfFieldIsFoundWhenGettingLocalDateTimeValue()
+            throws Exception {
+        assertEquals(localDateTime,
+                abstractDeserializer.getNodeLocalDateTimeValue(fakeObjectNode, fieldLocalDateTime));
+    }
+
+    @Test
+    public void shouldThrowExceptionForInvalidLocalDateTimeWhenGettingOptionalLocalDateTimeValue()
+            throws Exception {
+        when(mockLocalDateTimeJsonNode.textValue()).thenReturn("invalidDateTime");
+
+        thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
+                DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
+                IllegalArgumentException.class,
+                new Object[] { fieldLocalDateTime, textualBeanType, "Invalid format: \"invalidDateTime\"" }));
+
+        abstractDeserializer.getOptionalNodeLocalDateTimeValue(fakeObjectNode, fieldLocalDateTime);
+    }
+
+    @Test
+    public void shouldReturnNullIfFieldIsNullWhenGettingOptionalLocalDateTimeValue()
+            throws Exception {
+        when(mockLocalDateTimeJsonNode.textValue()).thenReturn(null);
+
+        assertNull(abstractDeserializer.getOptionalNodeLocalDateTimeValue(fakeObjectNode, fieldLocalDateTime));
+    }
+
+    @Test
+    public void shouldCreateAndReturnLocalDateTimeIfFieldIsFoundWhenGettingOptionalLocalDateTimeValue()
+            throws Exception {
+        assertEquals(localDateTime,
+                abstractDeserializer.getOptionalNodeLocalDateTimeValue(fakeObjectNode, fieldLocalDateTime));
+    }
 }

@@ -28,6 +28,8 @@ public class AccountGetView {
 	private LocalDateTime minimumCommitmentStartDate;
 	@JsonProperty("currency")
 	private String currency;
+    @JsonProperty("email")
+    private String email;
 	@JsonProperty("createDate")
 	private LocalDateTime createDate;
 	@JsonProperty("createUserId")
@@ -83,6 +85,10 @@ public class AccountGetView {
 
 	public String getCurrency() {
 		return currency;
+	}
+
+    public String getEmail() {
+        return email;
 	}
 
 	public LocalDateTime getCreateDate() {

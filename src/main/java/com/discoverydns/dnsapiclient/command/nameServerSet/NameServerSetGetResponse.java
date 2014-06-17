@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 		"createDate", "createAccountId", "createAccountIdentifier",
 		"createUserId", "createUserName", "lastUpdateDate",
 		"lastUpdateAccountId", "lastUpdateAccountIdentifier",
-		"lastUpdateUserId", "lastUpdateUserName",
+		"lastUpdateUserId", "lastUpdateUserName", "nameServerInterfaceSetStatus",
 		"nameServerInterfaceSetInterfaces" })
 public class NameServerSetGetResponse {
 
@@ -94,6 +94,14 @@ public class NameServerSetGetResponse {
 	@JsonProperty("nameServerInterfaceSetId")
 	public String getNameServerInterfaceSetId() {
 		return nameServerSetGetView.getNameServerInterfaceSetId();
+	}
+
+    /**
+     * @return The status of the NameServer Interface Set that this NameServer Set is associated with
+     */
+	@JsonProperty("nameServerInterfaceSetStatus")
+	public String getNameServerInterfaceSetStatus() {
+		return nameServerSetGetView.getNameServerInterfaceSetStatus();
 	}
 
     /**
