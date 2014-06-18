@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  * @author Chris Wright
  */
 @JsonRootName("ZoneListCommand")
-@JsonPropertyOrder({ "searchName", "searchNameSearchType","searchGroup",
+@JsonPropertyOrder({ "searchName", "searchNameSearchType", "searchGroup",
 		"searchNameServerInterfaceSetId", "searchNameServerSetId",
 		"searchBrandedNameServers", "searchDNSSECSigned" })
 public class ZoneListCommand {
@@ -66,6 +66,7 @@ public class ZoneListCommand {
 		 * beginsWith)
 		 * 
 		 * @param searchNameSearchType
+		 *            The type of match to do on the searched for name
 		 * @return The {@link Builder}
 		 */
 		public Builder withSearchNameSearchType(
@@ -115,15 +116,14 @@ public class ZoneListCommand {
 		}
 
 		/**
-		 * Sets the UUID of the Plan that the Zones to look for are
-		 * associated with.
-		 *
+		 * Sets the UUID of the Plan that the Zones to look for are associated
+		 * with.
+		 * 
 		 * @param searchPlanId
 		 *            The UUID of the associated Plan
 		 * @return The {@link Builder}
 		 */
-		public Builder withSearchPlanId(
-				final String searchPlanId) {
+		public Builder withSearchPlanId(final String searchPlanId) {
 			this.searchPlanId = searchPlanId;
 			return this;
 		}
@@ -211,8 +211,8 @@ public class ZoneListCommand {
 	}
 
 	/**
-	 * @return The UUID of the Plan associated to the Zones to look
-	 *         for, set on the command.
+	 * @return The UUID of the Plan associated to the Zones to look for, set on
+	 *         the command.
 	 */
 	public String getSearchPlanId() {
 		return searchPlanId;
