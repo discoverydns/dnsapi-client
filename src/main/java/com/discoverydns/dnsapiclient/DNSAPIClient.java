@@ -34,6 +34,7 @@ public class DNSAPIClient {
     /**
      * Process the given command, by sending it to the DNAPI server,
      * and getting a {@link Response} back from it.
+     * @param <T> The expected type of the response given the command object
      * @param command The command to send to the server
      * @return The {@link Response} received from the server
      * @throws Throwable In case of any error
