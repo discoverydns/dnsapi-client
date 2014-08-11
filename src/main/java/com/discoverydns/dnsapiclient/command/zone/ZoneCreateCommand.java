@@ -1,5 +1,11 @@
 package com.discoverydns.dnsapiclient.command.zone;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.xbill.DNS.Record;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -15,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  */
 @JsonRootName("ZoneCreateCommand")
 @JsonPropertyOrder({ "name", "planId", "group", "nameServerSetId",
-        "dnssecSigned", "brandedNameServers" })
+        "dnssecSigned", "brandedNameServers", "resourceRecords" })
 public class ZoneCreateCommand {
 
 	@JsonProperty("name")
@@ -30,6 +36,8 @@ public class ZoneCreateCommand {
 	private String group;
 	@JsonProperty("nameServerSetId")
 	private String nameServerSetId;
+    @JsonProperty("resourceRecords")
+    public Set<Record> records;
 
     /**
      * Builder used to build the desired command.
@@ -41,6 +49,7 @@ public class ZoneCreateCommand {
 		private String planId;
 		private String group;
 		private String nameServerSetId;
+        public Set<Record> records = new HashSet<Record>();
 
         /**
          * Sets the name of the Zone to create.
@@ -103,6 +112,19 @@ public class ZoneCreateCommand {
 		}
 
         /**
+         * Sets the full list of user resource records of the Zone to update.
+         * The operation is a 'replace', not an 'update'.
+         * @param records The full list of user resource records to set
+         * @return The {@link Builder}
+         */
+        public Builder withResourceRecords(final Set<Record> records) {
+            if (records != null) {
+                this.records = Collections.unmodifiableSet(records);
+            }
+            return this;
+        }
+
+        /**
          * Builds the {@link ZoneCreateCommand} from the parameters set on the {@link Builder}.
          * @return The built {@link ZoneCreateCommand}
          */
@@ -114,6 +136,7 @@ public class ZoneCreateCommand {
 			zoneCreateCommand.planId = planId;
 			zoneCreateCommand.group = group;
 			zoneCreateCommand.nameServerSetId = nameServerSetId;
+            zoneCreateCommand.records = records;
 
 			return zoneCreateCommand;
 		}
@@ -163,6 +186,13 @@ public class ZoneCreateCommand {
      */
 	public String getGroup() {
 		return group;
+	}
+
+    /**
+     * @return The full list of user resource records to set
+     */
+    public Set<Record> getRecords() {
+        return records;
 	}
 
 }
