@@ -2,8 +2,14 @@ package com.discoverydns.dnsapiclient.command.zone;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
+import static org.mockito.Mockito.mock;
+
+import java.util.Set;
 
 import org.junit.Test;
+import org.xbill.DNS.Record;
+
+import com.google.common.collect.Sets;
 
 public class ZoneCreateCommandTest {
     @Test
@@ -14,6 +20,7 @@ public class ZoneCreateCommandTest {
         String group = "group";
         Boolean dnssecSigned = true;
         Boolean brandedNameServers = true;
+        Set<Record> records = Sets.newHashSet(mock(Record.class), mock(Record.class));
         ZoneCreateCommand command =
                 new ZoneCreateCommand.Builder()
                         .withName(name)
@@ -22,6 +29,7 @@ public class ZoneCreateCommandTest {
                         .withDnssecSigned(dnssecSigned)
                         .withBrandedNameServers(brandedNameServers)
                         .withGroup(group)
+                        .withResourceRecords(records)
                         .build();
 
         assertEquals(name, command.getName());
@@ -30,6 +38,7 @@ public class ZoneCreateCommandTest {
         assertEquals(dnssecSigned, command.isDnssecSigned());
         assertEquals(brandedNameServers, command.isBrandedNameServers());
         assertEquals(group, command.getGroup());
+        assertEquals(records, command.getRecords());
     }
 
     @Test

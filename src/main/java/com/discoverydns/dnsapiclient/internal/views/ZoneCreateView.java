@@ -1,5 +1,9 @@
 package com.discoverydns.dnsapiclient.internal.views;
 
+import java.util.Set;
+
+import org.xbill.DNS.Record;
+
 import com.discoverydns.dnsapiclient.command.zone.ZoneCreateCommand;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -41,5 +45,10 @@ public class ZoneCreateView {
 	@JsonProperty("group")
 	public String getGroup() {
 		return zoneCreateCommand.getGroup();
+	}
+
+    @JsonProperty("resourceRecords")
+    public Set<Record> getResourceRecords() {
+        return zoneCreateCommand.getRecords();
 	}
 }
