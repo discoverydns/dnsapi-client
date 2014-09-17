@@ -18,7 +18,7 @@ public class ZoneCreateAXFRCommandTest {
         String nameServerSetId = "nameServerSetId";
         String planId = "planId";
         String group = "group";
-        List<String> axfrServers = Lists.newArrayList("firstAXFRServer", "secondAXFRServer");
+        List<String> axfrServers = Lists.newArrayList("1.2.3.4", "1::2");
         String tsigKey = "tsigKey";
         String tsigName = "tsigName";
         String tsigAlgorithm = "tsigAlgorithm";
@@ -41,7 +41,7 @@ public class ZoneCreateAXFRCommandTest {
         assertThat(command.getTsigKey(), is(tsigKey));
         assertThat(command.getTsigName(), is(tsigName));
         assertThat(command.getTsigAlgorithm(), is(tsigAlgorithm));
-        assertThat(command.getAxfrServers(), hasItems("firstAXFRServer", "secondAXFRServer"));
+        assertThat(command.getAxfrServers(), hasItems("1.2.3.4", "1::2"));
     }
 
     @Test

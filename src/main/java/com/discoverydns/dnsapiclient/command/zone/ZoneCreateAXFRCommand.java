@@ -93,7 +93,7 @@ public class ZoneCreateAXFRCommand {
 		}
 
         /**
-         * Sets the list of servers from where the zone records will be updated by AXFR.
+         * Sets the list of servers I.P. addresses from where the zone records will be updated by AXFR.
          * @param axfrServers The AXFR servers
          * @return The {@link Builder}
          */
@@ -186,7 +186,7 @@ public class ZoneCreateAXFRCommand {
 	}
 
     /**
-     * @return The list of servers from where the zone records will be updated by AXFR.
+     * @return The list of servers I.P. addresses from where the zone records will be updated by AXFR.
      */
     public List<String> getAxfrServers() {
         return axfrServers;
