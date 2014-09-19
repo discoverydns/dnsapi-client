@@ -21,40 +21,35 @@ public class ZoneCreateAXFRCommandHandler extends
 		BaseRestCommandHandler<ZoneCreateAXFRCommand, ZoneCreateAXFRResponse> {
 
 	private final WebTarget zoneCreateAXFRTarget;
+    private static final MediaType mediaType = new MediaType("application", "secondary+json");
 
 	public ZoneCreateAXFRCommandHandler(final WebTarget baseWebTarget) {
-		super(Method.POST, Status.CREATED.getStatusCode(),
-				MediaType.APPLICATION_JSON_TYPE);
-		this.zoneCreateAXFRTarget = baseWebTarget.path("zones/axfr");
+		super(Method.POST, Status.CREATED.getStatusCode(), mediaType);
+		this.zoneCreateAXFRTarget = baseWebTarget.path("zones");
 	}
 
 	@Override
-	public WebTarget getWebTarget(final ZoneCreateAXFRCommand command,
-			final CommandMetaData commandMetaData) {
+	public WebTarget getWebTarget(final ZoneCreateAXFRCommand command, final CommandMetaData commandMetaData) {
 		return zoneCreateAXFRTarget;
 	}
 
 	@Override
-	public InvocationBuilderFactory getInvocationBuilderFactory(
-			final ZoneCreateAXFRCommand command,
-			final CommandMetaData commandMetaData) {
-		return new WithEntityInvocationBuilderFactory(
-				MediaType.APPLICATION_JSON_TYPE);
+	public InvocationBuilderFactory getInvocationBuilderFactory(final ZoneCreateAXFRCommand command,
+                                                                final CommandMetaData commandMetaData) {
+		return new WithEntityInvocationBuilderFactory(mediaType);
 	}
 
 	@Override
 	public InvocationBuildInvoker getInvocationBuildInvoker(
 			final ZoneCreateAXFRCommand command,
 			final CommandMetaData commandMetaData) {
-		return new WithEntityInvocationBuildInvoker<ZoneCreateAXFRView>(
-				new ZoneCreateAXFRView(command));
+		return new WithEntityInvocationBuildInvoker<ZoneCreateAXFRView>(new ZoneCreateAXFRView(command), mediaType);
 	}
 
 	@Override
 	public ZoneCreateAXFRResponse getCommandResponse(final Response restResponse,
 			final CommandMetaData commandMetaData) {
-		final ZoneGetView zoneGetView = getResponseEntity(ZoneGetView.class,
-				restResponse);
+		final ZoneGetView zoneGetView = getResponseEntity(ZoneGetView.class, restResponse);
 		return new ZoneCreateAXFRResponse(zoneGetView);
 	}
 
