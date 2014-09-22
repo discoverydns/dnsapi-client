@@ -40,14 +40,14 @@ public class ZoneCreateAXFRCommandHandlerTest {
 
     @Before
     public void setup() throws Throwable {
-        when(mockBaseWebTarget.path("zones/axfr")).thenReturn(mockZoneCreateAXFRTarget);
+        when(mockBaseWebTarget.path("zones")).thenReturn(mockZoneCreateAXFRTarget);
 
         zoneCreateAXFRCommandHandler = new ZoneCreateAXFRCommandHandler(mockBaseWebTarget);
     }
 
     @Test
     public void shouldInitialiseZoneCreateAXFRTarget() {
-        verify(mockBaseWebTarget).path("zones/axfr");
+        verify(mockBaseWebTarget).path("zones");
     }
 
     @Test
@@ -68,7 +68,7 @@ public class ZoneCreateAXFRCommandHandlerTest {
 
         invocationBuilderFactory.buildInvocationBuilder(mockZoneCreateAXFRTarget);
 
-        verify(mockZoneCreateAXFRTarget).request(MediaType.APPLICATION_JSON_TYPE);
+        verify(mockZoneCreateAXFRTarget).request(new MediaType("application", "secondary+json"));
     }
 
     @Test
