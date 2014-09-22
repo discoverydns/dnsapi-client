@@ -7,7 +7,7 @@ import com.discoverydns.dnsapiclient.exception.DNSAPIClientException;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.ZoneGetQueryUsageView;
+import com.discoverydns.dnsapiclient.internal.views.response.ZoneGetQueryUsageView;
 import com.discoverydns.dnsapiclient.test.infrastructure.BaseExceptionMatcher;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;

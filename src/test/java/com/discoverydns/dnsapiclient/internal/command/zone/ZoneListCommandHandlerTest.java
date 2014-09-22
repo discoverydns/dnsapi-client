@@ -24,7 +24,7 @@ import com.discoverydns.dnsapiclient.command.zone.ZoneListResponse;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.ZoneListView;
+import com.discoverydns.dnsapiclient.internal.views.response.ZoneListView;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ZoneListCommandHandlerTest {
@@ -104,7 +104,7 @@ public class ZoneListCommandHandlerTest {
         verify(mockZoneListTarget).queryParam("searchPlanId",
                 searchPlanId);
     }
-    
+
     @Test
     public void shouldAddSearchGroupAsQueryParamIfNotNull() {
         String searchGroup = "searchGroup";

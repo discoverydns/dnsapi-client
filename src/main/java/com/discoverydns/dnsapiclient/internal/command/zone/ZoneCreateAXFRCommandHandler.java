@@ -14,43 +14,44 @@ import com.discoverydns.dnsapiclient.internal.command.InvocationBuilderFactory;
 import com.discoverydns.dnsapiclient.internal.command.Method;
 import com.discoverydns.dnsapiclient.internal.command.WithEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.WithEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.ZoneCreateAXFRView;
-import com.discoverydns.dnsapiclient.internal.views.ZoneGetView;
+import com.discoverydns.dnsapiclient.internal.views.request.ZoneCreateAXFRView;
+import com.discoverydns.dnsapiclient.internal.views.response.ZoneGetView;
 
 public class ZoneCreateAXFRCommandHandler extends
 		BaseRestCommandHandler<ZoneCreateAXFRCommand, ZoneCreateAXFRResponse> {
 
-	private final WebTarget zoneCreateAXFRTarget;
-    private static final MediaType mediaType = new MediaType("application", "secondary+json");
+    private final WebTarget zoneCreateAXFRTarget;
+    private static final MediaType requestMediaType = new MediaType("application", "secondary+json");
+    private static final MediaType responseMediaType = new MediaType("application", "secondary+json");
 
-	public ZoneCreateAXFRCommandHandler(final WebTarget baseWebTarget) {
-		super(Method.POST, Status.CREATED.getStatusCode(), mediaType);
-		this.zoneCreateAXFRTarget = baseWebTarget.path("zones");
-	}
+    public ZoneCreateAXFRCommandHandler(final WebTarget baseWebTarget) {
+        super(Method.POST, Status.CREATED.getStatusCode(), responseMediaType);
+        this.zoneCreateAXFRTarget = baseWebTarget.path("zones");
+    }
 
-	@Override
-	public WebTarget getWebTarget(final ZoneCreateAXFRCommand command, final CommandMetaData commandMetaData) {
-		return zoneCreateAXFRTarget;
-	}
+    @Override
+    public WebTarget getWebTarget(final ZoneCreateAXFRCommand command, final CommandMetaData commandMetaData) {
+        return zoneCreateAXFRTarget;
+    }
 
-	@Override
-	public InvocationBuilderFactory getInvocationBuilderFactory(final ZoneCreateAXFRCommand command,
+    @Override
+    public InvocationBuilderFactory getInvocationBuilderFactory(final ZoneCreateAXFRCommand command,
                                                                 final CommandMetaData commandMetaData) {
-		return new WithEntityInvocationBuilderFactory(mediaType);
-	}
+       return new WithEntityInvocationBuilderFactory(requestMediaType);
+    }
 
-	@Override
-	public InvocationBuildInvoker getInvocationBuildInvoker(
-			final ZoneCreateAXFRCommand command,
-			final CommandMetaData commandMetaData) {
-		return new WithEntityInvocationBuildInvoker<ZoneCreateAXFRView>(new ZoneCreateAXFRView(command), mediaType);
-	}
+    @Override
+    public InvocationBuildInvoker getInvocationBuildInvoker(final ZoneCreateAXFRCommand command,
+                                                            final CommandMetaData commandMetaData) {
+        final ZoneCreateAXFRView zoneCreateAXFRView = new ZoneCreateAXFRView(command);
+        return new WithEntityInvocationBuildInvoker<ZoneCreateAXFRView>(zoneCreateAXFRView, requestMediaType);
+    }
 
-	@Override
-	public ZoneCreateAXFRResponse getCommandResponse(final Response restResponse,
-			final CommandMetaData commandMetaData) {
-		final ZoneGetView zoneGetView = getResponseEntity(ZoneGetView.class, restResponse);
-		return new ZoneCreateAXFRResponse(zoneGetView);
-	}
+    @Override
+    public ZoneCreateAXFRResponse getCommandResponse(final Response restResponse,
+                                                     final CommandMetaData commandMetaData) {
+       final ZoneGetView zoneGetView = getResponseEntity(ZoneGetView.class, restResponse);
+       return new ZoneCreateAXFRResponse(zoneGetView);
+    }
 
 }

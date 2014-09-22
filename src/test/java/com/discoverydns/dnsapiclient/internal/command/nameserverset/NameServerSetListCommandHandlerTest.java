@@ -15,7 +15,7 @@ import com.discoverydns.dnsapiclient.command.nameServerSet.NameServerSetListResp
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.NameServerSetListView;
+import com.discoverydns.dnsapiclient.internal.views.response.NameServerSetListView;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

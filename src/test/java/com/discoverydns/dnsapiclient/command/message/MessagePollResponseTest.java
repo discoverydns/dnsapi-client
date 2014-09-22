@@ -6,7 +6,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 
-import com.discoverydns.dnsapiclient.internal.views.MessagePollView;
+import com.discoverydns.dnsapiclient.internal.views.response.MessagePollView;
 
 public class MessagePollResponseTest {
 	@Test

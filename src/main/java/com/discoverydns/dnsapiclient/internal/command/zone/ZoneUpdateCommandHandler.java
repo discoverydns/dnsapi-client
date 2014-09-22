@@ -16,8 +16,8 @@ import com.discoverydns.dnsapiclient.internal.command.InvocationBuilderFactory;
 import com.discoverydns.dnsapiclient.internal.command.Method;
 import com.discoverydns.dnsapiclient.internal.command.WithEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.WithEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.ZoneGetView;
-import com.discoverydns.dnsapiclient.internal.views.ZoneUpdateView;
+import com.discoverydns.dnsapiclient.internal.views.response.ZoneGetView;
+import com.discoverydns.dnsapiclient.internal.views.request.ZoneUpdateView;
 
 public class ZoneUpdateCommandHandler extends
 		BaseRestCommandHandler<ZoneUpdateCommand, ZoneUpdateResponse> {

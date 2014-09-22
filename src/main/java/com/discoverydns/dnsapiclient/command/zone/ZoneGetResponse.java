@@ -6,7 +6,7 @@ import java.util.Set;
 import org.joda.time.LocalDateTime;
 import org.xbill.DNS.Record;
 
-import com.discoverydns.dnsapiclient.internal.views.ZoneGetView;
+import com.discoverydns.dnsapiclient.internal.views.response.ZoneGetView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
