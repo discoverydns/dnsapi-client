@@ -38,6 +38,7 @@ import com.discoverydns.dnsapiclient.command.zone.ZoneGetCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneGetQueryUsageCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneGetZoneFileCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneListCommand;
+import com.discoverydns.dnsapiclient.command.zone.ZoneRefreshAXFRCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateResourceRecordsCommand;
 import com.discoverydns.dnsapiclient.config.DNSAPIClientConfig;
@@ -64,6 +65,7 @@ import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetCommandHandler
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetQueryUsageCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetZoneFileCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneListCommandHandler;
+import com.discoverydns.dnsapiclient.internal.command.zone.ZoneRefreshAXFRCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateResourceRecordsCommandHandler;
 import com.discoverydns.dnsapiclient.internal.commandinterceptors.ClientTransactionIdCommandInterceptor;
@@ -75,7 +77,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 /**
  * The factory to create {@link DNSAPIClient} instances.
- * 
+ *
  * @author Chris Wright
  */
 public class DNSAPIClientFactory {
@@ -92,7 +94,7 @@ public class DNSAPIClientFactory {
 	 * framework when a command is sent to the DNSAPI server, to generate a
 	 * client transaction id to be put in the meta-data. The given
 	 * {@link TransactionLogHandler} will be used for transaction logging.
-	 * 
+	 *
 	 * @param config
 	 *            The configuration to be used to create the instance
 	 * @param sslContextFactory
@@ -138,7 +140,7 @@ public class DNSAPIClientFactory {
 	 * {@link DefaultTransactionLogHandler} will be used as the
 	 * {@link TransactionLogHandler}, using the log files provided in the given
 	 * {@link DefaultTransactionLogHandlerConfig}.
-	 * 
+	 *
 	 * @param config
 	 *            The configuration to be used to create the instance
 	 * @param defaultSSLContextFactoryConfig
@@ -300,6 +302,8 @@ public class DNSAPIClientFactory {
 				new ZoneGetZoneFileCommandHandler(baseWebTarget));
         commandProcessor.subscribe(ZoneCreateAXFRCommand.class,
                 new ZoneCreateAXFRCommandHandler(baseWebTarget));
+        commandProcessor.subscribe(ZoneRefreshAXFRCommand.class,
+                new ZoneRefreshAXFRCommandHandler(baseWebTarget));
 		// MessageCommands
 		commandProcessor.subscribe(MessagePollCommand.class,
 				new MessagePollCommandHandler(baseWebTarget));
