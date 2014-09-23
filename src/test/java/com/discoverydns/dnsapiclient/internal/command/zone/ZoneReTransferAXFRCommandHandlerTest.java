@@ -18,8 +18,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.discoverydns.dnsapiclient.command.zone.ZoneRefreshAXFRCommand;
-import com.discoverydns.dnsapiclient.command.zone.ZoneRefreshResponse;
+import com.discoverydns.dnsapiclient.command.zone.ZoneReTransferAXFRCommand;
+import com.discoverydns.dnsapiclient.command.zone.ZoneReTransferAXFRResponse;
 import com.discoverydns.dnsapiclient.exception.DNSAPIClientException;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
@@ -27,73 +27,73 @@ import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderF
 import com.discoverydns.dnsapiclient.test.infrastructure.BaseExceptionMatcher;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ZoneRefreshAXFRCommandHandlerTest {
+public class ZoneReTransferAXFRCommandHandlerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Mock
     private WebTarget mockBaseWebTarget;
     @Mock
-    private WebTarget mockZoneRefreshAXFRTarget;
+    private WebTarget mockZoneReTransferAXFRTarget;
     @Mock
-    private ZoneRefreshAXFRCommand mockZoneRefreshAXFRCommand;
+    private ZoneReTransferAXFRCommand mockZoneReTransferAXFRCommand;
     @Mock
     private CommandMetaData mockCommandMetaData;
 
-    private ZoneRefreshAXFRCommandHandler zoneRefreshAXFRCommandHandler;
+    private ZoneReTransferAXFRCommandHandler zoneReTransferAXFRCommandHandler;
 
     @Before
     public void setup() throws Throwable {
-        when(mockBaseWebTarget.path("zones/{zoneId}/refresh")).thenReturn(mockZoneRefreshAXFRTarget);
+        when(mockBaseWebTarget.path("zones/{zoneId}/retransfer")).thenReturn(mockZoneReTransferAXFRTarget);
 
-        zoneRefreshAXFRCommandHandler = new ZoneRefreshAXFRCommandHandler(mockBaseWebTarget);
+        zoneReTransferAXFRCommandHandler = new ZoneReTransferAXFRCommandHandler(mockBaseWebTarget);
     }
 
     @Test
     public void shouldInitialiseZoneDeleteTarget() {
-        verify(mockBaseWebTarget).path("zones/{zoneId}/refresh");
+        verify(mockBaseWebTarget).path("zones/{zoneId}/retransfer");
     }
 
     @Test
     public void shouldGetTargetRelativeToProvidedCommand() {
         String id = "id";
-        when(mockZoneRefreshAXFRCommand.getId()).thenReturn(id);
+        when(mockZoneReTransferAXFRCommand.getId()).thenReturn(id);
         WebTarget resultingWebTarget = mock(WebTarget.class);
-        when(mockZoneRefreshAXFRTarget.resolveTemplate("zoneId", id))
+        when(mockZoneReTransferAXFRTarget.resolveTemplate("zoneId", id))
                 .thenReturn(resultingWebTarget);
 
         assertEquals(resultingWebTarget,
-                zoneRefreshAXFRCommandHandler.getWebTarget(mockZoneRefreshAXFRCommand, mockCommandMetaData));
+                zoneReTransferAXFRCommandHandler.getWebTarget(mockZoneReTransferAXFRCommand, mockCommandMetaData));
     }
 
     @Test
     public void shouldWrapExceptionOccurringDuringResolvingTemplate() {
         String id = "id";
-        when(mockZoneRefreshAXFRCommand.getId()).thenReturn(id);
+        when(mockZoneReTransferAXFRCommand.getId()).thenReturn(id);
         RuntimeException mockRuntimeException = mock(RuntimeException.class);
-        when(mockZoneRefreshAXFRTarget.resolveTemplate("zoneId", id))
+        when(mockZoneReTransferAXFRTarget.resolveTemplate("zoneId", id))
                 .thenThrow(mockRuntimeException);
 
         thrown.expect(new BaseExceptionMatcher(DNSAPIClientException.class,
                 DNSAPIClientException.DNSAPIClientExceptionCode.requiredParameterMissing,
                 new Object[]{"id"}, mockRuntimeException));
 
-        zoneRefreshAXFRCommandHandler.getWebTarget(mockZoneRefreshAXFRCommand, mockCommandMetaData);
+        zoneReTransferAXFRCommandHandler.getWebTarget(mockZoneReTransferAXFRCommand, mockCommandMetaData);
     }
 
     @Test
     public void shouldReturnNoEntityInvocationBuilderFactory() {
         assertThat(
-                zoneRefreshAXFRCommandHandler.getInvocationBuilderFactory(
-                        mockZoneRefreshAXFRCommand, mockCommandMetaData),
+                zoneReTransferAXFRCommandHandler.getInvocationBuilderFactory(
+                        mockZoneReTransferAXFRCommand, mockCommandMetaData),
                 instanceOf(NoEntityInvocationBuilderFactory.class));
     }
 
     @Test
     public void shouldReturnNoEntityInvocationBuildInvoker() {
         assertThat(
-                zoneRefreshAXFRCommandHandler.getInvocationBuildInvoker(
-                        mockZoneRefreshAXFRCommand, mockCommandMetaData),
+                zoneReTransferAXFRCommandHandler.getInvocationBuildInvoker(
+                        mockZoneReTransferAXFRCommand, mockCommandMetaData),
                 instanceOf(NoEntityInvocationBuildInvoker.class));
     }
 
@@ -101,8 +101,8 @@ public class ZoneRefreshAXFRCommandHandlerTest {
     public void shouldReturnExpectedZoneDeleteResponse() {
         Response mockRestResponse = mock(Response.class);
 
-        assertThat(zoneRefreshAXFRCommandHandler.getCommandResponse(
+        assertThat(zoneReTransferAXFRCommandHandler.getCommandResponse(
                         mockRestResponse, mockCommandMetaData),
-                instanceOf(ZoneRefreshResponse.class));
+                instanceOf(ZoneReTransferAXFRResponse.class));
     }
 }

@@ -4,8 +4,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import com.discoverydns.dnsapiclient.command.zone.ZoneRefreshAXFRCommand;
-import com.discoverydns.dnsapiclient.command.zone.ZoneRefreshResponse;
+import com.discoverydns.dnsapiclient.command.zone.ZoneReTransferAXFRCommand;
+import com.discoverydns.dnsapiclient.command.zone.ZoneReTransferAXFRResponse;
 import com.discoverydns.dnsapiclient.exception.DNSAPIClientException;
 import com.discoverydns.dnsapiclient.exception.DNSAPIClientException.DNSAPIClientExceptionCode;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
@@ -16,17 +16,18 @@ import com.discoverydns.dnsapiclient.internal.command.Method;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
 
-public class ZoneRefreshAXFRCommandHandler extends BaseRestCommandHandler<ZoneRefreshAXFRCommand, ZoneRefreshResponse> {
+public class ZoneReTransferAXFRCommandHandler
+        extends BaseRestCommandHandler<ZoneReTransferAXFRCommand, ZoneReTransferAXFRResponse> {
 
     private final WebTarget zoneRefreshTarget;
 
-    public ZoneRefreshAXFRCommandHandler(final WebTarget baseWebTarget) {
+    public ZoneReTransferAXFRCommandHandler(final WebTarget baseWebTarget) {
         super(Method.POST, Status.OK.getStatusCode());
-        this.zoneRefreshTarget = baseWebTarget.path("zones/{zoneId}/refresh");
+        this.zoneRefreshTarget = baseWebTarget.path("zones/{zoneId}/retransfer");
     }
 
     @Override
-    public WebTarget getWebTarget(final ZoneRefreshAXFRCommand command,
+    public WebTarget getWebTarget(final ZoneReTransferAXFRCommand command,
                                   final CommandMetaData commandMetaData) {
         WebTarget webTarget;
         try {
@@ -39,22 +40,22 @@ public class ZoneRefreshAXFRCommandHandler extends BaseRestCommandHandler<ZoneRe
 
     @Override
     public InvocationBuilderFactory getInvocationBuilderFactory(
-            final ZoneRefreshAXFRCommand command,
+            final ZoneReTransferAXFRCommand command,
             final CommandMetaData commandMetaData) {
         return new NoEntityInvocationBuilderFactory();
     }
 
     @Override
     public InvocationBuildInvoker getInvocationBuildInvoker(
-            final ZoneRefreshAXFRCommand command,
+            final ZoneReTransferAXFRCommand command,
             final CommandMetaData commandMetaData) {
         return new NoEntityInvocationBuildInvoker();
     }
 
     @Override
-    public ZoneRefreshResponse getCommandResponse(final Response restResponse,
+    public ZoneReTransferAXFRResponse getCommandResponse(final Response restResponse,
                                                  final CommandMetaData commandMetaData) {
-        return new ZoneRefreshResponse();
+        return new ZoneReTransferAXFRResponse();
     }
 
 }

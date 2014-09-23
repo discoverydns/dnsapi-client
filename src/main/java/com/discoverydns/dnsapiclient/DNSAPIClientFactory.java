@@ -38,7 +38,7 @@ import com.discoverydns.dnsapiclient.command.zone.ZoneGetCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneGetQueryUsageCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneGetZoneFileCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneListCommand;
-import com.discoverydns.dnsapiclient.command.zone.ZoneRefreshAXFRCommand;
+import com.discoverydns.dnsapiclient.command.zone.ZoneReTransferAXFRCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateResourceRecordsCommand;
 import com.discoverydns.dnsapiclient.config.DNSAPIClientConfig;
@@ -65,7 +65,7 @@ import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetCommandHandler
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetQueryUsageCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetZoneFileCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneListCommandHandler;
-import com.discoverydns.dnsapiclient.internal.command.zone.ZoneRefreshAXFRCommandHandler;
+import com.discoverydns.dnsapiclient.internal.command.zone.ZoneReTransferAXFRCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateResourceRecordsCommandHandler;
 import com.discoverydns.dnsapiclient.internal.commandinterceptors.ClientTransactionIdCommandInterceptor;
@@ -302,8 +302,8 @@ public class DNSAPIClientFactory {
 				new ZoneGetZoneFileCommandHandler(baseWebTarget));
         commandProcessor.subscribe(ZoneCreateAXFRCommand.class,
                 new ZoneCreateAXFRCommandHandler(baseWebTarget));
-        commandProcessor.subscribe(ZoneRefreshAXFRCommand.class,
-                new ZoneRefreshAXFRCommandHandler(baseWebTarget));
+        commandProcessor.subscribe(ZoneReTransferAXFRCommand.class,
+                new ZoneReTransferAXFRCommandHandler(baseWebTarget));
 		// MessageCommands
 		commandProcessor.subscribe(MessagePollCommand.class,
 				new MessagePollCommandHandler(baseWebTarget));

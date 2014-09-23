@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  */
 @JsonRootName("ZoneRefreshCommand")
 @JsonPropertyOrder({"id"})
-public class ZoneRefreshAXFRCommand {
+public class ZoneReTransferAXFRCommand {
 
     @JsonProperty("id")
     private String id;
@@ -38,13 +38,13 @@ public class ZoneRefreshAXFRCommand {
         }
 
         /**
-         * Builds the {@link com.discoverydns.dnsapiclient.command.zone.ZoneRefreshAXFRCommand} from the parameters
+         * Builds the {@link ZoneReTransferAXFRCommand} from the parameters
          * set on the {@link Builder}.
          *
-         * @return The built {@link com.discoverydns.dnsapiclient.command.zone.ZoneRefreshAXFRCommand}
+         * @return The built {@link ZoneReTransferAXFRCommand}
          */
-        public ZoneRefreshAXFRCommand build() {
-            final ZoneRefreshAXFRCommand zoneRefreshCommand = new ZoneRefreshAXFRCommand();
+        public ZoneReTransferAXFRCommand build() {
+            final ZoneReTransferAXFRCommand zoneRefreshCommand = new ZoneReTransferAXFRCommand();
             zoneRefreshCommand.id = id;
 
             return zoneRefreshCommand;
@@ -52,7 +52,7 @@ public class ZoneRefreshAXFRCommand {
 
     }
 
-    private ZoneRefreshAXFRCommand() {
+    private ZoneReTransferAXFRCommand() {
     }
 
     /**

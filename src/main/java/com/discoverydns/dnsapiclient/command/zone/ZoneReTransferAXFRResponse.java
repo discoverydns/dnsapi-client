@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 /**
  * Response object received by the {@link com.discoverydns.dnsapiclient.DNSAPIClient}
- * from the DNSAPI server subsequently to the sending of a {@link com.discoverydns.dnsapiclient.command.zone.ZoneRefreshAXFRCommand},
+ * from the DNSAPI server subsequently to the sending of a {@link ZoneReTransferAXFRCommand},
  * describing the result of the Zone refresh.
  *
  * A Zone, belonging to an Account, will be managed by the DNSAPI architecture
@@ -12,6 +12,6 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  *
  */
 @JsonRootName("ZoneRefreshResponse")
-public class ZoneRefreshResponse {
+public class ZoneReTransferAXFRResponse {
 
 }
