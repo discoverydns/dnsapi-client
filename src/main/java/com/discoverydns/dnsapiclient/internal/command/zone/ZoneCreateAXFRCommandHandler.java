@@ -21,12 +21,12 @@ public class ZoneCreateAXFRCommandHandler extends
 		BaseRestCommandHandler<ZoneCreateAXFRCommand, ZoneCreateAXFRResponse> {
 
     private final WebTarget zoneCreateAXFRTarget;
-    private static final MediaType requestMediaType = MediaType.APPLICATION_JSON_TYPE;
+    private static final MediaType requestMediaType = new MediaType("application", "secondary+json");
     private static final MediaType responseMediaType = MediaType.APPLICATION_JSON_TYPE;
 
     public ZoneCreateAXFRCommandHandler(final WebTarget baseWebTarget) {
         super(Method.POST, Status.CREATED.getStatusCode(), responseMediaType);
-        this.zoneCreateAXFRTarget = baseWebTarget.path("zones/secondary");
+        this.zoneCreateAXFRTarget = baseWebTarget.path("zones");
     }
 
     @Override

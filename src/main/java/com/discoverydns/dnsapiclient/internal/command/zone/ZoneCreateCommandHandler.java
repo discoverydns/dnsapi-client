@@ -20,12 +20,12 @@ import com.discoverydns.dnsapiclient.internal.views.response.ZoneGetView;
 public class ZoneCreateCommandHandler extends BaseRestCommandHandler<ZoneCreateCommand, ZoneCreateResponse> {
 
     private final WebTarget zoneCreateTarget;
-    private static final MediaType requestMediaType = MediaType.APPLICATION_JSON_TYPE;
+    private static final MediaType requestMediaType = new MediaType("application", "managed+json");
     private static final MediaType responseMediaType = MediaType.APPLICATION_JSON_TYPE;
 
     public ZoneCreateCommandHandler(final WebTarget baseWebTarget) {
         super(Method.POST, Status.CREATED.getStatusCode(), responseMediaType);
-        this.zoneCreateTarget = baseWebTarget.path("zones/managed");
+        this.zoneCreateTarget = baseWebTarget.path("zones");
     }
 
     @Override
