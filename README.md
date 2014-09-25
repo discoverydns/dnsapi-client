@@ -2,9 +2,17 @@
 
 This project is part of the [DiscoveryDNS](http://www.discoverydns.com) solution. It is a Java client to the DiscoveryDNS Server REST API.
 
+## User manual
+
+The user manual of the DiscoveryDNS API can be found in the ["doc/DDNS - Managed DNS Manual - 1.2.docx"](https://github.com/discoverydns/dnsapi-client/blob/master/doc/DDNS%20-%20Managed%20DNS%20Manual%20-%201.2.docx) document.
+
+## DNSSEC Practice Statement
+
+The DNSSEC Practice Statement of the DiscoveryDNS API can be found in the ["doc/DDNS - DNSSEC Practice Statement - Reseller - 1.0.docx"](https://github.com/discoverydns/dnsapi-client/blob/master/doc/DDNS%20-%20DNSSEC%20Practice%20Statement%20-%20Reseller%20-%201.0.docx) document.
+
 ## API Description
 
-The details of the DiscoveryDNS REST API commands and responses can be found in the ["doc/DDNS - DiscoveryDNS API - v1.7.docx"](https://github.com/discoverydns/dnsapi-client/blob/master/doc/DDNS%20-%20DiscoveryDNS%20API%20-%20v1.7.docx) document.
+The details of the DiscoveryDNS REST API commands and responses can be found in the ["doc/DDNS - DiscoveryDNS API - v1.9.docx"](https://github.com/discoverydns/dnsapi-client/blob/master/doc/DDNS%20-%20DiscoveryDNS%20API%20-%20v1.9.docx) document.
 
 If you want to develop a client to the API in a language different from Java, you will have to consult this document to find out what REST calls are to be implemented and what responses are to be expected.
 
@@ -40,7 +48,7 @@ To build the dnsapi-client, you must have the Java Development Kit (JDK) v6.0 or
 
 ## Development documentation
 
-The javadoc is available online: [dnsapi-client javadoc](http://discoverydns.github.io/dnsapi-client/javadoc/index.html).
+The javadoc is available online: [dnsapi-client javadoc](http://www.javadoc.io/doc/com.discoverydns.dnsapi/dnsapi-client/).
 
 ## Usage examples
 
