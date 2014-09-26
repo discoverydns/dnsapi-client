@@ -19,12 +19,13 @@ import com.discoverydns.dnsapiclient.internal.views.response.ZoneGetView;
 
 public class ZoneCreateCommandHandler extends BaseRestCommandHandler<ZoneCreateCommand, ZoneCreateResponse> {
 
+    private static final MediaType REQUEST_MEDIA_TYPE = new MediaType("application", "managed+json");
+    private static final MediaType RESPONSE_MEDIA_TYPE = MediaType.APPLICATION_JSON_TYPE;
+
     private final WebTarget zoneCreateTarget;
-    private static final MediaType requestMediaType = new MediaType("application", "managed+json");
-    private static final MediaType responseMediaType = MediaType.APPLICATION_JSON_TYPE;
 
     public ZoneCreateCommandHandler(final WebTarget baseWebTarget) {
-        super(Method.POST, Status.CREATED.getStatusCode(), responseMediaType);
+        super(Method.POST, Status.CREATED.getStatusCode(), RESPONSE_MEDIA_TYPE);
         this.zoneCreateTarget = baseWebTarget.path("zones");
     }
 
@@ -37,7 +38,7 @@ public class ZoneCreateCommandHandler extends BaseRestCommandHandler<ZoneCreateC
     @Override
     public InvocationBuilderFactory getInvocationBuilderFactory(final ZoneCreateCommand command,
                                                                 final CommandMetaData commandMetaData) {
-        return new WithEntityInvocationBuilderFactory(requestMediaType);
+        return new WithEntityInvocationBuilderFactory(REQUEST_MEDIA_TYPE);
     }
 
     @Override

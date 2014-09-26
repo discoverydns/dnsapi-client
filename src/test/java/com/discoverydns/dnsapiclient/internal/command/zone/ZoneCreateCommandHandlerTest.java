@@ -40,14 +40,14 @@ public class ZoneCreateCommandHandlerTest {
 
     @Before
     public void setup() throws Throwable {
-        when(mockBaseWebTarget.path("zones/")).thenReturn(mockZoneCreateTarget);
+        when(mockBaseWebTarget.path("zones")).thenReturn(mockZoneCreateTarget);
 
         zoneCreateCommandHandler = new ZoneCreateCommandHandler(mockBaseWebTarget);
     }
 
     @Test
     public void shouldInitialiseZoneCreateTarget() {
-        verify(mockBaseWebTarget).path("zones/");
+        verify(mockBaseWebTarget).path("zones");
     }
 
     @Test
