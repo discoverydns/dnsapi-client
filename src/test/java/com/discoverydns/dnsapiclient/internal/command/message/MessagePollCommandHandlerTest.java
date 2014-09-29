@@ -23,7 +23,7 @@ import com.discoverydns.dnsapiclient.command.message.MessageRecord;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.MessagePollView;
+import com.discoverydns.dnsapiclient.internal.views.response.MessagePollView;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MessagePollCommandHandlerTest {

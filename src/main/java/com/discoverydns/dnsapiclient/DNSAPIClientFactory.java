@@ -31,12 +31,14 @@ import com.discoverydns.dnsapiclient.command.plan.PlanGetCommand;
 import com.discoverydns.dnsapiclient.command.plan.PlanListCommand;
 import com.discoverydns.dnsapiclient.command.user.UserGetCommand;
 import com.discoverydns.dnsapiclient.command.user.UserListCommand;
+import com.discoverydns.dnsapiclient.command.zone.ZoneCreateAXFRCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneCreateCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneDeleteCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneGetCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneGetQueryUsageCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneGetZoneFileCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneListCommand;
+import com.discoverydns.dnsapiclient.command.zone.ZoneReTransferAXFRCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateResourceRecordsCommand;
 import com.discoverydns.dnsapiclient.config.DNSAPIClientConfig;
@@ -56,12 +58,14 @@ import com.discoverydns.dnsapiclient.internal.command.plan.PlanGetCommandHandler
 import com.discoverydns.dnsapiclient.internal.command.plan.PlanListCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.user.UserGetCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.user.UserListCommandHandler;
+import com.discoverydns.dnsapiclient.internal.command.zone.ZoneCreateAXFRCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneCreateCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneDeleteCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetQueryUsageCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetZoneFileCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneListCommandHandler;
+import com.discoverydns.dnsapiclient.internal.command.zone.ZoneReTransferAXFRCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateResourceRecordsCommandHandler;
 import com.discoverydns.dnsapiclient.internal.commandinterceptors.ClientTransactionIdCommandInterceptor;
@@ -73,7 +77,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 /**
  * The factory to create {@link DNSAPIClient} instances.
- * 
+ *
  * @author Chris Wright
  */
 public class DNSAPIClientFactory {
@@ -90,7 +94,7 @@ public class DNSAPIClientFactory {
 	 * framework when a command is sent to the DNSAPI server, to generate a
 	 * client transaction id to be put in the meta-data. The given
 	 * {@link TransactionLogHandler} will be used for transaction logging.
-	 * 
+	 *
 	 * @param config
 	 *            The configuration to be used to create the instance
 	 * @param sslContextFactory
@@ -136,7 +140,7 @@ public class DNSAPIClientFactory {
 	 * {@link DefaultTransactionLogHandler} will be used as the
 	 * {@link TransactionLogHandler}, using the log files provided in the given
 	 * {@link DefaultTransactionLogHandlerConfig}.
-	 * 
+	 *
 	 * @param config
 	 *            The configuration to be used to create the instance
 	 * @param defaultSSLContextFactoryConfig
@@ -296,6 +300,10 @@ public class DNSAPIClientFactory {
 				new ZoneGetQueryUsageCommandHandler(baseWebTarget));
 		commandProcessor.subscribe(ZoneGetZoneFileCommand.class,
 				new ZoneGetZoneFileCommandHandler(baseWebTarget));
+        commandProcessor.subscribe(ZoneCreateAXFRCommand.class,
+                new ZoneCreateAXFRCommandHandler(baseWebTarget));
+        commandProcessor.subscribe(ZoneReTransferAXFRCommand.class,
+                new ZoneReTransferAXFRCommandHandler(baseWebTarget));
 		// MessageCommands
 		commandProcessor.subscribe(MessagePollCommand.class,
 				new MessagePollCommandHandler(baseWebTarget));

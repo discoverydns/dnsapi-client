@@ -1,4 +1,4 @@
-package com.discoverydns.dnsapiclient.internal.views;
+package com.discoverydns.dnsapiclient.internal.views.response;
 
 import com.discoverydns.dnsapiclient.command.zone.ZoneQueryUsageRecord;
 import com.fasterxml.jackson.annotation.JsonProperty;

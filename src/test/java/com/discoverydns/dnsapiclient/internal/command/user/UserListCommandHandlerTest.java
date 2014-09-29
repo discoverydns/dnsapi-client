@@ -24,7 +24,7 @@ import com.discoverydns.dnsapiclient.command.user.UserListResponse;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.UserListView;
+import com.discoverydns.dnsapiclient.internal.views.response.UserListView;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserListCommandHandlerTest {

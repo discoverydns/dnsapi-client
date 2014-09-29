@@ -1,6 +1,6 @@
 package com.discoverydns.dnsapiclient.command.message;
 
-import com.discoverydns.dnsapiclient.internal.views.MessagePollView;
+import com.discoverydns.dnsapiclient.internal.views.response.MessagePollView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -11,11 +11,11 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  * {@link com.discoverydns.dnsapiclient.DNSAPIClient} from the DNSAPI server
  * subsequently to the sending of a {@link MessagePollCommand}, describing the
  * details of the retrieved Message.
- * 
+ *
  * A Message is a notification from the DNSAPI server, for the targeted sponsor
  * Account's Users, offering information about changes performed by the server
  * on a related object in the system.
- * 
+ *
  * @author Arnaud Dumont
  */
 @JsonRootName("MessagePollResponse")

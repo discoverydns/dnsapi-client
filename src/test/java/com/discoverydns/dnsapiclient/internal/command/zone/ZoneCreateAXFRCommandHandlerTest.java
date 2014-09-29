@@ -17,8 +17,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.discoverydns.dnsapiclient.command.zone.ZoneCreateCommand;
-import com.discoverydns.dnsapiclient.command.zone.ZoneCreateResponse;
+import com.discoverydns.dnsapiclient.command.zone.ZoneCreateAXFRCommand;
+import com.discoverydns.dnsapiclient.command.zone.ZoneCreateAXFRResponse;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.InvocationBuilderFactory;
 import com.discoverydns.dnsapiclient.internal.command.WithEntityInvocationBuildInvoker;
@@ -26,61 +26,61 @@ import com.discoverydns.dnsapiclient.internal.command.WithEntityInvocationBuilde
 import com.discoverydns.dnsapiclient.internal.views.response.ZoneGetView;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ZoneCreateCommandHandlerTest {
+public class ZoneCreateAXFRCommandHandlerTest {
     @Mock
     private WebTarget mockBaseWebTarget;
     @Mock
-    private WebTarget mockZoneCreateTarget;
+    private WebTarget mockZoneCreateAXFRTarget;
     @Mock
-    private ZoneCreateCommand mockZoneCreateCommand;
+    private ZoneCreateAXFRCommand mockZoneCreateAXFRCommand;
     @Mock
     private CommandMetaData mockCommandMetaData;
 
-    private ZoneCreateCommandHandler zoneCreateCommandHandler;
+    private ZoneCreateAXFRCommandHandler zoneCreateAXFRCommandHandler;
 
     @Before
     public void setup() throws Throwable {
-        when(mockBaseWebTarget.path("zones")).thenReturn(mockZoneCreateTarget);
+        when(mockBaseWebTarget.path("zones")).thenReturn(mockZoneCreateAXFRTarget);
 
-        zoneCreateCommandHandler = new ZoneCreateCommandHandler(mockBaseWebTarget);
+        zoneCreateAXFRCommandHandler = new ZoneCreateAXFRCommandHandler(mockBaseWebTarget);
     }
 
     @Test
-    public void shouldInitialiseZoneCreateTarget() {
+    public void shouldInitialiseZoneCreateAXFRTarget() {
         verify(mockBaseWebTarget).path("zones");
     }
 
     @Test
     public void shouldGetTargetRelativeToProvidedCommand() {
-        assertEquals(mockZoneCreateTarget,
-                zoneCreateCommandHandler.getWebTarget(mockZoneCreateCommand, mockCommandMetaData));
+        assertEquals(mockZoneCreateAXFRTarget,
+                zoneCreateAXFRCommandHandler.getWebTarget(mockZoneCreateAXFRCommand, mockCommandMetaData));
     }
 
     @Test
     public void shouldReturnWithEntityInvocationBuilderFactory() {
         InvocationBuilderFactory invocationBuilderFactory =
-                zoneCreateCommandHandler.getInvocationBuilderFactory(
-                mockZoneCreateCommand, mockCommandMetaData);
+                zoneCreateAXFRCommandHandler.getInvocationBuilderFactory(
+                        mockZoneCreateAXFRCommand, mockCommandMetaData);
 
         assertThat(
                 invocationBuilderFactory,
                 instanceOf(WithEntityInvocationBuilderFactory.class));
 
-        invocationBuilderFactory.buildInvocationBuilder(mockZoneCreateTarget);
+        invocationBuilderFactory.buildInvocationBuilder(mockZoneCreateAXFRTarget);
 
-        verify(mockZoneCreateTarget).request(new MediaType("application", "managed+json"));
+        verify(mockZoneCreateAXFRTarget).request(new MediaType("application", "secondary+json"));
     }
 
     @Test
     public void shouldReturnNoEntityInvocationBuildInvoker() {
         assertThat(
-                zoneCreateCommandHandler.getInvocationBuildInvoker(
-                        mockZoneCreateCommand, mockCommandMetaData),
+                zoneCreateAXFRCommandHandler.getInvocationBuildInvoker(
+                        mockZoneCreateAXFRCommand, mockCommandMetaData),
                 instanceOf(WithEntityInvocationBuildInvoker.class));
     }
 
     @Test
-    public void shouldReturnExpectedZoneCreateResponse() {
+    public void shouldReturnExpectedZoneCreateAXFRResponse() {
         Response mockRestResponse = mock(Response.class);
         ZoneGetView mockZoneGetView = mock(ZoneGetView.class);
         when(mockRestResponse.hasEntity()).thenReturn(true);
@@ -88,8 +88,8 @@ public class ZoneCreateCommandHandlerTest {
         String name = "name";
         when(mockZoneGetView.getName()).thenReturn(name);
 
-        ZoneCreateResponse commandResponse =
-                zoneCreateCommandHandler.getCommandResponse(
+        ZoneCreateAXFRResponse commandResponse =
+                zoneCreateAXFRCommandHandler.getCommandResponse(
                         mockRestResponse, mockCommandMetaData);
 
         assertEquals(name, commandResponse.getName());

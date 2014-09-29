@@ -5,7 +5,7 @@ import com.discoverydns.dnsapiclient.command.zone.ZoneGetQueryUsageResponse;
 import com.discoverydns.dnsapiclient.exception.DNSAPIClientException;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.*;
-import com.discoverydns.dnsapiclient.internal.views.ZoneGetQueryUsageView;
+import com.discoverydns.dnsapiclient.internal.views.response.ZoneGetQueryUsageView;
 
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;

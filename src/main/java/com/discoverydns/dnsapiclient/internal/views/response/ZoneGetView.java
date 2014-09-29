@@ -1,6 +1,7 @@
-package com.discoverydns.dnsapiclient.internal.views;
+package com.discoverydns.dnsapiclient.internal.views.response;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Set;
 
 import org.joda.time.LocalDateTime;
@@ -77,7 +78,26 @@ public class ZoneGetView {
 	@JsonProperty("delegationResourceRecords")
     private Set<Record> delegationDDNSResourceRecords;
 
-	public URI getUri() {
+    @JsonProperty("axfrEnabled")
+    private Boolean axfrEnabled;
+    @JsonProperty("axfrServers")
+    private List<String> axfrServers;
+    @JsonProperty("axfrTransferDate")
+    private LocalDateTime axfrTransferDate;
+    @JsonProperty("axfrTransferServer")
+    private String axfrTransferServer;
+    @JsonProperty("axfrAttemptedTransferDate")
+    private LocalDateTime axfrAttemptedTransferDate;
+    @JsonProperty("axfrAttemptedTransferServer")
+    private String axfrAttemptedTransferServer;
+    @JsonProperty("axfrTsigName")
+    private String axfrTsigName;
+    @JsonProperty("axfrTsigKey")
+    private String axfrTsigKey;
+    @JsonProperty("axfrTsigAlgorithm")
+    private String axfrTsigAlgorithm;
+
+    public URI getUri() {
 		return uri;
 	}
 
@@ -203,5 +223,41 @@ public class ZoneGetView {
 
     public Set<Record> getDelegationResourceRecords() {
         return delegationDDNSResourceRecords;
+    }
+
+    public Boolean getAxfrEnabled() {
+        return axfrEnabled;
+    }
+
+    public List<String> getAxfrServers() {
+        return axfrServers;
+    }
+
+    public LocalDateTime getAxfrTransferDate() {
+        return axfrTransferDate;
+    }
+
+    public String getAxfrTransferServer() {
+        return axfrTransferServer;
+    }
+
+    public LocalDateTime getAxfrAttemptedTransferDate() {
+        return axfrAttemptedTransferDate;
+    }
+
+    public String getAxfrAttemptedTransferServer() {
+        return axfrAttemptedTransferServer;
+    }
+
+    public String getAxfrTsigName() {
+        return axfrTsigName;
+    }
+
+    public String getAxfrTsigKey() {
+        return axfrTsigKey;
+    }
+
+    public String getAxfrTsigAlgorithm() {
+        return axfrTsigAlgorithm;
     }
 }

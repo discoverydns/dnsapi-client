@@ -3,7 +3,7 @@ package com.discoverydns.dnsapiclient.command.nameServerSet;
 import java.net.URI;
 import java.util.List;
 
-import com.discoverydns.dnsapiclient.internal.views.NameServerSetListView;
+import com.discoverydns.dnsapiclient.internal.views.response.NameServerSetListView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

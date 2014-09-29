@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import java.net.URI;
 import java.util.List;
 
-import com.discoverydns.dnsapiclient.internal.views.ZoneGetQueryUsageView;
+import com.discoverydns.dnsapiclient.internal.views.response.ZoneGetQueryUsageView;
 
 /**
  * Response object received by the {@link com.discoverydns.dnsapiclient.DNSAPIClient}

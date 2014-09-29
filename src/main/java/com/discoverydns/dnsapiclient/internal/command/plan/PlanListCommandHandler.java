@@ -14,7 +14,7 @@ import com.discoverydns.dnsapiclient.internal.command.InvocationBuilderFactory;
 import com.discoverydns.dnsapiclient.internal.command.Method;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.PlanListView;
+import com.discoverydns.dnsapiclient.internal.views.response.PlanListView;
 
 public class PlanListCommandHandler extends
 		BaseRestCommandHandler<PlanListCommand, PlanListResponse> {
