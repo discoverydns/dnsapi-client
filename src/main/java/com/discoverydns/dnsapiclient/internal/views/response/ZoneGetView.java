@@ -80,6 +80,8 @@ public class ZoneGetView {
 
     @JsonProperty("axfrEnabled")
     private Boolean axfrEnabled;
+    @JsonProperty("axfrDnssecSign")
+    private Boolean axfrDnssecSign;
     @JsonProperty("axfrServers")
     private List<String> axfrServers;
     @JsonProperty("axfrTransferDate")
@@ -259,5 +261,9 @@ public class ZoneGetView {
 
     public String getAxfrTsigAlgorithm() {
         return axfrTsigAlgorithm;
+    }
+
+    public Boolean getAxfrDnssecSign() {
+        return axfrDnssecSign;
     }
 }

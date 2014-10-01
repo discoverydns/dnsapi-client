@@ -20,7 +20,12 @@ public class ZoneCreateAXFRView {
 		return zoneCreateAXFRCommand.getNameServerSetId();
 	}
 
-	@JsonProperty("name")
+    @JsonProperty("dnssecSigned")
+    public Boolean getDnssecSigned() {
+        return zoneCreateAXFRCommand.isDnssecSigned();
+    }
+
+    @JsonProperty("name")
 	public String getName() {
 		return zoneCreateAXFRCommand.getName();
 	}

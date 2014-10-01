@@ -22,20 +22,22 @@ public class ZoneCreateAXFRCommandTest {
         String tsigKey = "tsigKey";
         String tsigName = "tsigName";
         String tsigAlgorithm = "tsigAlgorithm";
-        ZoneCreateAXFRCommand command =
-                new ZoneCreateAXFRCommand.Builder()
-                        .withName(name)
-                        .withNameServerSetId(nameServerSetId)
-                        .withPlanId(planId)
-                        .withGroup(group)
-                        .withAXFRServers(axfrServers)
-                        .withTsigKey(tsigKey)
-                        .withTsigName(tsigName)
-                        .withTsigAlgorithm(tsigAlgorithm)
-                        .build();
+        Boolean dnssecSigned = true;
+        ZoneCreateAXFRCommand command = new ZoneCreateAXFRCommand.Builder()
+                                                                 .withName(name)
+                                                                 .withNameServerSetId(nameServerSetId)
+                                                                 .withDnssecSigned(dnssecSigned)
+                                                                 .withPlanId(planId)
+                                                                 .withGroup(group)
+                                                                 .withAXFRServers(axfrServers)
+                                                                 .withTsigKey(tsigKey)
+                                                                 .withTsigName(tsigName)
+                                                                 .withTsigAlgorithm(tsigAlgorithm)
+                                                                 .build();
 
         assertThat(command.getName(), is(name));
         assertThat(command.getNameServerSetId(), is(nameServerSetId));
+        assertThat(command.isDnssecSigned(), is(dnssecSigned));
         assertThat(command.getPlanId(), is(planId));
         assertThat(command.getGroup(), is(group));
         assertThat(command.getTsigKey(), is(tsigKey));
@@ -46,7 +48,6 @@ public class ZoneCreateAXFRCommandTest {
 
     @Test
     public void shouldBuildANewCommandEveryTime() {
-        assertNotSame(new ZoneCreateAXFRCommand.Builder().build(),
-                new ZoneCreateAXFRCommand.Builder().build());
+        assertNotSame(new ZoneCreateAXFRCommand.Builder().build(), new ZoneCreateAXFRCommand.Builder().build());
     }
 }

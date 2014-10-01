@@ -34,7 +34,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
         "createUserName", "lastUpdateDate", "lastUpdateAccountId",
         "lastUpdateAccountIdentifier", "lastUpdateUserId",
         "lastUpdateUserName", "delegationResourceRecords",
-        "ddnsResourceRecords", "resourceRecords", "axfrEnabled", "axfrServers",
+        "ddnsResourceRecords", "resourceRecords", "axfrEnabled", "axfrDnssecSign", "axfrServers",
         "axfrTransferDate", "axfrTransferServer", "axfrAttemptedTransferDate",
         "axfrAttemptedTransferServer" })
 public class ZoneGetResponse {
@@ -387,5 +387,13 @@ public class ZoneGetResponse {
     @JsonProperty("axfrTsigKey")
     public String getAxfrTsigKey() {
         return zoneGetView.getAxfrTsigKey();
+    }
+
+    /**
+     * @return Indicates the DNSSEC signed is enabled for the AXFR zone.
+     */
+    @JsonProperty("axfrDnssecSign")
+    public Boolean getAxfrDnssecSign() {
+        return zoneGetView.getAxfrDnssecSign();
     }
 }

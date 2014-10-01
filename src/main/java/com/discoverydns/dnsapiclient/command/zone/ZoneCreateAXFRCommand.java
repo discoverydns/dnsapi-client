@@ -11,89 +11,107 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 /**
  * Command sent from a {@link com.discoverydns.dnsapiclient.DNSAPIClient} to the DNSAPI server,
  * to create a new AXFR-managed Zone.
- *
+ * <p/>
  * A Zone, belonging to an Account, will be managed by the DNSAPI architecture
  * for domain names resolution purpose.
  *
  * @author Arnaud Dumont
  */
 @JsonRootName("ZoneCreateCommand")
-@JsonPropertyOrder({ "name", "planId", "group", "nameServerSetId",
-        "axfrServers", "tsigKey", "tsigName", "tsigAlgorithm" })
+@JsonPropertyOrder({"name", "planId", "group", "nameServerSetId", "dnssecSigned",
+        "axfrServers", "tsigKey", "tsigName", "tsigAlgorithm"})
 public class ZoneCreateAXFRCommand {
 
-	@JsonProperty("name")
-	private String name;
-	@JsonProperty("planId")
-	private String planId;
-	@JsonProperty("group")
-	private String group;
-	@JsonProperty("nameServerSetId")
-	private String nameServerSetId;
-	@JsonProperty("axfrServers")
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("planId")
+    private String planId;
+    @JsonProperty("group")
+    private String group;
+    @JsonProperty("nameServerSetId")
+    private String nameServerSetId;
+    @JsonProperty("dnssecSigned")
+    private Boolean dnssecSigned;
+    @JsonProperty("axfrServers")
     private List<String> axfrServers;
-	@JsonProperty("tsigKey")
+    @JsonProperty("tsigKey")
     private String tsigKey;
-	@JsonProperty("tsigName")
+    @JsonProperty("tsigName")
     private String tsigName;
-	@JsonProperty("tsigAlgorithm")
+    @JsonProperty("tsigAlgorithm")
     private String tsigAlgorithm;
 
     /**
      * Builder used to build the desired command.
      */
-	public static class Builder {
-		private String name;
-		private String planId;
-		private String group;
-		private String nameServerSetId;
+    public static class Builder {
+        private String name;
+        private String planId;
+        private String group;
+        private String nameServerSetId;
         private List<String> axfrServers = new ArrayList<String>();
         private String tsigKey;
         private String tsigName;
         private String tsigAlgorithm;
+        private Boolean dnssecSigned;
 
         /**
          * Sets the name of the Zone to create.
+         *
          * @param name The name of the Zone to create
          * @return The {@link Builder}
          */
-		public Builder withName(final String name) {
-			this.name = name;
-			return this;
-		}
+        public Builder withName(final String name) {
+            this.name = name;
+            return this;
+        }
 
         /**
          * Sets the UUID of the Plan that the Zone to create should use.
+         *
          * @param planId The UUID of the Plan to use
          * @return The {@link Builder}
          */
-		public Builder withPlanId(final String planId) {
-			this.planId = planId;
-			return this;
-		}
+        public Builder withPlanId(final String planId) {
+            this.planId = planId;
+            return this;
+        }
 
         /**
          * Sets the group of the Zone to create, if the used Plan has the "grouping" feature. Leave 'null' otherwise.
+         *
          * @param group The group of the Zone to create
          * @return The {@link Builder}
          */
-		public Builder withGroup(final String group) {
-			this.group = group;
-			return this;
-		}
+        public Builder withGroup(final String group) {
+            this.group = group;
+            return this;
+        }
 
         /**
          * Sets the UUID of the NameServer Set that the Zone to create should be associated with.
+         *
          * @param nameServerSetId The UUID of the NameServer Set to associate the Zone with
          * @return The {@link Builder}
          */
-		public Builder withNameServerSetId(final String nameServerSetId) {
-			this.nameServerSetId = nameServerSetId;
-			return this;
-		}
+        public Builder withNameServerSetId(final String nameServerSetId) {
+            this.nameServerSetId = nameServerSetId;
+            return this;
+        }
+
+        /**
+         * Sets if the Zone to create will be DNSSEC signed.
+         * @param dnssecSigned true if the Zone to create should be DNSSEC signed, false otherwise
+         * @return The {@link Builder}
+         */
+        public Builder withDnssecSigned(final Boolean dnssecSigned) {
+            this.dnssecSigned = dnssecSigned;
+            return this;
+        }
 
         /**
          * Sets the list of servers I.P. addresses from where the zone records will be updated by AXFR.
+         *
          * @param axfrServers The AXFR servers
          * @return The {@link Builder}
          */
@@ -106,6 +124,7 @@ public class ZoneCreateAXFRCommand {
 
         /**
          * Sets the TSIG key to validate the AXFR operation.
+         *
          * @param tsigKey The TSIG key
          * @return The {@link Builder}
          */
@@ -116,6 +135,7 @@ public class ZoneCreateAXFRCommand {
 
         /**
          * Sets the name of the TSIG key to validate the AXFR operation.
+         *
          * @param tsigName The TSIG key name
          * @return The {@link Builder}
          */
@@ -126,6 +146,7 @@ public class ZoneCreateAXFRCommand {
 
         /**
          * Sets the algorithm of the TSIG key to validate the AXFR operation.
+         *
          * @param tsigAlgorithm The TSIG key algorithm
          * @return The {@link Builder}
          */
@@ -135,55 +156,59 @@ public class ZoneCreateAXFRCommand {
         }
 
         /**
-         * Builds the {@link com.discoverydns.dnsapiclient.command.zone.ZoneCreateAXFRCommand} from the parameters set on the {@link Builder}.
+         * Builds the {@link com.discoverydns.dnsapiclient.command.zone.ZoneCreateAXFRCommand} from the parameters
+         * set on the {@link Builder}.
+         *
          * @return The built {@link com.discoverydns.dnsapiclient.command.zone.ZoneCreateAXFRCommand}
          */
-		public ZoneCreateAXFRCommand build() {
-			final ZoneCreateAXFRCommand zoneCreateCommand = new ZoneCreateAXFRCommand();
-			zoneCreateCommand.name = name;
-			zoneCreateCommand.planId = planId;
-			zoneCreateCommand.group = group;
-			zoneCreateCommand.nameServerSetId = nameServerSetId;
+        public ZoneCreateAXFRCommand build() {
+            final ZoneCreateAXFRCommand zoneCreateCommand = new ZoneCreateAXFRCommand();
+            zoneCreateCommand.name = name;
+            zoneCreateCommand.planId = planId;
+            zoneCreateCommand.group = group;
+            zoneCreateCommand.nameServerSetId = nameServerSetId;
+            zoneCreateCommand.dnssecSigned = dnssecSigned;
             zoneCreateCommand.axfrServers = axfrServers;
             zoneCreateCommand.tsigKey = tsigKey;
             zoneCreateCommand.tsigName = tsigName;
             zoneCreateCommand.tsigAlgorithm = tsigAlgorithm;
 
-			return zoneCreateCommand;
-		}
+            return zoneCreateCommand;
+        }
 
-	}
+    }
 
-	private ZoneCreateAXFRCommand() {
-	}
+    private ZoneCreateAXFRCommand() {
+    }
 
     /**
      * @return The name of the Zone to create, set on the command.
      */
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
     /**
      * @return The UUID of the NameServer Set to associate the Zone with, set on the command.
      */
-	public String getNameServerSetId() {
-		return nameServerSetId;
-	}
+    public String getNameServerSetId() {
+        return nameServerSetId;
+    }
 
     /**
      * @return The UUID of the Plan to use, set on the command.
      */
-	public String getPlanId() {
-		return planId;
-	}
+    public String getPlanId() {
+        return planId;
+    }
 
     /**
-     * @return The group of the Zone to create, set on the command, if the used Plan has the "grouping" feature. 'null' otherwise.
+     * @return The group of the Zone to create, set on the command, if the used Plan has the "grouping" feature.
+     * 'null' otherwise.
      */
-	public String getGroup() {
-		return group;
-	}
+    public String getGroup() {
+        return group;
+    }
 
     /**
      * @return The list of servers I.P. addresses from where the zone records will be updated by AXFR.
@@ -212,4 +237,12 @@ public class ZoneCreateAXFRCommand {
     public String getTsigAlgorithm() {
         return tsigAlgorithm;
     }
+
+    /**
+     * @return true if the Zone to create should be DNSSEC signed, false otherwise
+     */
+    public Boolean isDnssecSigned() {
+        return dnssecSigned;
+    }
+
 }
