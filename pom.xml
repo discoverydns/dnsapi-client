@@ -344,4 +344,19 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
+
+    <repositories>
+        <repository>
+            <id>central-proxy</id>
+            <name>Maven Central proxy</name>
+            <url>http://nexus.office:8081/nexus/content/repositories/central/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central-proxy</id>
+            <url>http://nexus.office:8081/nexus/content/repositories/central/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
 </project>
