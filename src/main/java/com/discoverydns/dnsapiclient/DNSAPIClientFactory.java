@@ -1,25 +1,5 @@
 package com.discoverydns.dnsapiclient;
 
-import java.net.URI;
-
-import javax.net.ssl.SSLContext;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
-
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
-import org.glassfish.jersey.apache.connector.ApacheClientProperties;
-import org.glassfish.jersey.apache.connector.ApacheConnector;
-import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.client.ClientProperties;
-import org.glassfish.jersey.client.filter.CsrfProtectionFilter;
-import org.glassfish.jersey.client.spi.Connector;
-
 import com.discoverydns.dnsapiclient.command.account.AccountGetCommand;
 import com.discoverydns.dnsapiclient.command.message.MessageAcknowledgeCommand;
 import com.discoverydns.dnsapiclient.command.message.MessageGetCommand;
@@ -39,6 +19,7 @@ import com.discoverydns.dnsapiclient.command.zone.ZoneGetQueryUsageCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneGetZoneFileCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneListCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneReTransferAXFRCommand;
+import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateAXFRCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateResourceRecordsCommand;
 import com.discoverydns.dnsapiclient.config.DNSAPIClientConfig;
@@ -66,6 +47,7 @@ import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetQueryUsageComm
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetZoneFileCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneListCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneReTransferAXFRCommandHandler;
+import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateAXFRCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateResourceRecordsCommandHandler;
 import com.discoverydns.dnsapiclient.internal.commandinterceptors.ClientTransactionIdCommandInterceptor;
@@ -74,6 +56,24 @@ import com.discoverydns.dnsapiclient.internal.commandinterceptors.TransactionLog
 import com.discoverydns.dnsapiclient.internal.json.ErrorHandlingJacksonJsonProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.impl.conn.PoolingClientConnectionManager;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+import org.glassfish.jersey.apache.connector.ApacheClientProperties;
+import org.glassfish.jersey.apache.connector.ApacheConnector;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.ClientProperties;
+import org.glassfish.jersey.client.filter.CsrfProtectionFilter;
+import org.glassfish.jersey.client.spi.Connector;
+
+import javax.net.ssl.SSLContext;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import java.net.URI;
 
 /**
  * The factory to create {@link DNSAPIClient} instances.
@@ -304,6 +304,8 @@ public class DNSAPIClientFactory {
                 new ZoneCreateAXFRCommandHandler(baseWebTarget));
         commandProcessor.subscribe(ZoneReTransferAXFRCommand.class,
                 new ZoneReTransferAXFRCommandHandler(baseWebTarget));
+        commandProcessor.subscribe(ZoneUpdateAXFRCommand.class,
+                new ZoneUpdateAXFRCommandHandler(baseWebTarget));
 		// MessageCommands
 		commandProcessor.subscribe(MessagePollCommand.class,
 				new MessagePollCommandHandler(baseWebTarget));
