@@ -25,16 +25,14 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  */
 @JsonRootName("ZoneGetResponse")
 @JsonPropertyOrder({"@uri", "id", "version", "name", "serial",
-        "brandedNameServers", "dnssecSigned", "zskRollOverState",
-        "pendingOperation", "lastPublishDate",
-        "nameServerSetId", "nameServerSetName", "nameServerInterfaceSetId",
-        "nameServerInterfaceSetName", "planId", "planName", "group",
-        "sponsorAccountId", "sponsorAccountIdentifier", "createDate",
+        "brandedNameServers", "dnssecSigned", "zskRollOverState", "pendingOperation", "lastPublishDate",
+        "nameServerSetId", "nameServerSetName", "nameServerInterfaceSetId", "nameServerInterfaceSetName", "planId",
+        "planName", "group", "sponsorAccountId", "sponsorAccountIdentifier", "createDate",
         "createAccountId", "createAccountIdentifier", "createUserId",
         "createUserName", "lastUpdateDate", "lastUpdateAccountId",
         "lastUpdateAccountIdentifier", "lastUpdateUserId",
         "lastUpdateUserName", "delegationResourceRecords",
-        "ddnsResourceRecords", "resourceRecords", "axfrEnabled", "axfrDnssecSign", "axfrServers",
+        "ddnsResourceRecords", "resourceRecords", "axfrEnabled", "dnssecEnabled", "axfrServers",
         "axfrTransferDate", "axfrTransferServer", "axfrAttemptedTransferDate",
         "axfrAttemptedTransferServer" })
 public class ZoneGetResponse {
@@ -390,10 +388,10 @@ public class ZoneGetResponse {
     }
 
     /**
-     * @return Indicates the DNSSEC signed is enabled for the AXFR zone.
+     * @return Indicates the DNSSEC is enabled for the zone.
      */
-    @JsonProperty("axfrDnssecSign")
-    public Boolean getAxfrDnssecSign() {
-        return zoneGetView.getAxfrDnssecSign();
+    @JsonProperty("dnssecEnabled")
+    public Boolean getDNSSECEnabled() {
+        return zoneGetView.getDNSSECEnabled();
     }
 }
