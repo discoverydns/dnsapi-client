@@ -86,6 +86,23 @@ public class ZoneGetCommandExample {
                     + zoneGetResponse.getPlanId());
             System.out.println("Zone associated Plan name: "
                     + zoneGetResponse.getPlanName());
+            if (zoneGetResponse.getAxfrEnabled()) {
+                System.out.println("-- XFR (Zone Transfer): ");
+                System.out.println("   Zone XFR Enabled: " + zoneGetResponse.getAxfrEnabled());
+                System.out.println("   Zone DNSSEC Enabled: " + zoneGetResponse.getDNSSECEnabled());
+                System.out.println("   Zone Master Servers: ");
+                for (String axfrServer : zoneGetResponse.getAxfrServers()) {
+                    System.out.println("      " + axfrServer);
+                }
+                System.out.println("   Zone Last successful AXFR transfer date: "
+                        + zoneGetResponse.getAxfrLastSuccessfulTransferredDate());
+                System.out.println("   Zone Last successful AXFR transfer master: "
+                        + zoneGetResponse.getAxfrLastSuccessfulTransferServer());
+                System.out.println("   Zone Last unsuccessful AXFR transfer date: "
+                        + zoneGetResponse.getAxfrLastUnsuccessfulTransferDate());
+                System.out.println("   Zone Last unsuccessful AXFR transfer master: "
+                        + zoneGetResponse.getAxfrLastUnsuccessfulTransferServer());
+            }
             System.out.println("-- Zone system-generated delegation records: ");
             for (Record delegationRecord : zoneGetResponse.getDelegationResourceRecords()) {
                 System.out.println("   " + delegationRecord.toString());

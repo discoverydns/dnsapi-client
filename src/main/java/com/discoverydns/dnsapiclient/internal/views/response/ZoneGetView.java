@@ -84,14 +84,14 @@ public class ZoneGetView {
     private Boolean dnssecEnabled;
     @JsonProperty("axfrServers")
     private List<String> axfrServers;
-    @JsonProperty("axfrTransferDate")
-    private LocalDateTime axfrTransferDate;
-    @JsonProperty("axfrTransferServer")
-    private String axfrTransferServer;
-    @JsonProperty("axfrAttemptedTransferDate")
-    private LocalDateTime axfrAttemptedTransferDate;
-    @JsonProperty("axfrAttemptedTransferServer")
-    private String axfrAttemptedTransferServer;
+    @JsonProperty("axfrLastSuccessfulTransferredDate")
+    private LocalDateTime axfrLastSuccessfulTransferredDate;
+    @JsonProperty("axfrLastSuccessfulTransferServer")
+    private String axfrLastSuccessfulTransferServer;
+    @JsonProperty("axfrLastUnsuccessfulTransferDate")
+    private LocalDateTime axfrLastUnsuccessfulTransferDate;
+    @JsonProperty("axfrLastUnsuccessfulTransferServer")
+    private String axfrLastUnsuccessfulTransferServer;
     @JsonProperty("axfrTsigName")
     private String axfrTsigName;
     @JsonProperty("axfrTsigKey")
@@ -235,20 +235,20 @@ public class ZoneGetView {
         return axfrServers;
     }
 
-    public LocalDateTime getAxfrTransferDate() {
-        return axfrTransferDate;
+    public LocalDateTime getAxfrLastSuccessfulTransferredDate() {
+        return axfrLastSuccessfulTransferredDate;
     }
 
-    public String getAxfrTransferServer() {
-        return axfrTransferServer;
+    public String getAxfrLastSuccessfulTransferServer() {
+        return axfrLastSuccessfulTransferServer;
     }
 
-    public LocalDateTime getAxfrAttemptedTransferDate() {
-        return axfrAttemptedTransferDate;
+    public LocalDateTime getAxfrLastUnsuccessfulTransferDate() {
+        return axfrLastUnsuccessfulTransferDate;
     }
 
-    public String getAxfrAttemptedTransferServer() {
-        return axfrAttemptedTransferServer;
+    public String getAxfrLastUnsuccessfulTransferServer() {
+        return axfrLastUnsuccessfulTransferServer;
     }
 
     public String getAxfrTsigName() {

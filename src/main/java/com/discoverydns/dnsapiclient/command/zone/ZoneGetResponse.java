@@ -33,8 +33,8 @@ import com.fasterxml.jackson.annotation.JsonRootName;
         "lastUpdateAccountIdentifier", "lastUpdateUserId",
         "lastUpdateUserName", "delegationResourceRecords",
         "ddnsResourceRecords", "resourceRecords", "axfrEnabled", "dnssecEnabled", "axfrServers",
-        "axfrTransferDate", "axfrTransferServer", "axfrAttemptedTransferDate",
-        "axfrAttemptedTransferServer" })
+        "axfrLastSuccessfulTransferredDate", "axfrLastSuccessfulTransferServer", "axfrLastUnsuccessfulTransferDate",
+        "axfrLastUnsuccessfulTransferServer" })
 public class ZoneGetResponse {
 
     @JsonIgnore
@@ -334,33 +334,33 @@ public class ZoneGetResponse {
     /**
      * @return The date of a the last successful AXFR transfer
      */
-    @JsonProperty("axfrTransferDate")
-    public LocalDateTime getAxfrTransferDate() {
-        return zoneGetView.getAxfrTransferDate();
+    @JsonProperty("axfrLastSuccessfulTransferredDate")
+    public LocalDateTime getAxfrLastSuccessfulTransferredDate() {
+        return zoneGetView.getAxfrLastSuccessfulTransferredDate();
     }
 
     /**
      * @return The server used for the last successful AXFR transfer
      */
-    @JsonProperty("axfrTransferServer")
-    public String getAxfrTransferServer() {
-        return zoneGetView.getAxfrTransferServer();
+    @JsonProperty("axfrLastSuccessfulTransferServer")
+    public String getAxfrLastSuccessfulTransferServer() {
+        return zoneGetView.getAxfrLastSuccessfulTransferServer();
     }
 
     /**
-     * @return The date of a the last attempted AXFR transfer. Only set on unsuccessful transfer.
+     * @return The date of a the last unsuccessful AXFR transfer.
      */
-    @JsonProperty("axfrAttemptedTransferDate")
-    public LocalDateTime getAxfrAttemptedTransferDate() {
-        return zoneGetView.getAxfrAttemptedTransferDate();
+    @JsonProperty("axfrLastUnsuccessfulTransferDate")
+    public LocalDateTime getAxfrLastUnsuccessfulTransferDate() {
+        return zoneGetView.getAxfrLastUnsuccessfulTransferDate();
     }
 
     /**
-     * @return The server used for the last attempted AXFR transfer. Only set on unsuccessful transfer.
+     * @return The server used for the last unsuccessful AXFR transfer.
      */
-    @JsonProperty("axfrAttemptedTransferServer")
-    public String getAxfrAttemptedTransferServer() {
-        return zoneGetView.getAxfrAttemptedTransferServer();
+    @JsonProperty("axfrLastUnsuccessfulTransferServer")
+    public String getAxfrLastUnsuccessfulTransferServer() {
+        return zoneGetView.getAxfrLastUnsuccessfulTransferServer();
     }
 
     /**
