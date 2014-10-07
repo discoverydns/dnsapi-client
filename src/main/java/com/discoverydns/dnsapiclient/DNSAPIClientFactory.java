@@ -54,6 +54,7 @@ import com.discoverydns.dnsapiclient.internal.commandinterceptors.ClientTransact
 import com.discoverydns.dnsapiclient.internal.commandinterceptors.StopwatchCommandInterceptor;
 import com.discoverydns.dnsapiclient.internal.commandinterceptors.TransactionLogCommandInterceptor;
 import com.discoverydns.dnsapiclient.internal.json.ErrorHandlingJacksonJsonProvider;
+import com.discoverydns.dnsapiclient.internal.util.ApplicationProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import org.apache.http.conn.scheme.Scheme;
@@ -188,8 +189,9 @@ public class DNSAPIClientFactory {
 				jacksonJsonProvider, httpParams, clientConnectionManager);
 		final Connector connector = new ApacheConnector(clientConfig);
 		clientConfig.connector(connector);
+        final ApplicationProperties applicationProperties = new ApplicationProperties();
 		clientConfig.register(new CsrfProtectionFilter(
-				"DiscoveryDNS Reseller API Client"));
+				"DiscoveryDNS Reseller API Client v" + applicationProperties.getVersion()));
 		final ClientBuilder clientBuilder = ClientBuilder.newBuilder();
 		clientBuilder.withConfig(clientConfig);
 

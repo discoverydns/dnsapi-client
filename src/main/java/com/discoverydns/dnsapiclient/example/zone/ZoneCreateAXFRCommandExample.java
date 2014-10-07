@@ -1,7 +1,5 @@
 package com.discoverydns.dnsapiclient.example.zone;
 
-import org.xbill.DNS.TSIG;
-
 import com.discoverydns.dnsapiclient.DNSAPIClient;
 import com.discoverydns.dnsapiclient.DNSAPIClientFactory;
 import com.discoverydns.dnsapiclient.Response;
@@ -48,14 +46,13 @@ public class ZoneCreateAXFRCommandExample {
         ZoneCreateAXFRCommand command = null;
         try {
             command = new ZoneCreateAXFRCommand.Builder()
-                        .withName("myzone.com")
-                        .withGroup("mygroup")
+                        .withName("myaxfrzone.com")
                         .withNameServerSetId("<my-nss-id>")
                         .withPlanId("<my-plan-id>")
-                        .withAXFRServers(Lists.newArrayList("myAXFRserver"))
-                        .withTsigKey("myTSIGKey")
-                        .withTsigName("myTSIGName")
-                        .withTsigAlgorithm(TSIG.HMAC_MD5.toString())
+                        .withAXFRServers(Lists.newArrayList("<master-server1-ip>", "<master-server2-ip>"))
+                        .withTsigKey("<my-tsig-key>")
+                        .withTsigName("<my-tsig-name>")
+                        .withTsigAlgorithm("<my-tsig-algorighm>")
                         .build();
         } catch (Exception e) {
             e.printStackTrace();

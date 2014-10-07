@@ -55,7 +55,7 @@ public final class ZoneUpdateAXFRCommandExample {
                         .withTsigName("<my-tsig-name>")
                         .withTsigKey("<my-tsig-key>")
                         .withTsigAlgorithm("<my-tsig-algorighm>")
-                        .withAXFRServers(Lists.newArrayList("master-server-ip1", "master-server-ip2"))
+                        .withAXFRServers(Lists.newArrayList("<master-server1-ip>", "<master-server2-ip>"))
                         .build();
 
         //Send command to server and receive response
