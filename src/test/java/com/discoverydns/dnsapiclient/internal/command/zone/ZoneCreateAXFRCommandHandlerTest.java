@@ -68,7 +68,7 @@ public class ZoneCreateAXFRCommandHandlerTest {
 
         invocationBuilderFactory.buildInvocationBuilder(mockZoneCreateAXFRTarget);
 
-        verify(mockZoneCreateAXFRTarget).request(new MediaType("application", "secondary+json"));
+        verify(mockZoneCreateAXFRTarget).request(MediaType.APPLICATION_JSON_TYPE);
     }
 
     @Test

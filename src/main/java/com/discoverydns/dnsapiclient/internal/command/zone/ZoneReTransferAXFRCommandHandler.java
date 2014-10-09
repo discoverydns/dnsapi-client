@@ -22,7 +22,7 @@ public class ZoneReTransferAXFRCommandHandler
     private final WebTarget zoneRefreshTarget;
 
     public ZoneReTransferAXFRCommandHandler(final WebTarget baseWebTarget) {
-        super(Method.POST, Status.OK.getStatusCode());
+        super(Method.POST, Status.NO_CONTENT.getStatusCode());
         this.zoneRefreshTarget = baseWebTarget.path("zones/{zoneId}/retransfer");
     }
 

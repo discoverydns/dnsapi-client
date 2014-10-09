@@ -68,7 +68,7 @@ public class ZoneCreateCommandHandlerTest {
 
         invocationBuilderFactory.buildInvocationBuilder(mockZoneCreateTarget);
 
-        verify(mockZoneCreateTarget).request(new MediaType("application", "managed+json"));
+        verify(mockZoneCreateTarget).request(MediaType.APPLICATION_JSON_TYPE);
     }
 
     @Test

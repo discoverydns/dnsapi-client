@@ -38,7 +38,7 @@ public class ZoneCreateCommandHandler extends BaseRestCommandHandler<ZoneCreateC
     @Override
     public InvocationBuilderFactory getInvocationBuilderFactory(final ZoneCreateCommand command,
                                                                 final CommandMetaData commandMetaData) {
-        return new WithEntityInvocationBuilderFactory(REQUEST_MEDIA_TYPE);
+        return new WithEntityInvocationBuilderFactory(RESPONSE_MEDIA_TYPE);
     }
 
     @Override

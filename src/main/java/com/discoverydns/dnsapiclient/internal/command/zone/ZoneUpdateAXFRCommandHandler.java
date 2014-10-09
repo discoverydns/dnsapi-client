@@ -19,12 +19,14 @@ import javax.ws.rs.core.Response;
 
 public class ZoneUpdateAXFRCommandHandler extends
         BaseRestCommandHandler<ZoneUpdateAXFRCommand, ZoneUpdateAXFRResponse> {
+    private static final MediaType REQUEST_MEDIA_TYPE = new MediaType("application", "secondary+json");
+    private static final MediaType RESPONSE_MEDIA_TYPE = MediaType.APPLICATION_JSON_TYPE;
 
     private final WebTarget zoneUpdateTarget;
 
     public ZoneUpdateAXFRCommandHandler(WebTarget baseWebTarget) {
         super(Method.PUT, Response.Status.OK.getStatusCode(),
-                MediaType.APPLICATION_JSON_TYPE);
+                RESPONSE_MEDIA_TYPE);
         this.zoneUpdateTarget = baseWebTarget.path("zones/{zoneId}/xfrDetails");
     }
 
@@ -44,7 +46,7 @@ public class ZoneUpdateAXFRCommandHandler extends
     public InvocationBuildInvoker getInvocationBuildInvoker(final ZoneUpdateAXFRCommand command,
                                                             final CommandMetaData commandMetaData) {
         return new WithEntityInvocationBuildInvoker<ZoneUpdateAXFRView>(
-                new ZoneUpdateAXFRView(command));
+                new ZoneUpdateAXFRView(command), REQUEST_MEDIA_TYPE);
     }
 
     @Override
@@ -52,8 +54,7 @@ public class ZoneUpdateAXFRCommandHandler extends
             final ZoneUpdateAXFRCommand command,
             final CommandMetaData commandMetaData) {
 
-        return new WithEntityInvocationBuilderFactory(
-                MediaType.APPLICATION_JSON_TYPE);
+        return new WithEntityInvocationBuilderFactory(RESPONSE_MEDIA_TYPE);
     }
 
     @Override

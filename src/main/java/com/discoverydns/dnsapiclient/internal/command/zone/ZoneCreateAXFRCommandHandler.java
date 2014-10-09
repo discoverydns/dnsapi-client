@@ -19,13 +19,13 @@ import com.discoverydns.dnsapiclient.internal.views.response.ZoneGetView;
 
 public class ZoneCreateAXFRCommandHandler extends
 		BaseRestCommandHandler<ZoneCreateAXFRCommand, ZoneCreateAXFRResponse> {
+    private static final MediaType REQUEST_MEDIA_TYPE = new MediaType("application", "secondary+json");
+    private static final MediaType RESPONSE_MEDIA_TYPE = MediaType.APPLICATION_JSON_TYPE;
 
     private final WebTarget zoneCreateAXFRTarget;
-    private static final MediaType requestMediaType = new MediaType("application", "secondary+json");
-    private static final MediaType responseMediaType = MediaType.APPLICATION_JSON_TYPE;
 
     public ZoneCreateAXFRCommandHandler(final WebTarget baseWebTarget) {
-        super(Method.POST, Status.CREATED.getStatusCode(), responseMediaType);
+        super(Method.POST, Status.CREATED.getStatusCode(), RESPONSE_MEDIA_TYPE);
         this.zoneCreateAXFRTarget = baseWebTarget.path("zones");
     }
 
@@ -37,14 +37,14 @@ public class ZoneCreateAXFRCommandHandler extends
     @Override
     public InvocationBuilderFactory getInvocationBuilderFactory(final ZoneCreateAXFRCommand command,
                                                                 final CommandMetaData commandMetaData) {
-       return new WithEntityInvocationBuilderFactory(requestMediaType);
+       return new WithEntityInvocationBuilderFactory(RESPONSE_MEDIA_TYPE);
     }
 
     @Override
     public InvocationBuildInvoker getInvocationBuildInvoker(final ZoneCreateAXFRCommand command,
                                                             final CommandMetaData commandMetaData) {
         final ZoneCreateAXFRView zoneCreateAXFRView = new ZoneCreateAXFRView(command);
-        return new WithEntityInvocationBuildInvoker<ZoneCreateAXFRView>(zoneCreateAXFRView, requestMediaType);
+        return new WithEntityInvocationBuildInvoker<ZoneCreateAXFRView>(zoneCreateAXFRView, REQUEST_MEDIA_TYPE);
     }
 
     @Override
