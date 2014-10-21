@@ -21,6 +21,7 @@ import com.discoverydns.dnsapiclient.command.zone.ZoneListCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneReTransferAXFRCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateAXFRCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateCommand;
+import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateGroupPlanCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateResourceRecordsCommand;
 import com.discoverydns.dnsapiclient.config.DNSAPIClientConfig;
 import com.discoverydns.dnsapiclient.config.DefaultSSLContextFactoryConfig;
@@ -49,6 +50,7 @@ import com.discoverydns.dnsapiclient.internal.command.zone.ZoneListCommandHandle
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneReTransferAXFRCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateAXFRCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateCommandHandler;
+import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateGroupPlanCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateResourceRecordsCommandHandler;
 import com.discoverydns.dnsapiclient.internal.commandinterceptors.ClientTransactionIdCommandInterceptor;
 import com.discoverydns.dnsapiclient.internal.commandinterceptors.StopwatchCommandInterceptor;
@@ -308,6 +310,8 @@ public class DNSAPIClientFactory {
                 new ZoneReTransferAXFRCommandHandler(baseWebTarget));
         commandProcessor.subscribe(ZoneUpdateAXFRCommand.class,
                 new ZoneUpdateAXFRCommandHandler(baseWebTarget));
+        commandProcessor.subscribe(ZoneUpdateGroupPlanCommand.class,
+                new ZoneUpdateGroupPlanCommandHandler(baseWebTarget));
 		// MessageCommands
 		commandProcessor.subscribe(MessagePollCommand.class,
 				new MessagePollCommandHandler(baseWebTarget));

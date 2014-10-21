@@ -97,7 +97,7 @@ public class ZoneUpdateCommandHandlerTest {
     }
 
     @Test
-    public void shouldReturnNoEntityInvocationBuildInvoker() {
+    public void shouldReturnWithEntityInvocationBuildInvoker() {
         assertThat(
                 zoneUpdateCommandHandler.getInvocationBuildInvoker(
                         mockZoneUpdateCommand, mockCommandMetaData),
