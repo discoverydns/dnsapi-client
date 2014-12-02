@@ -4,7 +4,7 @@ This project is part of the [DiscoveryDNS](http://www.discoverydns.com) solution
 
 ## API Description
 
-The details of the DiscoveryDNS REST API commands and responses can be found in the ["doc/DDNS - DiscoveryDNS API - v1.7.docx"](https://github.com/discoverydns/dnsapi-client/blob/master/doc/DDNS%20-%20DiscoveryDNS%20API%20-%20v1.7.docx) document.
+The details of the DiscoveryDNS REST API commands and responses can be found in the ["doc/DDNS - DiscoveryDNS API - v2.0.docx"](https://github.com/discoverydns/dnsapi-client/blob/master/doc/DDNS%20-%20DiscoveryDNS%20API%20-%20v2.0.docx) document.
 
 If you want to develop a client to the API in a language different from Java, you will have to consult this document to find out what REST calls are to be implemented and what responses are to be expected.
 
