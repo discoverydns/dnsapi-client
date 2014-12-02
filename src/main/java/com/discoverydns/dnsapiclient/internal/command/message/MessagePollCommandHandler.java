@@ -13,7 +13,7 @@ import com.discoverydns.dnsapiclient.internal.command.InvocationBuilderFactory;
 import com.discoverydns.dnsapiclient.internal.command.Method;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.MessagePollView;
+import com.discoverydns.dnsapiclient.internal.views.response.MessagePollView;
 
 public class MessagePollCommandHandler extends
 		BaseRestCommandHandler<MessagePollCommand, MessagePollResponse> {

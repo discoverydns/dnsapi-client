@@ -24,7 +24,7 @@ import com.discoverydns.dnsapiclient.exception.DNSAPIClientException;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.NameServerSetGetView;
+import com.discoverydns.dnsapiclient.internal.views.response.NameServerSetGetView;
 import com.discoverydns.dnsapiclient.test.infrastructure.BaseExceptionMatcher;
 
 @RunWith(MockitoJUnitRunner.class)

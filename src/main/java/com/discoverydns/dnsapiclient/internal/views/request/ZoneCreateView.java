@@ -1,4 +1,4 @@
-package com.discoverydns.dnsapiclient.internal.views;
+package com.discoverydns.dnsapiclient.internal.views.request;
 
 import java.util.Set;
 
@@ -51,4 +51,5 @@ public class ZoneCreateView {
     public Set<Record> getResourceRecords() {
         return zoneCreateCommand.getRecords();
 	}
+
 }

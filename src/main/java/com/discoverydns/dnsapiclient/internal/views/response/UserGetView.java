@@ -1,17 +1,15 @@
-package com.discoverydns.dnsapiclient.internal.views;
+package com.discoverydns.dnsapiclient.internal.views.response;
 
 import java.net.URI;
 import java.util.Set;
 
 import org.joda.time.LocalDateTime;
 
-import com.discoverydns.dnsapiclient.command.plan.PlanFeature;
-import com.discoverydns.dnsapiclient.command.plan.PlanUnit;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-@JsonRootName("plan")
-public class PlanGetView {
+@JsonRootName("user")
+public class UserGetView {
 
 	@JsonProperty("@uri")
 	private URI uri;
@@ -19,24 +17,22 @@ public class PlanGetView {
 	private String id;
 	@JsonProperty("version")
 	private Long version;
-	@JsonProperty("name")
-	private String name;
+	@JsonProperty("username")
+	private String username;
 	@JsonProperty("status")
 	private String status;
-	@JsonProperty("baseMonthlyRate")
-	private Double baseMonthlyRate;
-	@JsonProperty("currency")
-	private String currency;
-	@JsonProperty("excessGraceMonths")
-	private Integer excessGraceMonths;
-	@JsonProperty("excessGraceMonthsPeriod")
-	private Integer excessGraceMonthsPeriod;
-	@JsonProperty("trialPeriod")
-	private Integer trialPeriod;
-	@JsonProperty("features")
-	private Set<PlanFeature> features;
-	@JsonProperty("units")
-	private Set<PlanUnit> units;
+	@JsonProperty("name")
+	private String name;
+	@JsonProperty("email")
+	private String email;
+	@JsonProperty("roles")
+	private Set<String> roles;
+	@JsonProperty("passwordExpireDate")
+	private LocalDateTime passwordExpireDate;
+	@JsonProperty("sponsorAccountId")
+	private String sponsorAccountId;
+	@JsonProperty("sponsorAccountIdentifier")
+	private String sponsorAccountIdentifier;
 	@JsonProperty("createAccountId")
 	private String createAccountId;
 	@JsonProperty("createAccountIdentifier")
@@ -70,40 +66,36 @@ public class PlanGetView {
 		return version;
 	}
 
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
 
 	public String getStatus() {
 		return status;
 	}
 
-	public Double getBaseMonthlyRate() {
-		return baseMonthlyRate;
+	public String getName() {
+		return name;
 	}
 
-	public String getCurrency() {
-		return currency;
+	public String getEmail() {
+		return email;
 	}
 
-	public Integer getExcessGraceMonths() {
-		return excessGraceMonths;
+	public Set<String> getRoles() {
+		return roles;
 	}
 
-	public Integer getExcessGraceMonthsPeriod() {
-		return excessGraceMonthsPeriod;
+	public LocalDateTime getPasswordExpireDate() {
+		return passwordExpireDate;
 	}
 
-	public Integer getTrialPeriod() {
-		return trialPeriod;
+	public String getSponsorAccountId() {
+		return sponsorAccountId;
 	}
 
-	public Set<PlanFeature> getFeatures() {
-		return features;
-	}
-
-	public Set<PlanUnit> getUnits() {
-		return units;
+	public String getSponsorAccountIdentifier() {
+		return sponsorAccountIdentifier;
 	}
 
 	public String getCreateAccountId() {

@@ -24,7 +24,7 @@ import com.discoverydns.dnsapiclient.command.plan.PlanListResponse;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.PlanListView;
+import com.discoverydns.dnsapiclient.internal.views.response.PlanListView;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PlanListCommandHandlerTest {

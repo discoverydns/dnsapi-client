@@ -3,7 +3,7 @@ package com.discoverydns.dnsapiclient.command.zone;
 import java.net.URI;
 import java.util.List;
 
-import com.discoverydns.dnsapiclient.internal.views.ZoneListView;
+import com.discoverydns.dnsapiclient.internal.views.response.ZoneListView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

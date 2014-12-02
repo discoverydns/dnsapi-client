@@ -1,25 +1,5 @@
 package com.discoverydns.dnsapiclient;
 
-import java.net.URI;
-
-import javax.net.ssl.SSLContext;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
-
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
-import org.glassfish.jersey.apache.connector.ApacheClientProperties;
-import org.glassfish.jersey.apache.connector.ApacheConnector;
-import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.client.ClientProperties;
-import org.glassfish.jersey.client.filter.CsrfProtectionFilter;
-import org.glassfish.jersey.client.spi.Connector;
-
 import com.discoverydns.dnsapiclient.command.account.AccountGetCommand;
 import com.discoverydns.dnsapiclient.command.message.MessageAcknowledgeCommand;
 import com.discoverydns.dnsapiclient.command.message.MessageGetCommand;
@@ -31,13 +11,17 @@ import com.discoverydns.dnsapiclient.command.plan.PlanGetCommand;
 import com.discoverydns.dnsapiclient.command.plan.PlanListCommand;
 import com.discoverydns.dnsapiclient.command.user.UserGetCommand;
 import com.discoverydns.dnsapiclient.command.user.UserListCommand;
+import com.discoverydns.dnsapiclient.command.zone.ZoneCreateAXFRCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneCreateCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneDeleteCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneGetCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneGetQueryUsageCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneGetZoneFileCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneListCommand;
+import com.discoverydns.dnsapiclient.command.zone.ZoneReTransferAXFRCommand;
+import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateAXFRCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateCommand;
+import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateGroupPlanCommand;
 import com.discoverydns.dnsapiclient.command.zone.ZoneUpdateResourceRecordsCommand;
 import com.discoverydns.dnsapiclient.config.DNSAPIClientConfig;
 import com.discoverydns.dnsapiclient.config.DefaultSSLContextFactoryConfig;
@@ -56,24 +40,47 @@ import com.discoverydns.dnsapiclient.internal.command.plan.PlanGetCommandHandler
 import com.discoverydns.dnsapiclient.internal.command.plan.PlanListCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.user.UserGetCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.user.UserListCommandHandler;
+import com.discoverydns.dnsapiclient.internal.command.zone.ZoneCreateAXFRCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneCreateCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneDeleteCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetQueryUsageCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneGetZoneFileCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneListCommandHandler;
+import com.discoverydns.dnsapiclient.internal.command.zone.ZoneReTransferAXFRCommandHandler;
+import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateAXFRCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateCommandHandler;
+import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateGroupPlanCommandHandler;
 import com.discoverydns.dnsapiclient.internal.command.zone.ZoneUpdateResourceRecordsCommandHandler;
 import com.discoverydns.dnsapiclient.internal.commandinterceptors.ClientTransactionIdCommandInterceptor;
 import com.discoverydns.dnsapiclient.internal.commandinterceptors.StopwatchCommandInterceptor;
 import com.discoverydns.dnsapiclient.internal.commandinterceptors.TransactionLogCommandInterceptor;
 import com.discoverydns.dnsapiclient.internal.json.ErrorHandlingJacksonJsonProvider;
+import com.discoverydns.dnsapiclient.internal.util.ApplicationProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.impl.conn.PoolingClientConnectionManager;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+import org.glassfish.jersey.apache.connector.ApacheClientProperties;
+import org.glassfish.jersey.apache.connector.ApacheConnector;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.ClientProperties;
+import org.glassfish.jersey.client.filter.CsrfProtectionFilter;
+import org.glassfish.jersey.client.spi.Connector;
+
+import javax.net.ssl.SSLContext;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import java.net.URI;
 
 /**
  * The factory to create {@link DNSAPIClient} instances.
- * 
+ *
  * @author Chris Wright
  */
 public class DNSAPIClientFactory {
@@ -90,7 +97,7 @@ public class DNSAPIClientFactory {
 	 * framework when a command is sent to the DNSAPI server, to generate a
 	 * client transaction id to be put in the meta-data. The given
 	 * {@link TransactionLogHandler} will be used for transaction logging.
-	 * 
+	 *
 	 * @param config
 	 *            The configuration to be used to create the instance
 	 * @param sslContextFactory
@@ -136,7 +143,7 @@ public class DNSAPIClientFactory {
 	 * {@link DefaultTransactionLogHandler} will be used as the
 	 * {@link TransactionLogHandler}, using the log files provided in the given
 	 * {@link DefaultTransactionLogHandlerConfig}.
-	 * 
+	 *
 	 * @param config
 	 *            The configuration to be used to create the instance
 	 * @param defaultSSLContextFactoryConfig
@@ -184,8 +191,9 @@ public class DNSAPIClientFactory {
 				jacksonJsonProvider, httpParams, clientConnectionManager);
 		final Connector connector = new ApacheConnector(clientConfig);
 		clientConfig.connector(connector);
+        final ApplicationProperties applicationProperties = new ApplicationProperties();
 		clientConfig.register(new CsrfProtectionFilter(
-				"DiscoveryDNS Reseller API Client"));
+				"DiscoveryDNS Reseller API Client v" + applicationProperties.getVersion()));
 		final ClientBuilder clientBuilder = ClientBuilder.newBuilder();
 		clientBuilder.withConfig(clientConfig);
 
@@ -296,6 +304,14 @@ public class DNSAPIClientFactory {
 				new ZoneGetQueryUsageCommandHandler(baseWebTarget));
 		commandProcessor.subscribe(ZoneGetZoneFileCommand.class,
 				new ZoneGetZoneFileCommandHandler(baseWebTarget));
+        commandProcessor.subscribe(ZoneCreateAXFRCommand.class,
+                new ZoneCreateAXFRCommandHandler(baseWebTarget));
+        commandProcessor.subscribe(ZoneReTransferAXFRCommand.class,
+                new ZoneReTransferAXFRCommandHandler(baseWebTarget));
+        commandProcessor.subscribe(ZoneUpdateAXFRCommand.class,
+                new ZoneUpdateAXFRCommandHandler(baseWebTarget));
+        commandProcessor.subscribe(ZoneUpdateGroupPlanCommand.class,
+                new ZoneUpdateGroupPlanCommandHandler(baseWebTarget));
 		// MessageCommands
 		commandProcessor.subscribe(MessagePollCommand.class,
 				new MessagePollCommandHandler(baseWebTarget));

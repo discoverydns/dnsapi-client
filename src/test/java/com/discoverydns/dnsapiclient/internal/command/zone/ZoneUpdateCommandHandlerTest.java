@@ -16,7 +16,7 @@ import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
 import com.discoverydns.dnsapiclient.internal.command.InvocationBuilderFactory;
 import com.discoverydns.dnsapiclient.internal.command.WithEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.WithEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.ZoneGetView;
+import com.discoverydns.dnsapiclient.internal.views.response.ZoneGetView;
 import com.discoverydns.dnsapiclient.test.infrastructure.BaseExceptionMatcher;
 import org.junit.Before;
 import org.junit.Rule;
@@ -97,7 +97,7 @@ public class ZoneUpdateCommandHandlerTest {
     }
 
     @Test
-    public void shouldReturnNoEntityInvocationBuildInvoker() {
+    public void shouldReturnWithEntityInvocationBuildInvoker() {
         assertThat(
                 zoneUpdateCommandHandler.getInvocationBuildInvoker(
                         mockZoneUpdateCommand, mockCommandMetaData),

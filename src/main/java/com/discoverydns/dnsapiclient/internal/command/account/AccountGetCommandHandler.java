@@ -16,7 +16,7 @@ import com.discoverydns.dnsapiclient.internal.command.InvocationBuilderFactory;
 import com.discoverydns.dnsapiclient.internal.command.Method;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.AccountGetView;
+import com.discoverydns.dnsapiclient.internal.views.response.AccountGetView;
 
 public class AccountGetCommandHandler extends
 		BaseRestCommandHandler<AccountGetCommand, AccountGetResponse> {

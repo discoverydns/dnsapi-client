@@ -65,6 +65,7 @@ public class ZoneListCommandExample {
                 System.out.println("   Zone name: " + record.getName());
                 System.out.println("   Zone branded nameServers: " + record.getBrandedNameServers());
                 System.out.println("   Zone DNSSEC signed: " + record.getDnssecSigned());
+                System.out.println("   Zone XFR enabled: " + record.getXfrEnabled());
                 System.out.println("   Zone create date: " + record.getCreateDate());
                 System.out.println("   Zone last update date: " + record.getLastUpdateDate());
             }

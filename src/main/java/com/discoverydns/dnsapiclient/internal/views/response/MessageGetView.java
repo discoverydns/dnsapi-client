@@ -1,4 +1,4 @@
-package com.discoverydns.dnsapiclient.internal.views;
+package com.discoverydns.dnsapiclient.internal.views.response;
 
 import java.net.URI;
 import java.util.Map;

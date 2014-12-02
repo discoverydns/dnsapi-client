@@ -1,4 +1,4 @@
-package com.discoverydns.dnsapiclient.internal.views;
+package com.discoverydns.dnsapiclient.internal.views.request;
 
 import java.util.Set;
 

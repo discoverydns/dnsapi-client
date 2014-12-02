@@ -15,7 +15,7 @@ import com.discoverydns.dnsapiclient.exception.DNSAPIClientHttpException;
 import com.discoverydns.dnsapiclient.exception.DNSAPIClientHttpException.DNSAPIClientHttpExceptionCode;
 import com.discoverydns.dnsapiclient.framework.command.CommandHandler;
 import com.discoverydns.dnsapiclient.framework.command.CommandMetaData;
-import com.discoverydns.dnsapiclient.internal.views.ErrorView;
+import com.discoverydns.dnsapiclient.internal.views.response.ErrorView;
 
 public abstract class BaseRestCommandHandler<T, R> implements CommandHandler<T> {
 

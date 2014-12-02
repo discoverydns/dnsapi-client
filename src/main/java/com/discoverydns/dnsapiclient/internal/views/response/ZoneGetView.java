@@ -1,6 +1,7 @@
-package com.discoverydns.dnsapiclient.internal.views;
+package com.discoverydns.dnsapiclient.internal.views.response;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Set;
 
 import org.joda.time.LocalDateTime;
@@ -77,7 +78,28 @@ public class ZoneGetView {
 	@JsonProperty("delegationResourceRecords")
     private Set<Record> delegationDDNSResourceRecords;
 
-	public URI getUri() {
+    @JsonProperty("axfrEnabled")
+    private Boolean axfrEnabled;
+    @JsonProperty("dnssecEnabled")
+    private Boolean dnssecEnabled;
+    @JsonProperty("axfrServers")
+    private List<String> axfrServers;
+    @JsonProperty("axfrLastSuccessfulTransferredDate")
+    private LocalDateTime axfrLastSuccessfulTransferredDate;
+    @JsonProperty("axfrLastSuccessfulTransferServer")
+    private String axfrLastSuccessfulTransferServer;
+    @JsonProperty("axfrLastUnsuccessfulTransferDate")
+    private LocalDateTime axfrLastUnsuccessfulTransferDate;
+    @JsonProperty("axfrLastUnsuccessfulTransferServer")
+    private String axfrLastUnsuccessfulTransferServer;
+    @JsonProperty("axfrTsigName")
+    private String axfrTsigName;
+    @JsonProperty("axfrTsigKey")
+    private String axfrTsigKey;
+    @JsonProperty("axfrTsigAlgorithm")
+    private String axfrTsigAlgorithm;
+
+    public URI getUri() {
 		return uri;
 	}
 
@@ -203,5 +225,45 @@ public class ZoneGetView {
 
     public Set<Record> getDelegationResourceRecords() {
         return delegationDDNSResourceRecords;
+    }
+
+    public Boolean getAxfrEnabled() {
+        return axfrEnabled;
+    }
+
+    public List<String> getAxfrServers() {
+        return axfrServers;
+    }
+
+    public LocalDateTime getAxfrLastSuccessfulTransferredDate() {
+        return axfrLastSuccessfulTransferredDate;
+    }
+
+    public String getAxfrLastSuccessfulTransferServer() {
+        return axfrLastSuccessfulTransferServer;
+    }
+
+    public LocalDateTime getAxfrLastUnsuccessfulTransferDate() {
+        return axfrLastUnsuccessfulTransferDate;
+    }
+
+    public String getAxfrLastUnsuccessfulTransferServer() {
+        return axfrLastUnsuccessfulTransferServer;
+    }
+
+    public String getAxfrTsigName() {
+        return axfrTsigName;
+    }
+
+    public String getAxfrTsigKey() {
+        return axfrTsigKey;
+    }
+
+    public String getAxfrTsigAlgorithm() {
+        return axfrTsigAlgorithm;
+    }
+
+    public Boolean getDNSSECEnabled() {
+        return dnssecEnabled;
     }
 }

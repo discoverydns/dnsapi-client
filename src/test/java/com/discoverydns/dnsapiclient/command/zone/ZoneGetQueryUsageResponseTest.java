@@ -1,6 +1,6 @@
 package com.discoverydns.dnsapiclient.command.zone;
 
-import com.discoverydns.dnsapiclient.internal.views.ZoneGetQueryUsageView;
+import com.discoverydns.dnsapiclient.internal.views.response.ZoneGetQueryUsageView;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 

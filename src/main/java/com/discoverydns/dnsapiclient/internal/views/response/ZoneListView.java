@@ -1,19 +1,19 @@
-package com.discoverydns.dnsapiclient.internal.views;
+package com.discoverydns.dnsapiclient.internal.views.response;
 
 import java.net.URI;
 import java.util.List;
 
-import com.discoverydns.dnsapiclient.command.user.UserRecord;
+import com.discoverydns.dnsapiclient.command.zone.ZoneRecord;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-@JsonRootName("users")
-public class UserListView {
+@JsonRootName("zones")
+public class ZoneListView {
 
 	@JsonProperty("@uri")
 	private URI uri;
-	@JsonProperty("userList")
-	private List<UserRecord> userList;
+	@JsonProperty("zoneList")
+	private List<ZoneRecord> zoneList;
 	@JsonProperty("totalCount")
 	private long totalCount;
 
@@ -21,8 +21,8 @@ public class UserListView {
 		return uri;
 	}
 
-	public List<UserRecord> getUserList() {
-		return userList;
+	public List<ZoneRecord> getZoneList() {
+		return zoneList;
 	}
 
 	public long getTotalCount() {

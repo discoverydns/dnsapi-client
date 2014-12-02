@@ -14,8 +14,8 @@ import com.discoverydns.dnsapiclient.internal.command.InvocationBuilderFactory;
 import com.discoverydns.dnsapiclient.internal.command.Method;
 import com.discoverydns.dnsapiclient.internal.command.WithEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.WithEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.MessageAcknowledgeView;
-import com.discoverydns.dnsapiclient.internal.views.MessageGetView;
+import com.discoverydns.dnsapiclient.internal.views.request.MessageAcknowledgeView;
+import com.discoverydns.dnsapiclient.internal.views.response.MessageGetView;
 
 public class MessageAcknowledgeCommandHandler
 		extends

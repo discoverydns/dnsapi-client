@@ -8,7 +8,7 @@ import static org.mockito.Mockito.when;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 
-import com.discoverydns.dnsapiclient.internal.views.ZoneCreateView;
+import com.discoverydns.dnsapiclient.internal.views.request.ZoneCreateView;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

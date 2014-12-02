@@ -7,15 +7,15 @@ import javax.ws.rs.core.MediaType;
 public class WithEntityInvocationBuilderFactory implements
 		InvocationBuilderFactory {
 
-	private final MediaType mediaType;
+	private final MediaType acceptedResponseType;
 
-	public WithEntityInvocationBuilderFactory(final MediaType mediaType) {
-		this.mediaType = mediaType;
+	public WithEntityInvocationBuilderFactory(final MediaType acceptedResponseType) {
+		this.acceptedResponseType = acceptedResponseType;
 	}
 
 	@Override
 	public Builder buildInvocationBuilder(final WebTarget webTarget) {
-		return webTarget.request(mediaType);
+		return webTarget.request(acceptedResponseType);
 	}
 
 }

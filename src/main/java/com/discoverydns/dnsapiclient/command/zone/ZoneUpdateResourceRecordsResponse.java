@@ -1,6 +1,6 @@
 package com.discoverydns.dnsapiclient.command.zone;
 
-import com.discoverydns.dnsapiclient.internal.views.ZoneGetView;
+import com.discoverydns.dnsapiclient.internal.views.response.ZoneGetView;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 /**

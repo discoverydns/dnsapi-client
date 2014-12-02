@@ -16,7 +16,7 @@ import com.discoverydns.dnsapiclient.internal.command.InvocationBuilderFactory;
 import com.discoverydns.dnsapiclient.internal.command.Method;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.ZoneGetView;
+import com.discoverydns.dnsapiclient.internal.views.response.ZoneGetView;
 
 public class ZoneGetCommandHandler extends
 		BaseRestCommandHandler<ZoneGetCommand, ZoneGetResponse> {

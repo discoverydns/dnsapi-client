@@ -57,61 +57,79 @@ public class ZoneGetCommandExample {
             System.out.println("== Processing time: " + response.getTransactionProcessingTime() + "ms");
 
             //The response object can now be used
-            System.out.println("Zone URI: " + response.getResponseObject().getURI());
-            System.out.println("Zone UUID: " + response.getResponseObject().getId());
-            System.out.println("Zone version: " + response.getResponseObject().getVersion());
-            System.out.println("Zone name: " + response.getResponseObject().getName());
-            System.out.println("Zone branded nameServers: " + response.getResponseObject().getBrandedNameServers());
-            System.out.println("Zone DNSSEC signed: " + response.getResponseObject().getDNSSECSigned());
-            if (response.getResponseObject().getDNSSECSigned()) {
-                System.out.println("   ZSK Rollover state: " + response.getResponseObject().getZskRollOverState());
+            final ZoneGetResponse zoneGetResponse = response.getResponseObject();
+            System.out.println("Zone URI: " + zoneGetResponse.getURI());
+            System.out.println("Zone UUID: " + zoneGetResponse.getId());
+            System.out.println("Zone version: " + zoneGetResponse.getVersion());
+            System.out.println("Zone name: " + zoneGetResponse.getName());
+            System.out.println("Zone branded nameServers: " + zoneGetResponse.getBrandedNameServers());
+            System.out.println("Zone DNSSEC signed: " + zoneGetResponse.getDNSSECSigned());
+            if (zoneGetResponse.getDNSSECSigned()) {
+                System.out.println("   ZSK Rollover state: " + zoneGetResponse.getZskRollOverState());
             }
-            System.out.println("Zone pending operation: " + response.getResponseObject().getPendingOperation());
-            System.out.println("Zone last publish date: " + response.getResponseObject().getLastPublishDate());
-            System.out.println("Zone serial: " + response.getResponseObject().getSerial());
-            System.out.println("Zone group: " + response.getResponseObject().getGroup());
-            System.out.println("Zone sponsor Account UUID: " + response.getResponseObject().getSponsorAccountId());
+            System.out.println("Zone pending operation: " + zoneGetResponse.getPendingOperation());
+            System.out.println("Zone last publish date: " + zoneGetResponse.getLastPublishDate());
+            System.out.println("Zone serial: " + zoneGetResponse.getSerial());
+            System.out.println("Zone group: " + zoneGetResponse.getGroup());
+            System.out.println("Zone sponsor Account UUID: " + zoneGetResponse.getSponsorAccountId());
             System.out.println("Zone sponsor Account identifier: "
-                    + response.getResponseObject().getSponsorAccountIdentifier());
+                    + zoneGetResponse.getSponsorAccountIdentifier());
             System.out.println("Zone associated NameServerInterfaceSet UUID: "
-                    + response.getResponseObject().getNameServerInterfaceSetId());
+                    + zoneGetResponse.getNameServerInterfaceSetId());
             System.out.println("Zone associated NameServerInterfaceSet name: "
-                    + response.getResponseObject().getNameServerInterfaceSetName());
+                    + zoneGetResponse.getNameServerInterfaceSetName());
             System.out.println("Zone associated NameServerSet UUID: "
-                    + response.getResponseObject().getNameServerSetId());
+                    + zoneGetResponse.getNameServerSetId());
             System.out.println("Zone associated NameServerSet name: "
-                    + response.getResponseObject().getNameServerSetName());
+                    + zoneGetResponse.getNameServerSetName());
             System.out.println("Zone associated Plan UUID: "
-                    + response.getResponseObject().getPlanId());
+                    + zoneGetResponse.getPlanId());
             System.out.println("Zone associated Plan name: "
-                    + response.getResponseObject().getPlanName());
+                    + zoneGetResponse.getPlanName());
+            if (zoneGetResponse.getAxfrEnabled()) {
+                System.out.println("-- XFR (Zone Transfer): ");
+                System.out.println("   Zone XFR Enabled: " + zoneGetResponse.getAxfrEnabled());
+                System.out.println("   Zone DNSSEC Enabled: " + zoneGetResponse.getDNSSECEnabled());
+                System.out.println("   Zone Master Servers: ");
+                for (String axfrServer : zoneGetResponse.getAxfrServers()) {
+                    System.out.println("      " + axfrServer);
+                }
+                System.out.println("   Zone Last successful AXFR transfer date: "
+                        + zoneGetResponse.getAxfrLastSuccessfulTransferredDate());
+                System.out.println("   Zone Last successful AXFR transfer master: "
+                        + zoneGetResponse.getAxfrLastSuccessfulTransferServer());
+                System.out.println("   Zone Last unsuccessful AXFR transfer date: "
+                        + zoneGetResponse.getAxfrLastUnsuccessfulTransferDate());
+                System.out.println("   Zone Last unsuccessful AXFR transfer master: "
+                        + zoneGetResponse.getAxfrLastUnsuccessfulTransferServer());
+            }
             System.out.println("-- Zone system-generated delegation records: ");
-            for (Record delegationRecord : response.getResponseObject().getDelegationResourceRecords()) {
+            for (Record delegationRecord : zoneGetResponse.getDelegationResourceRecords()) {
                 System.out.println("   " + delegationRecord.toString());
             }
             System.out.println("-- Zone system-generated records: ");
-            for (Record ddnsRecord : response.getResponseObject().getDDNSResourceRecords()) {
+            for (Record ddnsRecord : zoneGetResponse.getDDNSResourceRecords()) {
                 System.out.println("   " + ddnsRecord.toString());
             }
             System.out.println("-- Zone user-generated records: ");
-            for (Record userRecord : response.getResponseObject().getUserResourceRecords()) {
+            for (Record userRecord : zoneGetResponse.getUserResourceRecords()) {
                 System.out.println("   " + userRecord.toString());
             }
-            System.out.println("Zone create Account UUID: " + response.getResponseObject().getCreateAccountId());
+            System.out.println("Zone create Account UUID: " + zoneGetResponse.getCreateAccountId());
             System.out.println("Zone create Account Identifier: "
-                    + response.getResponseObject().getCreateAccountIdentifier());
-            System.out.println("Zone create User UUID: " + response.getResponseObject().getCreateUserId());
+                    + zoneGetResponse.getCreateAccountIdentifier());
+            System.out.println("Zone create User UUID: " + zoneGetResponse.getCreateUserId());
             System.out.println("Zone create User name: "
-                    + response.getResponseObject().getCreateUserName());
-            System.out.println("Zone create date: " + response.getResponseObject().getCreateDate());
+                    + zoneGetResponse.getCreateUserName());
+            System.out.println("Zone create date: " + zoneGetResponse.getCreateDate());
             System.out.println("Zone last update Account UUID: "
-                    + response.getResponseObject().getLastUpdateAccountId());
+                    + zoneGetResponse.getLastUpdateAccountId());
             System.out.println("Zone last update Account Identifier: "
-                    + response.getResponseObject().getLastUpdateAccountIdentifier());
-            System.out.println("Zone last update User UUID: " + response.getResponseObject().getLastUpdateUserId());
+                    + zoneGetResponse.getLastUpdateAccountIdentifier());
+            System.out.println("Zone last update User UUID: " + zoneGetResponse.getLastUpdateUserId());
             System.out.println("Zone last update User name: "
-                    + response.getResponseObject().getLastUpdateUserName());
-            System.out.println("Zone last update date: " + response.getResponseObject().getLastUpdateDate());
+                    + zoneGetResponse.getLastUpdateUserName());
+            System.out.println("Zone last update date: " + zoneGetResponse.getLastUpdateDate());
         } catch (final Throwable e) {
             e.printStackTrace();
             System.exit(1);

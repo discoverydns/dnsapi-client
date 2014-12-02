@@ -4,7 +4,7 @@ import java.net.URI;
 
 import org.joda.time.LocalDateTime;
 
-import com.discoverydns.dnsapiclient.internal.views.AccountGetView;
+import com.discoverydns.dnsapiclient.internal.views.response.AccountGetView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -15,10 +15,10 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  * {@link com.discoverydns.dnsapiclient.DNSAPIClient} from the DNSAPI server
  * subsequently to the sending of a {@link AccountGetCommand}, describing the
  * details of the retrieved Account.
- * 
+ *
  * An Account represents a company or organisation who has the ability to
  * connect to and interact with the DNSAPI server, through its users.
- * 
+ *
  * @author Chris Wright
  */
 @JsonRootName("AccountGetResponse")

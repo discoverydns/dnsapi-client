@@ -14,7 +14,7 @@ import com.discoverydns.dnsapiclient.internal.command.InvocationBuilderFactory;
 import com.discoverydns.dnsapiclient.internal.command.Method;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuildInvoker;
 import com.discoverydns.dnsapiclient.internal.command.NoEntityInvocationBuilderFactory;
-import com.discoverydns.dnsapiclient.internal.views.NameServerSetListView;
+import com.discoverydns.dnsapiclient.internal.views.response.NameServerSetListView;
 
 public class NameServerSetListCommandHandler
 		extends
