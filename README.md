@@ -12,7 +12,7 @@ The DNSSEC Practice Statement of the DiscoveryDNS API can be found in the ["doc/
 
 ## API Description
 
-The details of the DiscoveryDNS REST API commands and responses can be found in the ["doc/DDNS - DiscoveryDNS API - v1.9.docx"](https://github.com/discoverydns/dnsapi-client/blob/master/doc/DDNS%20-%20DiscoveryDNS%20API%20-%20v1.9.docx) document.
+The details of the DiscoveryDNS REST API commands and responses can be found in the ["doc/DDNS - DiscoveryDNS API - v2.0.docx"](https://github.com/discoverydns/dnsapi-client/blob/master/doc/DDNS%20-%20DiscoveryDNS%20API%20-%20v2.0.docx) document.
 
 If you want to develop a client to the API in a language different from Java, you will have to consult this document to find out what REST calls are to be implemented and what responses are to be expected.
 
