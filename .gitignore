@@ -24,3 +24,4 @@ dependency-reduced-pom.xml
 *.iml
 js-unit-test-results.xml
 js-unit-test-coverage/
+*.orig
