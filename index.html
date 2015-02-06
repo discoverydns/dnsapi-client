@@ -8,11 +8,11 @@
 		<h2>Introduction</h2>
 		<p>This project is part of the <a href="http://www.discoverydns.com">DiscoveryDNS</a> solution. It is a Java client to the DiscoveryDNS Server REST API.</p>
 		<h2>User manual</h2>
-		<p>The user manual of the DiscoveryDNS API can be found in <a href="http://discoverydns.github.io/dnsapi-client/doc/DDNS%20-%20Managed%20DNS%20Manual%20-%202.0.pdf">this document</a>.</p>
+		<p>The user manual of the DiscoveryDNS API can be found in <a href="http://discoverydns.github.io/dnsapi-client/doc/DDNS%20-%20Managed%20DNS%20Manual%20-%202.1.pdf">this document</a>.</p>
 		<h2>DNSSEC Practice Statement</h2>
 		<p>The DNSSEC Practice Statement of the DiscoveryDNS API can be found in <a href="http://discoverydns.github.io/dnsapi-client/doc/DDNS%20-%20DNSSEC%20Practice%20Statement%20-%20Reseller%20-%201.0.pdf">this document</a>.</p>
 		<h2>API documentation</h2>
-		<p>The details of the DiscoveryDNS REST API commands and responses can be found in <a href="http://discoverydns.github.io/dnsapi-client/doc/DDNS%20-%20DiscoveryDNS%20API%20-%20v2.0.pdf">this document</a>.<br/>If you want to develop a client to the API in a language different from Java, you will have to consult this document to find out what REST calls are to be implemented and what responses are to be expected.</p>
+		<p>The details of the DiscoveryDNS REST API commands and responses can be found in <a href="http://discoverydns.github.io/dnsapi-client/doc/DDNS%20-%20DiscoveryDNS%20API%20-%20v2.1.pdf">this document</a>.<br/>If you want to develop a client to the API in a language different from Java, you will have to consult this document to find out what REST calls are to be implemented and what responses are to be expected.</p>
 		<h2>License</h2>
 		<p>This project is placed under the <a href="http://www.gnu.org/licenses/lgpl.txt">LGPLv3</a> license.</p>
 		<h2>Download</h2>
@@ -21,7 +21,7 @@
 &lt;dependency&gt;
   &lt;groupId&gt;com.discoverydns.dnsapi&lt;/groupId&gt;
   &lt;artifactId&gt;dnsapi-client&lt;/artifactId&gt;
-  &lt;version&gt;1.3.0&lt;/version&gt;
+  &lt;version&gt;1.3.1&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
 		<h2>Javadoc</h2>
@@ -29,30 +29,30 @@
 		<h2>Usage</h2>
 		<p>Examples are provided in the <code>com.discoverydns.dnsapiclient.example</code> package. However, here is a small description of what needs to be done:<p>
 		<ul>
-			<li>The dnsapi-client library uses a <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/DNSAPIClient.html"><code>DNSAPIClient</code></a> to send commmands to the DNSAPI server, through a REST API over the HTTPS protocol.</li>
-			<li>The <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/DNSAPIClient.html"><code>DNSAPIClient</code></a> should be obtained from a <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/DNSAPIClientFactory.html"><code>DNSAPIClientFactory</code></a>.</li>
-			<li>This <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/DNSAPIClientFactory.html"><code>DNSAPIClientFactory</code></a> uses several feature providers to create the client:</li>
+			<li>The dnsapi-client library uses a <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/DNSAPIClient.html"><code>DNSAPIClient</code></a> to send commmands to the DNSAPI server, through a REST API over the HTTPS protocol.</li>
+			<li>The <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/DNSAPIClient.html"><code>DNSAPIClient</code></a> should be obtained from a <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/DNSAPIClientFactory.html"><code>DNSAPIClientFactory</code></a>.</li>
+			<li>This <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/DNSAPIClientFactory.html"><code>DNSAPIClientFactory</code></a> uses several feature providers to create the client:</li>
 				<ul>
-					<li>An implementation of the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/config/DNSAPIClientConfig.html"><code>DNSAPIClientConfig</code></a> interface, to configure the HTTP connection used by the client.</li>
-					<li>An implementation of the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/SSLContextFactory.html"><code>SSLContextFactory</code></a> interface, to create a <code>javax.net.ssl.SSLContext</code> instance, to establish a secure communication between the client and the server.</li>
-					<li>An implementation of the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/ObjectMapperFactory.html"><code>ObjectMapperFactory</code></a> interface, to create an <code>com.fasterxml.jackson.databind.ObjectMapper</code> instance, for the client to serialize and deserialize the JSON data sent to or coming from the server.</li>
-					<li>An implementation of the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/ClientTransactionIdStrategy.html"><code>ClientTransactionIdStrategy</code></a> interface, to generate a client transaction id to be put in each transaction's meta-data.</li>
-					<li>An implementation of the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/TransactionLogHandler.html"><code>TransactionLogHandler</code></a> interface, to log the successful and failed transactions between the client and the server.</li>
+					<li>An implementation of the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/config/DNSAPIClientConfig.html"><code>DNSAPIClientConfig</code></a> interface, to configure the HTTP connection used by the client.</li>
+					<li>An implementation of the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/SSLContextFactory.html"><code>SSLContextFactory</code></a> interface, to create a <code>javax.net.ssl.SSLContext</code> instance, to establish a secure communication between the client and the server.</li>
+					<li>An implementation of the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/ObjectMapperFactory.html"><code>ObjectMapperFactory</code></a> interface, to create an <code>com.fasterxml.jackson.databind.ObjectMapper</code> instance, for the client to serialize and deserialize the JSON data sent to or coming from the server.</li>
+					<li>An implementation of the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/ClientTransactionIdStrategy.html"><code>ClientTransactionIdStrategy</code></a> interface, to generate a client transaction id to be put in each transaction's meta-data.</li>
+					<li>An implementation of the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/TransactionLogHandler.html"><code>TransactionLogHandler</code></a> interface, to log the successful and failed transactions between the client and the server.</li>
 				</ul>
-			<li>To obtain the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/DNSAPIClient.html"><code>DNSAPIClient</code></a> from the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/DNSAPIClientFactory.html"><code>DNSAPIClientFactory</code></a>, you need to:</li>
+			<li>To obtain the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/DNSAPIClient.html"><code>DNSAPIClient</code></a> from the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/DNSAPIClientFactory.html"><code>DNSAPIClientFactory</code></a>, you need to:</li>
 				<ul>
 					<li>Setup the SLF4J logging (the client uses the logback's native binding) for log messages.</li>
-					<li>Instantiate the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/DNSAPIClientFactory.html"><code>DNSAPIClientFactory</code></a>.</li>
+					<li>Instantiate the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/DNSAPIClientFactory.html"><code>DNSAPIClientFactory</code></a>.</li>
 					<li>Then, you can either:</li>
 						<ul>
 							<li>Call its <code>createInstance</code> method, passing your custom implementation of all the features providers' interfaces described above.</li>
 							<li>Call its <code>createInstanceFromDefaultProviders</code> method to use the provided default implementation of all the features providers' interfaces. You then only need to pass:</li>
 								<ul>
-									<li>An implementation of the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/config/DNSAPIClientConfig.html"><code>DNSAPIClientConfig</code></a> interface, to configure the HTTP connection used by the client.</li>
-									<li>An implementation of the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/config/DefaultSSLContextFactoryConfig.html"><code>DefaultSSLContextFactoryConfig</code></a> interface, to configure the provided <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/DefaultSSLContextFactory.html"><code>DefaultSSLContextFactory</code></a>, using path-accessible keystore and if required, trustore resources (return null to the truststore path method will use the system truststore).</li>
-									<li>An implementation of the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/config/DefaultTransactionLogHandlerConfig.html"><code>DefaultTransactionLogHandlerConfig</code></a> interface, to configure the provided <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/DefaultTransactionLogHandler.html"><code>DefaultTransactionLogHandler</code></a>, using path-accessible log file resources, with a rotation pattern.</li>
-									<li>A <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/DefaultObjectMapperFactory.html"><code>DefaultObjectMapperFactory</code></a> will then be automatically provided, using the Jackson serializers and deserializers provided by the <a href="http://discoverydns.github.io/ddns-dnsjava/"><i>ddns-dnsjava</i></a> library.</li>
-									<li>A <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.0/com/discoverydns/dnsapiclient/DefaultClientTransactionIdStrategy.html"><code>DefaultClientTransactionIdStrategy</code></a> will then be automatically provided, using random UUID strings as client transaction Ids.</li>
+									<li>An implementation of the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/config/DNSAPIClientConfig.html"><code>DNSAPIClientConfig</code></a> interface, to configure the HTTP connection used by the client.</li>
+									<li>An implementation of the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/config/DefaultSSLContextFactoryConfig.html"><code>DefaultSSLContextFactoryConfig</code></a> interface, to configure the provided <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/DefaultSSLContextFactory.html"><code>DefaultSSLContextFactory</code></a>, using path-accessible keystore and if required, trustore resources (return null to the truststore path method will use the system truststore).</li>
+									<li>An implementation of the <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/config/DefaultTransactionLogHandlerConfig.html"><code>DefaultTransactionLogHandlerConfig</code></a> interface, to configure the provided <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/DefaultTransactionLogHandler.html"><code>DefaultTransactionLogHandler</code></a>, using path-accessible log file resources, with a rotation pattern.</li>
+									<li>A <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/DefaultObjectMapperFactory.html"><code>DefaultObjectMapperFactory</code></a> will then be automatically provided, using the Jackson serializers and deserializers provided by the <a href="http://discoverydns.github.io/ddns-dnsjava/"><i>ddns-dnsjava</i></a> library.</li>
+									<li>A <a href="http://static.javadoc.io/com.discoverydns.dnsapi/dnsapi-client/1.3.1/com/discoverydns/dnsapiclient/DefaultClientTransactionIdStrategy.html"><code>DefaultClientTransactionIdStrategy</code></a> will then be automatically provided, using random UUID strings as client transaction Ids.</li>
 								</ul>
 						</ul>
 				</ul>
