@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.net.InetAddress;
 
-
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.Before;
@@ -67,24 +66,23 @@ public class NameServerInterfaceDeserializerTest {
 	@Before
 	public void setup() throws Throwable {
 		fakeObjectNode = new ObjectNode(mockJsonNodeFactory);
-		
+
 		when(mockJsonParser.getCodec()).thenReturn(mockObjectMapper);
 		when(mockObjectMapper.reader()).thenReturn(mockObjectReader);
 		when(mockObjectReader.without(DeserializationFeature.UNWRAP_ROOT_VALUE)).thenReturn(mockObjectReader);
-		when(mockObjectReader.readTree(mockJsonParser)).thenReturn(
-				fakeObjectNode);
-		
+		when(mockObjectReader.readTree(mockJsonParser)).thenReturn(fakeObjectNode);
+
 		when(mockOrderJsonNode.intValue()).thenReturn(order);
-        fakeObjectNode.put("order", mockOrderJsonNode);
+        fakeObjectNode.set("order", mockOrderJsonNode);
 
         when(mockNameJsonNode.textValue()).thenReturn(name);
-        fakeObjectNode.put("name", mockNameJsonNode);
-		
+        fakeObjectNode.set("name", mockNameJsonNode);
+
 		when(mockIPv4AddressJsonNode.textValue()).thenReturn(ipv4Address);
-		fakeObjectNode.put(fieldIPv4Address, mockIPv4AddressJsonNode);
-		
+		fakeObjectNode.set(fieldIPv4Address, mockIPv4AddressJsonNode);
+
 		when(mockIPv6AddressJsonNode.textValue()).thenReturn(ipv6Address);
-        fakeObjectNode.put("ipv6Address", mockIPv6AddressJsonNode);
+        fakeObjectNode.set("ipv6Address", mockIPv6AddressJsonNode);
 
 		nameServerInterfaceDeserializer = new NameServerInterfaceDeserializer();
 	}
@@ -96,9 +94,8 @@ public class NameServerInterfaceDeserializerTest {
                 DNSAPIClientJsonMappingException.DNSAPIClientJsonMappingExceptionCode.invalidFieldValue,
                 new Exception("cause"), "arguments");
 		nameServerInterfaceDeserializer = spy(nameServerInterfaceDeserializer);
-		when(
-				nameServerInterfaceDeserializer.getNodeAddressValue(
-						fakeObjectNode, fieldIPv4Address)).thenThrow(exception);
+		when(nameServerInterfaceDeserializer.getNodeAddressValue(fakeObjectNode, fieldIPv4Address))
+				.thenThrow(exception);
 
 		thrown.expect(new BaseMatcher<Throwable>() {
 			@Override
@@ -111,13 +108,11 @@ public class NameServerInterfaceDeserializerTest {
 			}
 		});
 
-		nameServerInterfaceDeserializer.deserialize(mockJsonParser,
-				mockDeserializationContext);
+		nameServerInterfaceDeserializer.deserialize(mockJsonParser, mockDeserializationContext);
 	}
 
 	@Test
-	public void shouldWrapThrownExceptionIfNotDNSAPIClientJsonMappingExceptionWhenCreatingNode()
-			throws Exception {
+	public void shouldWrapThrownExceptionIfNotDNSAPIClientJsonMappingExceptionWhenCreatingNode() throws Exception {
 		nameServerInterfaceDeserializer = spy(nameServerInterfaceDeserializer);
         IOException exception = new IOException("message");
 		when(mockObjectReader.readTree(mockJsonParser)).thenThrow(exception);
@@ -126,10 +121,9 @@ public class NameServerInterfaceDeserializerTest {
 
 		thrown.expect(new DNSAPIClientJsonMappingExceptionMatcher(
                 DNSAPIClientJsonMappingException.DNSAPIClientJsonMappingExceptionCode.unexpectedMappingError,
-                exception, new Object[] { textualBeanType, exception.getMessage() }));
+                exception, new Object[] {textualBeanType, exception.getMessage()}));
 
-		nameServerInterfaceDeserializer.deserialize(mockJsonParser,
-				mockDeserializationContext);
+		nameServerInterfaceDeserializer.deserialize(mockJsonParser, mockDeserializationContext);
 	}
 
 	@Test
@@ -139,12 +133,10 @@ public class NameServerInterfaceDeserializerTest {
 
 		assertEquals(order.intValue(), nameServerInterface.getOrder());
 		assertEquals(name, nameServerInterface.getName());
-		assertEquals(ipv4Address, nameServerInterface.getIpv4Address()
-				.getHostAddress());
-		assertEquals(ipv6Address, nameServerInterface.getIpv6Address()
-				.getHostAddress());
+		assertEquals(ipv4Address, nameServerInterface.getIpv4Address().getHostAddress());
+		assertEquals(ipv6Address, nameServerInterface.getIpv6Address().getHostAddress());
 	}
-	
+
 	@Test
 	public void shouldReturnExpectedTextualBeanType() throws Exception {
 		assertEquals("nameServer Interface", nameServerInterfaceDeserializer.getTextualBeanType());
