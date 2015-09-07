@@ -37,7 +37,7 @@ public class ZoneCreateCommand {
 	@JsonProperty("nameServerSetId")
 	private String nameServerSetId;
     @JsonProperty("resourceRecords")
-    public Set<Record> records;
+	private Set<Record> records;
 
     /**
      * Builder used to build the desired command.
@@ -49,7 +49,7 @@ public class ZoneCreateCommand {
 		private String planId;
 		private String group;
 		private String nameServerSetId;
-        public Set<Record> records = new HashSet<Record>();
+		private Set<Record> records = new HashSet<Record>();
 
         /**
          * Sets the name of the Zone to create.
