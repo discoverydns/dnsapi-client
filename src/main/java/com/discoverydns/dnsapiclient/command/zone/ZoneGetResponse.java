@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  * Response object received by the {@link com.discoverydns.dnsapiclient.DNSAPIClient}
  * from the DNSAPI server subsequently to the sending of a {@link ZoneGetCommand},
  * describing the details of the retrieved Zone.
- * <p/>
+ * <p>
  * A Zone, belonging to an Account, will be managed by the DNSAPI architecture
  * for domain names resolution purpose.
  *

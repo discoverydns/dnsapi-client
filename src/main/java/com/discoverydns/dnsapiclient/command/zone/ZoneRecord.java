@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 /**
  * List record representing a Zone, from the list returned in the {@link ZoneListResponse}.
- * <p/>
+ * <p>
  * A Zone, belonging to an Account, will be managed by the DNSAPI architecture
  * for domain names resolution purpose.
  *

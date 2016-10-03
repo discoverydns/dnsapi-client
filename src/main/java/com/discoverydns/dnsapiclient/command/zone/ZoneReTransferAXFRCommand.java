@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 /**
  * Command sent from a {@link com.discoverydns.dnsapiclient.DNSAPIClient} to the DNSAPI server,
  * to refresh an AXFR-managed Zone.
- * <p/>
+ * <p>
  * A Zone, belonging to an Account, will be managed by the DNSAPI architecture
  * for domain names resolution purpose.
  *
